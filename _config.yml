@@ -1,1 +1,40 @@
-theme: jekyll-theme-hacker
+# Site settings
+title: Tom van Schaijk
+description: 'Software engineer'
+url: 'https://tomvanschaijk.github.io'
+baseurl: ''
+disqus_shortname: 'tomvanschaijk-github-io'
+
+author:
+  name: 'Tom van Schaijk'
+  email: vanschaijktom@hotmail.com
+  github_username:  tomvanschaijk
+  linkedin_username:  tomvanschaijk
+
+defaults:
+  -
+    scope:
+      path: ''
+      type: 'posts'
+    values:
+        layout: 'post'
+
+# Build settings
+destination: _site
+paginate: 10
+permalink: /:year/:title/
+markdown: kramdown
+highlighter: rouge
+
+sass:
+    sass_dir: _sass
+    style: compressed
+
+kramdown:
+  # use Github Flavored Markdown
+  input: GFM
+  # do not replace newlines by <br>s
+  hard_wrap: false
+
+gems: ['jekyll-paginate']
+exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
