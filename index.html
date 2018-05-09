@@ -1,40 +1,42 @@
----
-layout: default
-robots: noindex
----
+--- layout: default robots: noindex ---
 <div>
-  I know, nothing crazy so far... I'll be posting my blogs very soon. For now, check out a few I added to my <a href="http://www.linkedin.com/in/{{ site.author.linkedin_username }}" title="LinkedIn" target="_blank">LinkedIn</a> page!
-  <div>
-    <ul>
-      <li><a href="https://www.linkedin.com/pulse/how-artificial-intelligence-transforming-software-tom-van-schaijk/" target="_blank">How artificial intelligence is transforming software engineering</a></li>
-      <li><a href="https://www.linkedin.com/pulse/through-trees-tom-van-schaijk/" target="_blank">Through the trees...</a></li>
-      <li><a href="https://www.linkedin.com/pulse/prime-skills-tom-van-schaijk/" target="_blank">Prime skills?</a></li>
-    </ul>
-  </div>
+  I know, nothing crazy so far... I'll be posting my blogs very soon. For now, check out a few I added to my
+  <a href="http://www.linkedin.com/in/{{ site.author.linkedin_username }}" title="LinkedIn" target="_blank">LinkedIn</a> page!
+  <br/>
+  <ul>
+    <li>
+      <a href="https://www.linkedin.com/pulse/how-artificial-intelligence-transforming-software-tom-van-schaijk/" target="_blank">How artificial intelligence is transforming software engineering</a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/pulse/through-trees-tom-van-schaijk/" target="_blank">Through the trees...</a>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/pulse/prime-skills-tom-van-schaijk/" target="_blank">Prime skills?</a>
+    </li>
+  </ul>
   Concerning GitHub repos, I'll move some cool ones over from another platform very soon, sit tight ;-)
 </div>
 <div class="main-post-list">
 
   <ol class="post-list">
     {% for post in paginator.posts %}
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
-        <p class="excerpt">{{ post.excerpt | strip_html }}&hellip;</p>
-        <div class="post-list__meta">
-            <time datetime="{{ post.date | date: "%-d %b %Y" }}" class="post-list__meta--date date">{{ post.date | date: "%-d %b %Y" }}</time>
-            {% if post.tags.size > 0 %}
-            &#8226; <span class="post-meta__tags">on {% for tag in post.tags %}<a href="{{ site.baseurl }}/tags/#{{ tag }}">{{ tag }}</a> {% endfor %}</span>
-            {% endif %}
-        </div>
-        <hr class="post-list__divider">
-      </li>
+    <li>
+      <h2 class="post-list__post-title post-title">
+        <a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+      </h2>
+      <p class="excerpt">{{ post.excerpt | strip_html }}&hellip;</p>
+      <div class="post-list__meta">
+        <time datetime="{{ post.date | date: " %-d %b %Y " }}" class="post-list__meta--date date">{{ post.date | date: "%-d %b %Y" }}</time>
+        {% if post.tags.size > 0 %} &#8226;
+        <span class="post-meta__tags">on {% for tag in post.tags %}
+          <a href="{{ site.baseurl }}/tags/#{{ tag }}">{{ tag }}</a> {% endfor %}</span>
+        {% endif %}
+      </div>
+      <hr class="post-list__divider">
+    </li>
     {% endfor %}
   </ol>
 
-  <hr class="post-list__divider ">
-
-  {% if paginator.previous_page or paginator.next_page %}
-      {% include pagination.html %}
-  {% endif %}
+  <hr class="post-list__divider "> {% if paginator.previous_page or paginator.next_page %} {% include pagination.html %} {% endif %}
 
 </div>
