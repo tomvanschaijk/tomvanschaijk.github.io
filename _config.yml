@@ -3,6 +3,7 @@ title: Tom van Schaijk
 description: 'Software engineer'
 url: 'https://tomvanschaijk.github.io'
 baseurl: ''
+google_analytics: 'UA-118965289-1'
 disqus_shortname: 'tomvanschaijk-github-io'
 
 author:
