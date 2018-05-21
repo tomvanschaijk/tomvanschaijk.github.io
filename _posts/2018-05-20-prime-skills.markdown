@@ -1,6 +1,6 @@
 ---
 title:  "Prime skills?"
-date:   2018-05-20 17:00:00
+date:   2018-05-20 16:00:00
 categories: [algorithms] 
 tags: [algorithms, eratosthenes, prime numbers, mathematics]
 ---

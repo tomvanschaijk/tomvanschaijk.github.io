@@ -3,9 +3,9 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/prime-skills/</loc>
+      <loc>http://localhost:4000/2018/how-ai-transforming-se/</loc>
       
-        <lastmod>2018-05-20T19:00:00+02:00</lastmod>
+        <lastmod>2018-05-20T19:30:00+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -18,7 +18,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/how-ai-transforming-se/</loc>
+      <loc>http://localhost:4000/2018/through-the-trees/</loc>
       
         <lastmod>2018-05-20T18:30:00+02:00</lastmod>
       
@@ -33,7 +33,7 @@
   
     
     <url>
-      <loc>http://localhost:4000/2018/through-the-trees/</loc>
+      <loc>http://localhost:4000/2018/prime-skills/</loc>
       
         <lastmod>2018-05-20T18:00:00+02:00</lastmod>
       
@@ -53,7 +53,7 @@
     <url>
       <loc>http://localhost:4000/feed.xml</loc>
       
-        <lastmod>2018-05-21T17:28:06+02:00</lastmod>
+        <lastmod>2018-05-21T17:30:01+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -72,7 +72,7 @@
     <url>
       <loc>http://localhost:4000/css/main.css</loc>
       
-        <lastmod>2018-05-21T17:28:06+02:00</lastmod>
+        <lastmod>2018-05-21T17:30:01+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -89,7 +89,7 @@
     <url>
       <loc>http://localhost:4000/tags/</loc>
       
-        <lastmod>2018-05-21T17:28:06+02:00</lastmod>
+        <lastmod>2018-05-21T17:30:01+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -104,7 +104,7 @@
     <url>
       <loc>http://localhost:4000/assets/css/style.css</loc>
       
-        <lastmod>2018-05-21T17:28:06+02:00</lastmod>
+        <lastmod>2018-05-21T17:30:01+02:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
