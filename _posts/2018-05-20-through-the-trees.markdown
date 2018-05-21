@@ -2,7 +2,7 @@
 title:  "Through the trees..."
 date:   2018-05-20 16:00:00
 categories: [algorithms] 
-tags: [algorithms, data structures, kruskal, trees, graphs, binary heap, disjoint set, priority queue]
+tags: [algorithms, data structures, kruskal, graph, binary heap, disjoint set, priority queue]
 ---
 
 Some wise man - Jim Rohn, for the record - once said:
