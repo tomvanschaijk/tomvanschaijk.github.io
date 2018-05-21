@@ -1,7 +1,7 @@
 ---
 title:  "Through the trees..."
 date:   2018-05-20 16:30:00
-categories: [algorithms] 
+categories: [Tech, Algorithms, Data structures]
 tags: [algorithms, data structures, kruskal, graph, binary heap, disjoint set, priority queue]
 ---
 

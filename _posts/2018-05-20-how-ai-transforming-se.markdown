@@ -1,7 +1,7 @@
 ---
 title:  "How artificial intelligence is transforming software engineering"
 date:   2018-05-20 17:30:00
-categories: [ai] 
+categories: [Tech, Artificial intelligence]
 tags: [artificial intelligence, software development, software requirements engineering]
 ---
 

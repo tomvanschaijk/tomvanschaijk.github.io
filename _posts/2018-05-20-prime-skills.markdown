@@ -1,7 +1,7 @@
 ---
 title:  "Prime skills?"
 date:   2018-05-20 16:00:00
-categories: [algorithms] 
+categories: [Tech, Algorithms] 
 tags: [algorithms, eratosthenes, prime numbers, mathematics]
 ---
 
