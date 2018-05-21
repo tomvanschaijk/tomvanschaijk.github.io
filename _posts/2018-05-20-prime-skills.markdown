@@ -7,6 +7,8 @@ tags: [algorithms, eratosthenes, prime numbers, mathematics]
 
 I was always charmed by the idea and the practice of algorithm-heavy programming. The heavy lifting, making seemingly complex and daunting tasks run like <nowiki>****</nowiki> of a shovel. 
 
+![eratosthenes]({{ site.url }}/assets/prime_skills/eratosthenes.png)
+
 That's what got me into programming 20 years ago, as I started ploughing my way through lines of TurboPascal code, and it's what keeps me loving programming nowadays as well. Since that time, I underwent VB 6.0, learned a bit of Java, some VB.NET, dabbled in VBA, fell in love with C#, learned to hate JavaScript, played with meta-programming (Rascal) and functional programming (Haskell) in university, and because of my study endeavours in the field of data science and AI, am experiencing a fair bit of Python and R as well.
 
 Now, because all of this, I do spend a fair amount of time wandering through sites like [TopCoder](https://www.topcoder.com){:target="_blank"}, [HackerRank](https://www.hackerrank.com){:target="_blank"}, [CodeFights](https://www.codefights.com){:target="_blank"}. You know, all those nerdy coding websites for developers that don't particularly enjoy learning all the ways to create flashy front-end webdesigns. The type of programmer who believes that high quality code, efficiency and performance do actually matter, and is convinced that mastering those skills will set you up for a rewarding career in the long haul (how naive we are, we'd better stick with current trends and learn Angular2 right? NO!! Although that's a topic for another post). I do not proclaim to be great at all this stuff, but I like a challenge from time to time. I came about such a challenge very recently, and after being presented with the possible solution, I got that typical thought I get sometimes. It goes something like this:
@@ -139,8 +141,6 @@ Concerning the inner loop, we only run to the square root of i, cutting the numb
 Without even presenting you with test results right now, you can already tell that this implementation will be way more efficient. However, that's not what I was thinking when faced with this solution (although the original one was slightly less optimized than this), since in the back of my mind, I remembered parts of a much better solution, with much higher efficiency.
 
 ### So let's try that again
-
-![eratosthenes]({{ site.url }}/assets/prime_skills/eratosthenes.png)
 
 I did remember a much better solution that I learned once, but kind of forgot. Weird as this may sound, I'm not calculating prime numbers in my spare time (except for this one time I guess), so this one was pretty rusty. After checking online and brushing off some stuff, I remembered the Sieve of Eratosthenes algorithm, which is a pretty old but simple algorithm to calculate primes in a very efficient way. Of course, you can just copy an implementation from a website and go with that, but I would strongly advise you to
 
