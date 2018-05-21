@@ -1,7 +1,8 @@
 # Site settings
 title: Tom van Schaijk
 description: 'Software engineer. Algorithm & data structures nut. On my way to mastering AI. Eternal student.'
-url: 'https://tomvanschaijk.github.io'
+# url: 'https://tomvanschaijk.github.io'
+url: 'https://www.peculiar-coding-endeavours.com'
 baseurl: ''
 google_analytics: 'UA-118965289-1'
 disqus_shortname: 'tomvanschaijk-github-io'
@@ -37,7 +38,7 @@ kramdown:
   # do not replace newlines by <br>s
   hard_wrap: false
 
-plugins: ['jekyll-paginate']
+plugins: ['jekyll-paginate', 'jekyll-feed']
 exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
 
 theme: jekyll-theme-hacker
