@@ -5,13 +5,15 @@
     <description>Software engineer. Algorithm &amp; data structures nut. On my way to mastering AI. Eternal student.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 21 May 2018 17:23:37 +0200</pubDate>
-    <lastBuildDate>Mon, 21 May 2018 17:23:37 +0200</lastBuildDate>
+    <pubDate>Mon, 21 May 2018 17:26:17 +0200</pubDate>
+    <lastBuildDate>Mon, 21 May 2018 17:26:17 +0200</lastBuildDate>
     <generator>Jekyll v3.7.3</generator>
     
       <item>
         <title>Prime skills?</title>
-        <description>&lt;p&gt;I was always charmed by the idea and the practice of algorithm-heavy programming. The heavy lifting, making seemingly complex and daunting tasks run like &lt;nowiki&gt;****&lt;/nowiki&gt; of a shovel. That’s what got me into programming 20 years ago, as I started ploughing my way through lines of TurboPascal code, and it’s what keeps me loving programming nowadays as well. Since that time, I underwent VB 6.0, learned a bit of Java, some VB.NET, dabbled in VBA, fell in love with C#, learned to hate JavaScript, played with meta-programming (Rascal) and functional programming (Haskell) in university, and because of my study endeavours in the field of data science and AI, am experiencing a fair bit of Python and R as well.&lt;/p&gt;
+        <description>&lt;p&gt;I was always charmed by the idea and the practice of algorithm-heavy programming. The heavy lifting, making seemingly complex and daunting tasks run like &lt;nowiki&gt;****&lt;/nowiki&gt; of a shovel.&lt;/p&gt;
+
+&lt;p&gt;That’s what got me into programming 20 years ago, as I started ploughing my way through lines of TurboPascal code, and it’s what keeps me loving programming nowadays as well. Since that time, I underwent VB 6.0, learned a bit of Java, some VB.NET, dabbled in VBA, fell in love with C#, learned to hate JavaScript, played with meta-programming (Rascal) and functional programming (Haskell) in university, and because of my study endeavours in the field of data science and AI, am experiencing a fair bit of Python and R as well.&lt;/p&gt;
 
 &lt;p&gt;Now, because all of this, I do spend a fair amount of time wandering through sites like &lt;a href=&quot;https://www.topcoder.com&quot; target=&quot;_blank&quot;&gt;TopCoder&lt;/a&gt;, &lt;a href=&quot;https://www.hackerrank.com&quot; target=&quot;_blank&quot;&gt;HackerRank&lt;/a&gt;, &lt;a href=&quot;https://www.codefights.com&quot; target=&quot;_blank&quot;&gt;CodeFights&lt;/a&gt;. You know, all those nerdy coding websites for developers that don’t particularly enjoy learning all the ways to create flashy front-end webdesigns. The type of programmer who believes that high quality code, efficiency and performance do actually matter, and is convinced that mastering those skills will set you up for a rewarding career in the long haul (how naive we are, we’d better stick with current trends and learn Angular2 right? NO!! Although that’s a topic for another post). I do not proclaim to be great at all this stuff, but I like a challenge from time to time. I came about such a challenge very recently, and after being presented with the possible solution, I got that typical thought I get sometimes. It goes something like this:&lt;/p&gt;
 
