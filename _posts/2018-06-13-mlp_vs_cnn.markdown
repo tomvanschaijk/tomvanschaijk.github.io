@@ -753,19 +753,13 @@ Here you can see one of the new concepts in the wild: data augmentation. In shor
 batch_size = 64
 optimized_cnn_path_best = "saved_weights/optimized_cifar10_cnn_best.hdf5"
 checkpointer_optimized_cnn = ModelCheckpoint(optimized_cnn_path_best, verbose=1, save_best_only=True)
-hist_optimized_cnn = optimized_cnn.fit_generator(datagen.flow(optimized_processed_data.x_train,
-                                                              optimized_processed_data.y_train,
-                                                              batch_size=batch_size),
-                                                              steps_per_epoch=optimized_processed_data.x_train.shape[0] 
-                                                                              // batch_size,
-                                                              epochs=250, verbose=0,
-                                                              validation_data= (optimized_processed_data.x_valid,
-                                                                                optimized_processed_data.y_valid),                                                                                     callbacks=[checkpointer_optimized_cnn,
-                                                                        LearningRateScheduler(learningrate_schedule),
-                                                                        EarlyStopping(min_delta=0.001, patience=40)])
+hist_optimized_cnn = 
+    optimized_cnn.fit_generator(datagen.flow(optimized_processed_data.x_train, optimized_processed_data.y_train, batch_size=batch_size),                                 steps_per_epoch=optimized_processed_data.x_train.shape[0] // batch_size, epochs=250, verbose=0,                                         validation_data= (optimized_processed_data.x_valid, optimized_processed_data.y_valid), 
+                                callbacks=[checkpointer_optimized_cnn, LearningRateScheduler(learningrate_schedule),                    
+                                           EarlyStopping(min_delta=0.001, patience=40)])
+
 optimized_cnn.load_weights(optimized_cnn_path_best)
-score_optimized_cnn = optimized_cnn.evaluate(optimized_processed_data.x_test, 
-                                             optimized_processed_data.y_test, verbose=0)
+score_optimized_cnn = optimized_cnn.evaluate(optimized_processed_data.x_test, optimized_processed_data.y_test, verbose=0)
 ```
     Epoch 00001: val_loss improved from inf to 1.44708, saving model to saved_weights/optimized_cifar10_cnn_best.hdf5
     Epoch 00002: val_loss improved from 1.44708 to 1.22333, saving model to saved_weights/optimized_cifar10_cnn_best.hdf5
@@ -774,6 +768,7 @@ score_optimized_cnn = optimized_cnn.evaluate(optimized_processed_data.x_test,
     Epoch 00223: val_loss did not improve from 0.39229
     Epoch 00224: val_loss did not improve from 0.39229
     Epoch 00225: val_loss did not improve from 0.39229
+   
    
 Our training takes place here. We define the batch size to be 64, and prepare our checkpoint to save the best weights. The fit function has been replaced by a fit_generator function, since we use our data generator. That's also the reason why we use the datagen.flow function instead of simply presenting the datasets x and y values. Also notice the addition of a LearningRateScheduler (refering to our function learningrate_schedule) to the callbacks. You can imagine what's happening there. The EarlyStopping callback stops our training if there was no improvement for 40 epochs. What can be seen as "improvement" is defined by the min_delta parameter. Look at the amount of epochs as well. Obviously this training will take a bit more time. I changed the verbose parameter to 0, so you will only see the result of each epoch.
 
