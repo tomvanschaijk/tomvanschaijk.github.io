@@ -753,14 +753,16 @@ Here you can see one of the new concepts in the wild: data augmentation. In shor
 batch_size = 64
 optimized_cnn_path_best = "saved_weights/optimized_cifar10_cnn_best.hdf5"
 checkpointer_optimized_cnn = ModelCheckpoint(optimized_cnn_path_best, verbose=1, save_best_only=True)
-hist_optimized_cnn = optimized_cnn.fit_generator(datagen.flow(optimized_processed_data.x_train, 
+hist_optimized_cnn = optimized_cnn.fit_generator(datagen.flow(optimized_processed_data.x_train,
                                                               optimized_processed_data.y_train,
-                                                              batch_size=batch_size),                                                                                                    steps_per_epoch=optimized_processed_data.x_train.shape[0] 
-                                                                 // batch_size, epochs=250,
-                                                 verbose=0, validation_data=(optimized_processed_data.x_valid,                                                                                                        optimized_processed_data.y_valid),
-                                                 callbacks=[checkpointer_optimized_cnn,
-                                                            LearningRateScheduler(learningrate_schedule),
-                                                            EarlyStopping(min_delta=0.001, patience=40)])
+                                                              batch_size=batch_size),
+                                                              steps_per_epoch=optimized_processed_data.x_train.shape[0] 
+                                                                              // batch_size,
+                                                              epochs=250, verbose=0,
+                                                              validation_data= (optimized_processed_data.x_valid,
+                                                                                optimized_processed_data.y_valid),                                                                                     callbacks=[checkpointer_optimized_cnn,
+                                                                        LearningRateScheduler(learningrate_schedule),
+                                                                        EarlyStopping(min_delta=0.001, patience=40)])
 optimized_cnn.load_weights(optimized_cnn_path_best)
 score_optimized_cnn = optimized_cnn.evaluate(optimized_processed_data.x_test, 
                                              optimized_processed_data.y_test, verbose=0)
