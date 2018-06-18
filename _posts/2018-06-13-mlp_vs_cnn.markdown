@@ -555,8 +555,8 @@ print("Accuracy mlp: {0:.2f}%".format(score_mlp[1] * 100))
 print("Accuracy cnn: {0:.2f}%".format(score_cnn[1] * 100))
 ```
 
-    Accuracy mlp: 40.11%
-    Accuracy cnn: 67.18%
+    Accuracy mlp: 39.42%
+    Accuracy cnn: 67.90%
     
 
 Well, I think the difference is pretty clear. Although the MLP didn't perform bad (way above "random guessing" levels of about 10%, which proves we are at least doing something right here), the CNN shatters those numbers, with less training time and way less parameters.
@@ -570,3 +570,221 @@ Can we achieve more? Obviously we can, but remember we just trained this model f
 So far for this little proof of concept! I do hope this sparked your interest to go and research more about deep learning, MLP's, CNN's and much more. Although it can be easily overlooked, remember what we did here! For 10000 images, using the simple 32x32x3 matrix of values between 0 and 255, we managed to determine, with an accuracy of 67%, what that image represents. That in itself is pretty awesome, especially taking into account that the network was trained in only a few minutes. That beats having to classify those 10000 images by hand I'd say.
 
 However, there's so much more out there (RNN's, GAN's, auto-encoders, ...) to apply on an enormous amount of areas of industry, and research is still very much ongoing in most of these fields. Time to get involved! Much more fun stuff, examples and tutorials will follow in time, using deep learning/machine learning techniques such as MLP's, CNN's, RNN's, GAN's and so on, or other AI applications. Stay tuned, and by all means, give me your feedback about what you thought about this example ;-)
+
+
+### And by the way
+
+In the case of 67% accuracy does not overly impress you and you need some more persuasion, let's aim a bit higher. I will implement a few techniques I mentioned earlier already:
+
+* data augmentation
+* regularization: we'll use **L2 regularization**
+
+I will additionaly increase the complexity of the architecture of the network by adding more layers. We'll also take more control of the optimizer that we use during the training, and will adapt the learning rate as we go. Lastly (or rather, firstly), we'll preprocess our data just a little bit differently than we did in our previous examples. I'll add the minimal explanation and will highlight some important terms you want to research in order to better understand what I'm doing there. This part of the code is more about a short demonstration about what's possible, instead of explaining fully how to achieve it.
+
+```python
+from keras.layers import BatchNormalization
+from keras.optimizers import rmsprop
+from keras.callbacks import LearningRateScheduler, EarlyStopping
+from keras.preprocessing.image import ImageDataGenerator
+from keras import regularizers
+```
+
+You clearly see what we are doing here. We import all libraries and functions that we need to perform the higher level of customization to apply to our neural network.
+
+```python
+def optimized_preprocess(data, categories):
+    # Z-score normalization of data
+    mean = np.mean(data.x_train, axis=(0,1,2,3))
+    std = np.std(data.x_train, axis=(0,1,2,3))
+    x_train = ((data.x_train - mean) / (std + 1e-7)).astype("float32")
+    x_test = ((data.x_test - mean) / (std + 1e-7)).astype("float32")
+    y_train = to_categorical(data.y_train, categories)
+    y_test = to_categorical(data.y_test, categories)    
+    return Data(x_train[5000:], y_train[5000:],
+                x_train[:5000], y_train[:5000],
+                x_test, y_test)
+```
+
+Here we perform the known necessary normalization of the data. However, we don't just divide by 255 as we did before, but we use Z-score or standard score normalization. Read more about methods of normalization [here](https://en.wikipedia.org/wiki/Normalization_(statistics)){:target="_blank"}.
+
+```python
+def learningrate_schedule(epoch):
+    # We use a standard learning rate of 0.001
+    # From the 51st epoch, we decrease it to 0.0007
+    # From the 101st epoch, we decrease it further to 0.0005
+    # From the 1356h epoch, we decrease it further to 0.0003
+    # From the 176th epoch, we decrease it further to 0.0001
+    rate = 0.001
+    if epoch > 175:
+        rate = 0.0001
+    elif epoch > 135:
+        rate = 0.0003
+    elif epoch > 100:
+        rate = 0.0005
+    elif epoch > 50:
+        rate = 0.0007    
+    return rate
+```
+
+Remember this function, we'll use it later during the training, as one of the callbacks. It implies that the learning rate starts out as being 0.001 (which is often a reasonable starting point), and as we enter the higher epochs, we change it to lower values. This is one of the ways in which we can avoid **local minima** during the gradient descent.
+
+```python
+def build_optimized_cnn(data, categories):
+    # Create model architecture
+    weight_decay = 1e-4
+    model = Sequential()
+    model.add(Conv2D(32, kernel_size=3, padding="same", activation="elu",
+                     kernel_regularizer=regularizers.l2(weight_decay), input_shape=data.x_train.shape[1:]))
+    model.add(BatchNormalization())
+    model.add(Conv2D(32, kernel_size=3, padding="same", activation="elu",
+                     kernel_regularizer=regularizers.l2(weight_decay)))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=2))
+    model.add(Dropout(0.2))
+
+    model.add(Conv2D(64, kernel_size=3, padding="same", activation="elu",
+                     kernel_regularizer=regularizers.l2(weight_decay)))
+    model.add(BatchNormalization())
+    model.add(Conv2D(64, kernel_size=3, padding="same", activation="elu",
+                     kernel_regularizer=regularizers.l2(weight_decay)))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=2))
+    model.add(Dropout(0.3))
+
+    model.add(Conv2D(128, kernel_size=3, padding="same", activation="elu",
+                     kernel_regularizer=regularizers.l2(weight_decay)))
+    model.add(BatchNormalization())
+    model.add(Conv2D(128, kernel_size=3, padding="same", activation="elu",
+                     kernel_regularizer=regularizers.l2(weight_decay)))
+    model.add(BatchNormalization())
+    model.add(MaxPooling2D(pool_size=2))
+    model.add(Dropout(0.4))
+
+    model.add(Flatten())
+    model.add(Dense(categories, activation="softmax"))
+
+    # Compile the model, using an optimized rms this time, which we will adapt
+    # during training
+    optimized_rmsprop = rmsprop(lr=0.001,decay=1e-6)
+    model.compile(loss="categorical_crossentropy", optimizer=optimized_rmsprop, metrics=["accuracy"])
+    return model
+```
+
+That's a slightly more interesting architecture, isn't it? Notice the use of more 2D-convolutional layers, the kernel regularizers, batch normalization, the pool and kernel sizes, the dropout layers. This obviously builds on what we saw in the more basic cnn architecture. Be sure to research the terms that are not familiar to you:
+
+* **kernel regularization**
+* **L1 and L2 regularization**
+* **batch normalization**
+
+```python
+# Preprocess for optimized cnn
+optimized_processed_data = optimized_preprocess(data, categories)
+```
+
+Not much to say here. We perform the preprocessing step as described above.
+
+```python
+# Preprocess for optimized cnn
+optimized_processed_data = optimized_preprocess(data, categories)
+```
+    Optimized CNN architecture:
+    _________________________________________________________________
+    Layer (type)                 Output Shape              Param #   
+    =================================================================
+    conv2d_40 (Conv2D)           (None, 32, 32, 32)        896       
+    _________________________________________________________________
+    batch_normalization_25 (Batc (None, 32, 32, 32)        128       
+    _________________________________________________________________
+    conv2d_41 (Conv2D)           (None, 32, 32, 32)        9248      
+    _________________________________________________________________
+    batch_normalization_26 (Batc (None, 32, 32, 32)        128       
+    _________________________________________________________________
+    max_pooling2d_28 (MaxPooling (None, 16, 16, 32)        0         
+    _________________________________________________________________
+    dropout_39 (Dropout)         (None, 16, 16, 32)        0         
+    _________________________________________________________________
+    conv2d_42 (Conv2D)           (None, 16, 16, 64)        18496     
+    _________________________________________________________________
+    batch_normalization_27 (Batc (None, 16, 16, 64)        256       
+    _________________________________________________________________
+    conv2d_43 (Conv2D)           (None, 16, 16, 64)        36928     
+    _________________________________________________________________
+    batch_normalization_28 (Batc (None, 16, 16, 64)        256       
+    _________________________________________________________________
+    max_pooling2d_29 (MaxPooling (None, 8, 8, 64)          0         
+    _________________________________________________________________
+    dropout_40 (Dropout)         (None, 8, 8, 64)          0         
+    _________________________________________________________________
+    conv2d_44 (Conv2D)           (None, 8, 8, 128)         73856     
+    _________________________________________________________________
+    batch_normalization_29 (Batc (None, 8, 8, 128)         512       
+    _________________________________________________________________
+    conv2d_45 (Conv2D)           (None, 8, 8, 128)         147584    
+    _________________________________________________________________
+    batch_normalization_30 (Batc (None, 8, 8, 128)         512       
+    _________________________________________________________________
+    max_pooling2d_30 (MaxPooling (None, 4, 4, 128)         0         
+    _________________________________________________________________
+    dropout_41 (Dropout)         (None, 4, 4, 128)         0         
+    _________________________________________________________________
+    flatten_18 (Flatten)         (None, 2048)              0         
+    _________________________________________________________________
+    dense_39 (Dense)             (None, 10)                20490     
+    =================================================================
+    Total params: 309,290
+    Trainable params: 308,394
+    Non-trainable params: 896
+    _________________________________________________________________
+    
+    
+Here we build our more advanced cnn (at least in terms of architecture, we'll see about the results later). As you see, there's quite a bit more going on, and we have quite a few parameters again.
+
+```python
+# Perform data augmentation
+datagen = ImageDataGenerator(rotation_range=15, width_shift_range=0.15, height_shift_range=0.15, horizontal_flip=True)
+datagen.fit(optimized_processed_data.x_train)
+```
+
+Here you can see one of the new concepts in the wild: data augmentation. In short, what we do is rotate, shift and flip the images, thereby introducting more variation in our dataset, so that our network could generalize beter. That's, in a single simple sentence, what data augmentation is about. Read more about how to do it in Keras [here](https://keras.io/preprocessing/image/){:target="_blank"}.
+
+```python
+# Train the optimized cnn
+batch_size = 64
+optimized_cnn_path_best = "saved_weights/optimized_cifar10_cnn_best.hdf5"
+checkpointer_optimized_cnn = ModelCheckpoint(optimized_cnn_path_best, verbose=1, save_best_only=True)
+hist_optimized_cnn = optimized_cnn.fit_generator(datagen.flow(optimized_processed_data.x_train, optimized_processed_data.y_train,                                                                     batch_size=batch_size),
+                                                 steps_per_epoch=optimized_processed_data.x_train.shape[0] // batch_size, epochs=250,
+                                                 verbose=0,validation_data=(optimized_processed_data.x_valid,                                                                                                        optimized_processed_data.y_valid),
+                                                 callbacks=[checkpointer_optimized_cnn, LearningRateScheduler(learningrate_schedule),
+                                                            EarlyStopping(min_delta=0.001, patience=40)])
+optimized_cnn.load_weights(optimized_cnn_path_best)
+score_optimized_cnn = optimized_cnn.evaluate(optimized_processed_data.x_test, optimized_processed_data.y_test, verbose=0)
+```
+    Epoch 00001: val_loss improved from inf to 1.44708, saving model to saved_weights/optimized_cifar10_cnn_best.hdf5
+    Epoch 00002: val_loss improved from 1.44708 to 1.22333, saving model to saved_weights/optimized_cifar10_cnn_best.hdf5
+    Epoch 00003: val_loss improved from 1.22333 to 0.95801, saving model to saved_weights/optimized_cifar10_cnn_best.hdf5
+    ................
+    Epoch 00223: val_loss did not improve from 0.39229
+    Epoch 00224: val_loss did not improve from 0.39229
+    Epoch 00225: val_loss did not improve from 0.39229
+   
+Our training takes place here. We define the batch size to be 64, and prepare our checkpoint to save the best weights. The fit function has been replaced by a fit_generator function, since we use our data generator. That's also the reason why we use the datagen.flow function instead of simply presenting the datasets x and y values. Also notice the addition of a LearningRateScheduler (refering to our function learningrate_schedule) to the callbacks. You can imagine what's happening there. The EarlyStopping callback stops our training if there was no improvement for 40 epochs. What can be seen as "improvement" is defined by the min_delta parameter. Look at the amount of epochs as well. Obviously this training will take a bit more time. I changed the verbose parameter to 0, so you will only see the result of each epoch.
+
+
+```python
+visualize_training(hist_optimized_cnn)
+```
+
+![optimized_cnn_hist_acc]({{ site.url }}/assets/mlp_vs_cnn/optimized_cnn_hist_acc.png)
+
+
+
+![optimized_cnn_hist_loss]({{ site.url }}/assets/mlp_vs_cnn/optimized_cnn_hist_loss.png)
+
+
+```python
+print("Accuracy optimized cnn: {0:.2f}%".format(score_optimized_cnn[1] * 100))
+```
+    Accuracy optimized cnn: 89.12%
+
+And the moment of truth: printing our achieved degree of accuracy. I leave you with that, and I hope this sparked your eagerness to learn about this amazing topic even more.
