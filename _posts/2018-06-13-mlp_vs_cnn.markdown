@@ -666,7 +666,8 @@ def build_optimized_cnn(data, categories):
     # Compile the model, using an optimized rms this time, which we will adapt
     # during training
     optimized_rmsprop = rmsprop(lr=0.001,decay=1e-6)
-    model.compile(loss="categorical_crossentropy", optimizer=optimized_rmsprop, metrics=["accuracy"])
+    model.compile(loss="categorical_crossentropy", optimizer=optimized_rmsprop,
+                  metrics=["accuracy"])
     return model
 ```
 
