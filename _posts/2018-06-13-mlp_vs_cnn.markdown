@@ -685,8 +685,10 @@ optimized_processed_data = optimized_preprocess(data, categories)
 Not much to say here. We perform the preprocessing step as described above.
 
 ```python
-# Preprocess for optimized cnn
-optimized_processed_data = optimized_preprocess(data, categories)
+# Build optimized cnn
+optimized_cnn = build_optimized_cnn(optimized_processed_data, categories)
+print("Optimized CNN architecture:")
+optimized_cnn.summary()
 ```
     Optimized CNN architecture:
     _________________________________________________________________
