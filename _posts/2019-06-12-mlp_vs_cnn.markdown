@@ -1,6 +1,6 @@
 ---
 title:  "Image classification: MLP vs CNN"
-date:   2018-06-12 20:30:00
+date:   2019-06-12 20:30:00
 categories: [Tech, AI, Deep learning]
 tags: [artificial intelligence, machine learning, deep learning, computer vision]
 ---
