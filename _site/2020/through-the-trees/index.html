@@ -61,7 +61,7 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1669200898874073000">
+  <link rel="stylesheet" href="/css/main.css?1669205041251542400">
   <link rel="canonical" href="http://localhost:4000/2020/through-the-trees/">
   <link rel="alternate" type="application/rss+xml" title="Tom van Schaijk" href="/feed.xml">
 </head>
@@ -222,35 +222,35 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Graph</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="o">=</span><span class="p">[]):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span> <span class="o">=</span> <span class="p">{</span><span class="n">vertex</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">vertices</span><span class="p">}</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span> <span class="o">=</span> <span class="p">{</span><span class="n">vertex</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">vertices</span><span class="p">}</span>
 
     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span>
+        <span class="k">return</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">vertex</span>
 
     <span class="k">def</span> <span class="nf">add_edge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">neighbour</span><span class="p">,</span> <span class="n">cost</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">vertex</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">neighbour</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">neighbour</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">neighbour</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">neighbour</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">neighbour</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">neighbour</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">vertex</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">vertex</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">neighbour</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">neighbour</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">neighbour</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">vertex</span><span class="p">].</span><span class="n">append</span><span class="p">((</span><span class="n">neighbour</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">neighbour</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__vertices</span><span class="p">[</span><span class="n">neighbour</span><span class="p">].</span><span class="n">append</span><span class="p">((</span><span class="n">vertex</span><span class="p">,</span> <span class="n">cost</span><span class="p">))</span>
 </code></pre></div></div>
 
 <h3 id="the-priority-queue">The priority queue</h3>
@@ -259,94 +259,94 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MinBinaryHeap</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">values</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__check_elements</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__build_heap</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">values</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__check_elements</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__build_heap</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__check_elements</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__check_elements</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__check_elements</span>
+        <span class="k">return</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__check_elements</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">", "</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">el</span><span class="p">)</span>
-                    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]])</span>
+        <span class="k">return</span> <span class="s">", "</span><span class="p">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">el</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="mi">0</span><span class="p">:(</span><span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]])</span>
 
     <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">def</span> <span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__check_elements</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__check_elements</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">__sift_up</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__sift_up</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">pop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">None</span>
 
-        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peek</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">peek</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">element</span>
 
     <span class="k">def</span> <span class="nf">__build_heap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__sift_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="n">parent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">parent</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">parent</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">__sift_up</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__sift_up</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__sift_down</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="n">left</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">left</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">left</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="n">right</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="ow">or</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="ow">or</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">left</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">left</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="ow">and</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">right</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="ow">and</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">right</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span><span class="p">:</span>
             <span class="k">return</span>
 
-        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__check_elements</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__ubound</span> <span class="o">-=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__check_elements</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__swap</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__ubound</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__sift_down</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__swap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
-        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-         <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
-                                <span class="bp">self</span><span class="o">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+         <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
+                                <span class="bp">self</span><span class="p">.</span><span class="n">__elements</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </code></pre></div></div>
 
 <p>I will refrain from going too deep into the implementation of the data structure, because it would take me an entire article to do that alone. Please read up on <strong>binary heaps</strong> to learn more. What’s important to know right now is that all edges and their costs are stored in a simple list, that is then reordered in such a way that it adheres to a few core properties of a min binary heap:</p>
@@ -366,56 +366,56 @@
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">DisjointSet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__values_to_indices</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__values_to_indices</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__values_to_indices</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__values_to_indices</span><span class="p">[</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
 
     <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__values_to_indices</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">__values_to_indices</span> <span class="o">=</span> <span class="bp">None</span>
 
     <span class="k">def</span> <span class="nf">__get_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> 
-                <span class="bp">self</span><span class="o">.</span><span class="n">__get_parent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> 
+                <span class="bp">self</span><span class="p">.</span><span class="n">__get_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
 
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">get_parent_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_parent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__values_to_indices</span><span class="p">[</span><span class="n">element</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">.</span><span class="n">__get_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">__values_to_indices</span><span class="p">[</span><span class="n">element</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element1</span><span class="p">,</span> <span class="n">element2</span><span class="p">):</span>
-        <span class="n">index1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">element1</span><span class="p">)</span>
-        <span class="n">index2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">element2</span><span class="p">)</span>
+        <span class="n">index1</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">element1</span><span class="p">)</span>
+        <span class="n">index2</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">element2</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">index1</span> <span class="o">==</span> <span class="n">index2</span><span class="p">:</span>
             <span class="k">return</span>
         
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index2</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index2</span><span class="p">]</span> <span class="o">=</span> <span class="n">index1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index2</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index2</span><span class="p">]</span> <span class="o">=</span> <span class="n">index1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">=</span> <span class="n">index2</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index2</span><span class="p">]:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">__parents</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">=</span> <span class="n">index2</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index2</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
 </code></pre></div></div>
 
 <p>In short, we store our values in several ways. in values_to_indices (what’s in a name, right?) we basically have a dictionary that will tell us at which index in the parents and ranks lists each value is stored. Each entry in parents holds the index of the parent of the value at that index. I know that sounds like gibberish, so I’ll clarify with an example. Let’s say we have 4 values: “a”, “b”, “c”, “d”. Then our variables look like this:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">self</span><span class="o">.</span><span class="n">__parents</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">__values_to_indices</span> <span class="o">==</span> <span class="p">{</span> <span class="s">"a"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"b"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"c"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"d"</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">self</span><span class="p">.</span><span class="n">__parents</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">__values_to_indices</span> <span class="o">==</span> <span class="p">{</span> <span class="s">"a"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"b"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"c"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"d"</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 </code></pre></div></div>
 
 <p>Which means that “a” points to index 0 in parents and ranks, “b” to index 1 and so on. In parents, we see that the element at index 1 has the element with index 1 as a parent. Same for 0, 2, 3. Basically, they all have themselves as parent, which means they just stand on their own. When merging 2 elements, we get their parent indices (using the <strong>path compression heuristic</strong> along the way - again, read up on it), and if they are different, it means they belong to different sets and can be merged. When doing the merging, we perform a <strong>union-by-rank</strong> (read, read, read) to keep our tree as shallow as possible in order to minimise running times. Let’s assume we want to merge elements “b” and “d”. The parent of “b” sits at index 1, the parent of “d” at index 3. So, they are not in the same set. We can then merge them, and we do so by setting the parent of “b” to be “d”. Since they both have the same ranks (0), element “d” sees it’s rank increased to 1. After that, our variables look like this:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">self</span><span class="o">.</span><span class="n">__parents</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">__ranks</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="bp">self</span><span class="o">.</span><span class="n">__values_to_indices</span> <span class="o">==</span> <span class="p">{</span> <span class="s">"a"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"b"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"c"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"d"</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="bp">self</span><span class="p">.</span><span class="n">__parents</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">__ranks</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="bp">self</span><span class="p">.</span><span class="n">__values_to_indices</span> <span class="o">==</span> <span class="p">{</span> <span class="s">"a"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"b"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">"c"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"d"</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
 </code></pre></div></div>
 
 <p>Elements “a” and “c” at index 0 and 2, respectively, still have themselves as parent, meaning they represent separate sets. Also, they kept their ranks as we didn’t touch them in this merge operation. However, element “b” at index 1 now has the element at index 3 as its parent. That would be “d”, as values_to_indices tells us. Element “d” itself didn’t change in terms of parent (meaning it’s still at the top of its tree), but did see its rank increase, since we took the rank of its new child “b”, increased it with 1 and assigned it to the rank of “d”. So we now have 3 sets: [“a”], [“c”] and [“d”,”b”]. That’s in simple terms how the <strong>disjoint set</strong> works. Thanks to the combination of the <strong>union-by-rank</strong> and <strong>path compression</strong> heuristics, our <strong>amortised running time</strong> per operation is lowered to O(α(n)), where α stands for the <strong>inverse Ackermann</strong> function. Details aside, this function has a result of &lt;5 for any value of n that can be written in our physical universe. That makes disjoint set operations with these heuristics in place practically operate in <strong>constant time</strong>. That’s pretty awesome.</p>
@@ -425,17 +425,17 @@
 <p>Now for the main event, the algorithm you all came to admire. For those expecting a great big codefest, spoiler alert: this will be a bummer. The code below is really all there is to it, thanks to good use of the data structures we created before.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_cost_minimal_spanning_tree</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">edgecoll</span><span class="p">):</span>    
-    <span class="c"># Kruskal's algorithm, just so you know, you might miss it</span>
-    <span class="n">total_cost</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="c1"># Kruskal's algorithm, just so you know, you might miss it
+</span>    <span class="n">total_cost</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="n">edges</span> <span class="o">=</span> <span class="n">MinBinaryHeap</span><span class="p">(</span><span class="n">edgecoll</span><span class="p">)</span>
     <span class="n">minimal_tree</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
     <span class="n">disjoint_set</span> <span class="o">=</span> <span class="n">DisjointSet</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
-    <span class="k">while</span> <span class="ow">not</span> <span class="n">edges</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
-        <span class="p">(</span><span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">),</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-        <span class="k">if</span><span class="p">(</span><span class="n">disjoint_set</span><span class="o">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">vertex1</span><span class="p">)</span> <span class="o">!=</span> 
-            <span class="n">disjoint_set</span><span class="o">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">vertex2</span><span class="p">)):</span>
-            <span class="n">disjoint_set</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">)</span>
-            <span class="n">minimal_tree</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">edges</span><span class="p">.</span><span class="n">empty</span><span class="p">():</span>
+        <span class="p">(</span><span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">),</span> <span class="n">cost</span> <span class="o">=</span> <span class="n">edges</span><span class="p">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">disjoint_set</span><span class="p">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">vertex1</span><span class="p">)</span> <span class="o">!=</span> 
+            <span class="n">disjoint_set</span><span class="p">.</span><span class="n">get_parent_index</span><span class="p">(</span><span class="n">vertex2</span><span class="p">)):</span>
+            <span class="n">disjoint_set</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">)</span>
+            <span class="n">minimal_tree</span><span class="p">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">vertex1</span><span class="p">,</span> <span class="n">vertex2</span><span class="p">,</span> <span class="n">cost</span><span class="p">)</span>
             <span class="n">total_cost</span> <span class="o">+=</span> <span class="n">cost</span>
   
     <span class="k">return</span> <span class="n">minimal_tree</span><span class="p">,</span> <span class="n">total_cost</span>
@@ -519,7 +519,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1669200898874073000"></script>
+<script type="text/javascript" src="/js/main.js?1669205041251542400"></script>
 
 
     </div>
