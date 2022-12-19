@@ -61,8 +61,8 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1669205041251542400">
-  <link rel="canonical" href="http://localhost:4000/2020/through-the-trees/">
+  <link rel="stylesheet" href="/css/main.css?1671423775989348900">
+  <link rel="canonical" href="https://www.peculiar-coding-endeavours.com/2020/through-the-trees/">
   <link rel="alternate" type="application/rss+xml" title="Tom van Schaijk" href="/feed.xml">
 </head>
 
@@ -172,7 +172,7 @@
 
 <p>So instead of buying another piece of apparel to wear once a year, I conjured up the incredibly original idea that I would buy my own mug for work, and a similar one for in my car. The kind that makes it very obvious what I do for a living, but does have an underlying tongue-in-cheek joke engrained. People in my own field of specialty would immediately recognise it, whereas outsiders just shrug their shoulders and think of me as some kind of mad scientist computer magician man. Something like that. So, in short, I can share some knowledge regarding a topic I love, can reward myself with a fun little item, can write about it here which further engrains that piece of knowledge, plus I get to differentiate myself from the general population of software engineers that think this kind of stuff isn’t too useful or have never heard of it at all.</p>
 
-<p><img src="http://localhost:4000/assets/through_the_trees/mug.png" alt="kruskal mug" /></p>
+<p><img src="https://www.peculiar-coding-endeavours.com/assets/through_the_trees/mug.png" alt="kruskal mug" /></p>
 
 <h3 id="kruskal-trees-potato">Kruskal? Trees? Potato?</h3>
 
@@ -457,13 +457,13 @@
 </ul>
 
 <p>If we were to plot these locations on an imaginary chart, we would end up with something like this:
-<img src="http://localhost:4000/assets/through_the_trees/graph_nodes.png" alt="graph nodes" /></p>
+<img src="https://www.peculiar-coding-endeavours.com/assets/through_the_trees/graph_nodes.png" alt="graph nodes" /></p>
 
 <p>which makes for a decent enough estimation of the relative locations of the houses. Next up, we need to consider all possible tunnels (edges in the graph) we can dig between each of the houses. Simple graph theory tells us we will have (n * (n-1)) / 2 edges to check, where n is the number of nodes or houses. Thus, we will have 10 edges to go through, which cover all possible edges between all of the houses. As an example, this will suffice since we can easily reason about this, as well as visualise it. When considering this type of problem in real life however, when connecting hubs on a network or houses in a telephone grid or power grid, it’s easy to imagine the need for a fast algorithm, as the number of candidate edges will quickly run in the millions.</p>
 
 <p>Besides building a list of all possible edges, we need to calculate the cost per edge. For our example, the costs are just Euclidean distances. I’m sure you remember your math from long ago, but as a reminder, we just take the Pythagorean theorem A² + B² = C² and give it a spin, giving us a simple way to calculate the distances in this 2-dimensional plane. By way of example, the distance between Otto and Peter is the root of ((3-1)² + (2-1)²), which equals to 2.24 (rounded up to 2 decimals). In this way, we calculate the costs between all nodes and add them to the edges, achieving the situation below:</p>
 
-<p><img src="http://localhost:4000/assets/through_the_trees/graph_all_connections.png" alt="graph all connections" /></p>
+<p><img src="https://www.peculiar-coding-endeavours.com/assets/through_the_trees/graph_all_connections.png" alt="graph all connections" /></p>
 
 <p>This is basically our starting point, our initial graph from which we need to distill our minimum spanning tree. I would invite you to once again read the algorithm steps, summarized for your convenience:</p>
 <ol>
@@ -474,7 +474,7 @@
 
 <p>And that’s what I leave up to you to work out for yourself. Again: we’re not in instant gratification land here ;-) it’s time to put those cells to work. But remember it’s quite simple: you will start from the graph without any edges. Then we start considering each edge in increasing order of cost. That would be either the edge between Robert and Otto, or Joseph and Otto. It doesn’t really matter. After that, the cheapest edge is that between Peter and Jarnik or between Robert and Joseph. Then the edges between Otto and Peter, and Otto and Jarnik are considered. When thinking about all those, watch out, since adding some could create a cycle, which you must avoid. Which ones you pick (in the case of equal cost) doesn’t really matter in the end result, your spanning tree could look slightly different, but the total cost remains the same). The next cheapest after that are the edges between Joseph and Jarnik, and between Robert and Peter. Again, watch out for cycles, and follow the steps in the algorithm and the logic in the data structures! Last edges are those between Robert and Jarnik and between Joseph and Peter. And that makes 10 edges you checked, depleting your priority queue, ending the algorithm and leaving you with the total_cost variable containing 7.06 as the minimum total cost, and a minimum spanning tree looking something like this:</p>
 
-<p><img src="http://localhost:4000/assets/through_the_trees/graph_minimal_connections.png" alt="graph minimal connections" /></p>
+<p><img src="https://www.peculiar-coding-endeavours.com/assets/through_the_trees/graph_minimal_connections.png" alt="graph minimal connections" /></p>
 
 <p>Again, the actual layout of your result could differ a bit, but the total cost should be the same. If the result you conjured up differs, you made an error in your reasoning somewhere, and I would encourage you to go over it again. So, to connect all their houses, the guys need to dig at least 7.06 (miles, meters, whatever your metric is) of tunnel. At least they found out fast enough, thanks to Joseph’s work. Now, some of the other guys also developed algorithms that are very similar, but I’ll leave that for you to discover ;-)</p>
 
@@ -496,7 +496,7 @@
 
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'http://localhost:4000/2020/through-the-trees/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.url = 'https://www.peculiar-coding-endeavours.com/2020/through-the-trees/';  // Replace PAGE_URL with your page's canonical URL variable
         this.page.identifier = '/2020/through-the-trees'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
       };
 
@@ -519,7 +519,7 @@
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1669205041251542400"></script>
+<script type="text/javascript" src="/js/main.js?1671423775989348900"></script>
 
 
     </div>

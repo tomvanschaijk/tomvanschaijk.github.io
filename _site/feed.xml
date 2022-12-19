@@ -3,17 +3,17 @@
   <channel>
     <title>Tom van Schaijk</title>
     <description>Software engineer. Algorithm &amp; data structures nut. On my way to mastering AI. Eternal student.</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 23 Nov 2022 13:04:01 +0100</pubDate>
-    <lastBuildDate>Wed, 23 Nov 2022 13:04:01 +0100</lastBuildDate>
+    <link>https://www.peculiar-coding-endeavours.com/</link>
+    <atom:link href="https://www.peculiar-coding-endeavours.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 19 Dec 2022 05:22:55 +0100</pubDate>
+    <lastBuildDate>Mon, 19 Dec 2022 05:22:55 +0100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
         <title>Prime skills?</title>
         <description>&lt;p&gt;I was always charmed by the idea and the practice of algorithm-heavy programming. The heavy lifting, making seemingly complex and daunting tasks run like &lt;nowiki&gt;****&lt;/nowiki&gt; of a shovel.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/prime_skills/eratosthenes.png&quot; alt=&quot;eratosthenes&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/prime_skills/eratosthenes.png&quot; alt=&quot;eratosthenes&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;That’s what got me into programming 20 years ago, as I started ploughing my way through lines of TurboPascal code, and it’s what keeps me loving programming nowadays as well. Since that time, I underwent VB 6.0, learned a bit of Java, some VB.NET, dabbled in VBA, fell in love with C#, learned to hate JavaScript, played with meta-programming (Rascal) and functional programming (Haskell) in university, and because of my study endeavours in the field of data science and AI, am experiencing a fair bit of Python and R as well.&lt;/p&gt;
 
@@ -344,8 +344,8 @@
 &lt;p&gt;If you notice anything silly or sloppy in this explanation, or have remarks or questions, do let me know! I’d love to hear your thoughts on this!&lt;/p&gt;
 </description>
         <pubDate>Fri, 20 May 2022 18:00:00 +0200</pubDate>
-        <link>http://localhost:4000/2022/prime-skills/</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/prime-skills/</guid>
+        <link>https://www.peculiar-coding-endeavours.com/2022/prime-skills/</link>
+        <guid isPermaLink="true">https://www.peculiar-coding-endeavours.com/2022/prime-skills/</guid>
         
         <category>algorithms</category>
         
@@ -366,7 +366,7 @@
         <title>How artificial intelligence is transforming software engineering</title>
         <description>&lt;h4 id=&quot;automation-of-the-automation-process&quot;&gt;&lt;strong&gt;Automation of the automation process&lt;/strong&gt;&lt;/h4&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/haitse/ai.png&quot; alt=&quot;ai&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/haitse/ai.png&quot; alt=&quot;ai&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Abstract&lt;/em&gt; — This paper explores the influences of the growing field of artificial intelligence (AI) on the software development process. Several techniques and their potential positive effects on multiple areas of software development will be explored. The main focus is on requirements engineering, the development process, testing and deployment, and the human factor in the field of software development as a whole. A number of scenarios concerning the future influence of AI on software engineering are presented.&lt;/p&gt;
 
@@ -429,8 +429,8 @@
 &lt;p&gt;[5]    &lt;a name=&quot;5&quot;&gt;M. Harman: The relationship between search based software engineering and predictive modeling. In &lt;em&gt;6th International Conference on Predictive Models in Software Engineering, Timisoara, Romania&lt;/em&gt; (2010)&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Mon, 07 Mar 2022 18:30:00 +0100</pubDate>
-        <link>http://localhost:4000/2022/how-ai-transforming-se/</link>
-        <guid isPermaLink="true">http://localhost:4000/2022/how-ai-transforming-se/</guid>
+        <link>https://www.peculiar-coding-endeavours.com/2022/how-ai-transforming-se/</link>
+        <guid isPermaLink="true">https://www.peculiar-coding-endeavours.com/2022/how-ai-transforming-se/</guid>
         
         <category>artificial intelligence</category>
         
@@ -456,7 +456,7 @@
 
 &lt;p&gt;So instead of buying another piece of apparel to wear once a year, I conjured up the incredibly original idea that I would buy my own mug for work, and a similar one for in my car. The kind that makes it very obvious what I do for a living, but does have an underlying tongue-in-cheek joke engrained. People in my own field of specialty would immediately recognise it, whereas outsiders just shrug their shoulders and think of me as some kind of mad scientist computer magician man. Something like that. So, in short, I can share some knowledge regarding a topic I love, can reward myself with a fun little item, can write about it here which further engrains that piece of knowledge, plus I get to differentiate myself from the general population of software engineers that think this kind of stuff isn’t too useful or have never heard of it at all.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/through_the_trees/mug.png&quot; alt=&quot;kruskal mug&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/through_the_trees/mug.png&quot; alt=&quot;kruskal mug&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;kruskal-trees-potato&quot;&gt;Kruskal? Trees? Potato?&lt;/h3&gt;
 
@@ -741,13 +741,13 @@
 &lt;/ul&gt;
 
 &lt;p&gt;If we were to plot these locations on an imaginary chart, we would end up with something like this:
-&lt;img src=&quot;http://localhost:4000/assets/through_the_trees/graph_nodes.png&quot; alt=&quot;graph nodes&quot; /&gt;&lt;/p&gt;
+&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/through_the_trees/graph_nodes.png&quot; alt=&quot;graph nodes&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;which makes for a decent enough estimation of the relative locations of the houses. Next up, we need to consider all possible tunnels (edges in the graph) we can dig between each of the houses. Simple graph theory tells us we will have (n * (n-1)) / 2 edges to check, where n is the number of nodes or houses. Thus, we will have 10 edges to go through, which cover all possible edges between all of the houses. As an example, this will suffice since we can easily reason about this, as well as visualise it. When considering this type of problem in real life however, when connecting hubs on a network or houses in a telephone grid or power grid, it’s easy to imagine the need for a fast algorithm, as the number of candidate edges will quickly run in the millions.&lt;/p&gt;
 
 &lt;p&gt;Besides building a list of all possible edges, we need to calculate the cost per edge. For our example, the costs are just Euclidean distances. I’m sure you remember your math from long ago, but as a reminder, we just take the Pythagorean theorem A² + B² = C² and give it a spin, giving us a simple way to calculate the distances in this 2-dimensional plane. By way of example, the distance between Otto and Peter is the root of ((3-1)² + (2-1)²), which equals to 2.24 (rounded up to 2 decimals). In this way, we calculate the costs between all nodes and add them to the edges, achieving the situation below:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/through_the_trees/graph_all_connections.png&quot; alt=&quot;graph all connections&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/through_the_trees/graph_all_connections.png&quot; alt=&quot;graph all connections&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This is basically our starting point, our initial graph from which we need to distill our minimum spanning tree. I would invite you to once again read the algorithm steps, summarized for your convenience:&lt;/p&gt;
 &lt;ol&gt;
@@ -758,7 +758,7 @@
 
 &lt;p&gt;And that’s what I leave up to you to work out for yourself. Again: we’re not in instant gratification land here ;-) it’s time to put those cells to work. But remember it’s quite simple: you will start from the graph without any edges. Then we start considering each edge in increasing order of cost. That would be either the edge between Robert and Otto, or Joseph and Otto. It doesn’t really matter. After that, the cheapest edge is that between Peter and Jarnik or between Robert and Joseph. Then the edges between Otto and Peter, and Otto and Jarnik are considered. When thinking about all those, watch out, since adding some could create a cycle, which you must avoid. Which ones you pick (in the case of equal cost) doesn’t really matter in the end result, your spanning tree could look slightly different, but the total cost remains the same). The next cheapest after that are the edges between Joseph and Jarnik, and between Robert and Peter. Again, watch out for cycles, and follow the steps in the algorithm and the logic in the data structures! Last edges are those between Robert and Jarnik and between Joseph and Peter. And that makes 10 edges you checked, depleting your priority queue, ending the algorithm and leaving you with the total_cost variable containing 7.06 as the minimum total cost, and a minimum spanning tree looking something like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/through_the_trees/graph_minimal_connections.png&quot; alt=&quot;graph minimal connections&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/through_the_trees/graph_minimal_connections.png&quot; alt=&quot;graph minimal connections&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Again, the actual layout of your result could differ a bit, but the total cost should be the same. If the result you conjured up differs, you made an error in your reasoning somewhere, and I would encourage you to go over it again. So, to connect all their houses, the guys need to dig at least 7.06 (miles, meters, whatever your metric is) of tunnel. At least they found out fast enough, thanks to Joseph’s work. Now, some of the other guys also developed algorithms that are very similar, but I’ll leave that for you to discover ;-)&lt;/p&gt;
 
@@ -775,8 +775,8 @@
 &lt;p&gt;And there you have it: my implementation and explanation of Kruskal’s algorithm. I hope you had a nice read and at least picked up some nice data structures to get you inspired. Feel free to copy the code and play around with it, keep in mind this is only really scratching the surface of all cool stuff out there, and remember that algorithms and data structures like these are the engines behind all the cool technology we have the privilege of using every day. So next time you consider a topic to study, give this a whirl. I promise you it will pay dividends in the future, and the JavaScript frameworks will still be there when you get back ;-)&lt;/p&gt;
 </description>
         <pubDate>Sun, 20 Dec 2020 17:30:00 +0100</pubDate>
-        <link>http://localhost:4000/2020/through-the-trees/</link>
-        <guid isPermaLink="true">http://localhost:4000/2020/through-the-trees/</guid>
+        <link>https://www.peculiar-coding-endeavours.com/2020/through-the-trees/</link>
+        <guid isPermaLink="true">https://www.peculiar-coding-endeavours.com/2020/through-the-trees/</guid>
         
         <category>algorithms</category>
         
@@ -823,11 +823,11 @@
 
 &lt;p&gt;Let’s start with a basic explanation of what an MLP actually is. In fact, the description “multi-layer perceptron” pretty much says it all (and says nothing at the same time). I trust the “multi-layer” part will sort itself out from the moment you know a bit more about what a perceptron is. Here it is for you: a perceptron is quite simply the most basic neural network you can think of. You probably already know, like a biological neuron having dendrites, a cell body and an axon, like this charming specimen:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/neuron.jpg&quot; alt=&quot;neuron&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/neuron.jpg&quot; alt=&quot;neuron&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;the equivalents of that for an artificial neuron are the input channels, a processing stage, and an output, as displayed here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/singleperceptron.png&quot; alt=&quot;Perceptron&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/singleperceptron.png&quot; alt=&quot;Perceptron&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;What happens here, is really rather simple (and I’m going to speed through this, so sit tight): image a simple function with a number of inputs x&lt;sub&gt;1&lt;/sub&gt;, x&lt;sub&gt;2&lt;/sub&gt;, … all the way to x&lt;sub&gt;n&lt;/sub&gt;. When the inputs come in, each gets multiplied by the weight value that is assigned to the particular input: so x&lt;sub&gt;1&lt;/sub&gt; gets multiplied by w&lt;sub&gt;1&lt;/sub&gt;, x&lt;sub&gt;2&lt;/sub&gt; by w&lt;sub&gt;2&lt;/sub&gt; and so on. All the resulting values are then summed up to a single value. We also have what’s called a bias (nothing crazy, it’s like the constant in linear regression), which is also added to the sum. Finally, the result of these calculations has to be turned into an output signal. This is done by feeding the result to an &lt;strong&gt;activation function&lt;/strong&gt;.&lt;/p&gt;
 
@@ -835,7 +835,7 @@
 
 &lt;p&gt;The most basic use case is simple classification into 2 categories. So for example: if the result of the function is above a certain value, classify in one category. Otherwise, designate the other category. So, in reality, we are outputting a &lt;strong&gt;probability&lt;/strong&gt;. We want to check the probability that the result of our function makes a certain set of input variables end up in one or the other category. So we use a sigmoid function for that (in this case, the logistic function as displayed below this paragraph), which takes any value and transforms it to a value between 0 and 1, which is basically our probability. There are many other activation functions (softmax for multiple classification, reactive linear unit or relu, hyperbolic tangent, …), each with their own uses and properties. I’m not going to go deep into those, there are several sources out there to learn more about them. For now: you’ll find below how the logistic sigmoid function looks like, in formula and in a chart.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/logisticsigmoid.jpg&quot; alt=&quot;Sigmoid&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/logisticsigmoid.jpg&quot; alt=&quot;Sigmoid&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;So, in very simple terms, that is what a perceptron is and does. So what can you do with it? Well, as I told you above, you could use it to do 2-class classification. For example, to predict whether a student passes a course based on the points he or she scored on several tests. Or you could emulate AND, OR, or NOT functions. They basically do the same thing, right? Based on a number of inputs (for example: TRUE, FALSE, FALSE, TRUE, TRUE) you determine whether the end result of applying a logical operator to those inputs, results in the output being TRUE or FALSE. So you could take a dataset of the results of applying, for example, the AND function to 4 input variables (each having the value TRUE or FALSE), and predict for any combination of 4 values whether the output is TRUE or FALSE. Or translated to neural network terms: given 4 input variables, what is the probability of the output being TRUE?&lt;/p&gt;
 
@@ -849,15 +849,15 @@
 
 &lt;p&gt;So whereas 1 perceptron can classify an input in 2 categories, achieving (if displayed on a graph) something like this (basically finding that ideal line that separates the two blobs of points, thereby being able to categorize each new point in one of those 2 categories):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/2classification.png&quot; alt=&quot;2 class classification&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/2classification.png&quot; alt=&quot;2 class classification&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;a more elaborate amalgam (I love that word) of perceptrons, orchestrated in several layers (I love English in general) as such:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/mlp.png&quot; alt=&quot;mlp&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/mlp.png&quot; alt=&quot;mlp&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;where we see all inputs (in the first column) be &lt;strong&gt;fully connected&lt;/strong&gt; to each neuron in the second layer (or column), which is in turn connected to each neuron in the third layer, whose inputs then go to the output layer, which then outputs a probability, could look something like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/hyperplane.png&quot; alt=&quot;hyperplane&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/hyperplane.png&quot; alt=&quot;hyperplane&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Now please realize this is all explained in very simple basic terms, in order not to complicate matters in this tutorial. In reality, this kind of MLP will quickly turn into an almost obscure brew of linear functions, activation functions, backpropagation, hyperparameter optimalization, matrix multiplications and a mix of funny terms and techniques. But in reality, it all boils down to as simple an explanation as provided above. Just with much more grimy details (that matter a lot).&lt;/p&gt;
 
@@ -985,7 +985,7 @@
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;visualize_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/cifarimages.png&quot; alt=&quot;cifarimages&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cifarimages.png&quot; alt=&quot;cifarimages&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Let’s have a glimpse at our data. I think you can quite easily identify some categories here. Trucks, cars, horses, frogs, cats. Now you know what we are working with. These are the images we want our network to identify. Just by giving it the values of the pixels in the RGB range.&lt;/p&gt;
 
@@ -1108,9 +1108,9 @@ Epoch 00100: val_loss did not improve from 1.69003
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;visualize_training&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hist_mlp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/mlp_hist_acc.png&quot; alt=&quot;mlp_hist_acc&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/mlp_hist_acc.png&quot; alt=&quot;mlp_hist_acc&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/mlp_hist_loss.png&quot; alt=&quot;mlp_hist_loss&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/mlp_hist_loss.png&quot; alt=&quot;mlp_hist_loss&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Here, we visualize our training process. We see the accuracy on our training data move around quite a bit, and the validation set jumps all across the board. Same for the loss. Basically, this type of visualization can be handy to quickly pinpoint the  exact point we pass our &lt;strong&gt;goldilocks point&lt;/strong&gt; and we start overfitting to our training set. I’d say, in time, it’s definitely getting worse. That could tell us that 100 is pretty much overkill. There are options you can set up in TensorFlow and Keras to make sure the process stops when accuracy doesn’t increase for x number of epochs, so that can save you some time.&lt;/p&gt;
 
@@ -1136,11 +1136,11 @@ Epoch 00100: val_loss did not improve from 1.69003
 
 &lt;p&gt;When an image is pushed through a CNN, the network won’t know where the features we are looking for will be located, so it will look for them in every possible position. In order to calculate the matches to a feature across the whole image, we make it into a filter. The actual math that is used is called &lt;strong&gt;convolution&lt;/strong&gt;, from which Convolutional Neural Networks take their name. The simple gist of it, is that each pixel in the feature is multiplied by the value of the corresponding pixel in the image. Then all results are summed up and divided by the total number of pixels in the feature. This way we can identify matches to a certain pattern in a particular part of the image. This process is then repeated for every part in the image. Using all the outputs of those calculations, a new 2-dimensional array is created, which is in fact a filtered version of the original image, “highlighting” the specific features we are looking for. Moving through the layers, more complicated features will be identified, which looks something like this visualized:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/features.png&quot; alt=&quot;features&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/features.png&quot; alt=&quot;features&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;An added benefit of this approach is that our layers do not need to be not fully connected. Not every node in a layer is connected to every node in a next layer. This avoids an explosion in the amount of parameters, and thus, we need to do much less work. If you don’t understand this, reconsider the fact that you slide a window over an image, calculating a result using the pixels in that small window and the corresponding values of the window. Within each window position, you calculate a certain result and don’t take the rest of the image into account. That only happens after you slide the window to its next position and redo the process. This principle is called &lt;strong&gt;local connectivity&lt;/strong&gt;. An example of the actual way the calculation occurs can be seen here:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/locality.jpg&quot; alt=&quot;locality&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/locality.jpg&quot; alt=&quot;locality&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;I hope it’s somewhat clear that, by running a window of a certain small enough (another hyperparameter) size over an image and doing some simple elementwise matrix multiplications, we end up with identification of certain features, those being ever more complicated lines, shapes, and so on. Because we add several filters in each layer, we end up deepening our images. When inputting for example a 32x32x3 pixel image (32 pixels wide, 32 pixels high, and 3 layers in the case of RGB images), and throwing 16 filters at it, we end up with a 32x32x16 dimension matrix. Each layer will still represent the image, but will contain information about shapes and lines instead of simple color values.&lt;/p&gt;
 
@@ -1151,19 +1151,19 @@ Epoch 00100: val_loss did not improve from 1.69003
   &lt;li&gt;MaxPooling layers take the average of the values that the kernel is currently sliding over, and takes the maximum value there. Quite simple, using an example, this looks like the picture below, effectively cutting the width and height dimensions in half. Note the term &lt;em&gt;stride&lt;/em&gt;, which is nothing more than the steps the window takes. If it is 1, the window will just slide one pixel over after selecting the largest value. In this example, the window size is 2x2 and the stride is also 2, which means we will have a total of 4 positions to move to and calculate a new result.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/maxpooling.png&quot; alt=&quot;maxpooling&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/maxpooling.png&quot; alt=&quot;maxpooling&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Global pooling layers do not use a stride or kernel size, but quite simply take the average of the entire set of values in a single feature map, and outputs 1 value. This is a more extreme way of reducing dimensionality.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/globalpooling.png&quot; alt=&quot;globalpooling&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/globalpooling.png&quot; alt=&quot;globalpooling&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;As such, the result of a Pooling layer is that a certain image gets reduced in width and height, while respecting the filters we added by using Convolutional layers. Slowly but surely, as we push through the network, our image is transformed from a matrix that is much wider and higher than it is deep, to a very small but very deep matrix, until it’s ready to go to a Dense layer, which as we know already requires a 1 dimensional vector.&lt;/p&gt;
 
 &lt;p&gt;That’s all the theoretical gibberish you’ll get thrown at you! I hope you can agree it wasn’t that bad, and quite interesting as well to see how a computer treats the information in an image, as compared to the way humans do it! For those waiting for more code, now’s the time to put all that stuff into practice. As a summary, to hammer the point home, a complete CNN architecture could look something like the picture below. Again, realize that this explanation (even more so for CNN’s than was the case for MLP’s) is extremely brief and simple. Much more is to be said about all the intricacies here, but this short introduction does give you an idea of the basic concepts.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/cnnexample.png&quot; alt=&quot;cnnexample&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cnnexample.png&quot; alt=&quot;cnnexample&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;cnn-implementation&quot;&gt;CNN implementation&lt;/h3&gt;
 
@@ -1289,9 +1289,9 @@ Epoch 00020: val_loss did not improve from 0.95311
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;visualize_training&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hist_cnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/cnn_hist_acc.png&quot; alt=&quot;cnn_hist_acc&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cnn_hist_acc.png&quot; alt=&quot;cnn_hist_acc&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/cnn_hist_loss.png&quot; alt=&quot;cnn_hist_loss&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cnn_hist_loss.png&quot; alt=&quot;cnn_hist_loss&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;cnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_weights&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cnn_weights_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;score_cnn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;evaluate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;processed_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;processed_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verbose&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -1528,9 +1528,9 @@ Epoch 00225: val_loss did not improve from 0.39229
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;visualize_training&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hist_optimized_cnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/optimized_cnn_hist_acc.png&quot; alt=&quot;optimized_cnn_hist_acc&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/optimized_cnn_hist_acc.png&quot; alt=&quot;optimized_cnn_hist_acc&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/mlp_vs_cnn/optimized_cnn_hist_loss.png&quot; alt=&quot;optimized_cnn_hist_loss&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/optimized_cnn_hist_loss.png&quot; alt=&quot;optimized_cnn_hist_loss&quot; /&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Accuracy optimized cnn: {0:.2f}%&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score_optimized_cnn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
@@ -1540,8 +1540,8 @@ Epoch 00225: val_loss did not improve from 0.39229
 &lt;p&gt;And the moment of truth: printing our achieved degree of accuracy. I leave you with that, and I hope this sparked your eagerness to learn about this amazing topic even more.&lt;/p&gt;
 </description>
         <pubDate>Thu, 12 Dec 2019 21:30:00 +0100</pubDate>
-        <link>http://localhost:4000/2019/mlp_vs_cnn/</link>
-        <guid isPermaLink="true">http://localhost:4000/2019/mlp_vs_cnn/</guid>
+        <link>https://www.peculiar-coding-endeavours.com/2019/mlp_vs_cnn/</link>
+        <guid isPermaLink="true">https://www.peculiar-coding-endeavours.com/2019/mlp_vs_cnn/</guid>
         
         <category>artificial intelligence</category>
         
