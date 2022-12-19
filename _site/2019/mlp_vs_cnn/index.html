@@ -52,9 +52,9 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1671423775989348900">
-  <link rel="canonical" href="https://www.peculiar-coding-endeavours.com/2019/mlp_vs_cnn/">
-  <link rel="alternate" type="application/rss+xml" title="Tom van Schaijk" href="/feed.xml">
+  <link rel="stylesheet" href="/css/main.css?1671430147712920900">
+  <link rel="canonical" href="http://localhost:4000/2019/mlp_vs_cnn/">
+  <link rel="alternate" type="application/rss+xml" title="Peculiar Coding Endeavours" href="/feed.xml">
 </head>
 
 
@@ -69,9 +69,9 @@
 
     <div class="panel-main__inner panel-inverted">
     <div class="panel-main__content">
-        <a href="/" title="Tom van Schaijk Home">
+        <a href="/" title="Peculiar Coding Endeavours Home">
           <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
-          <h1 class="panel-cover__title panel-title">Tom van Schaijk</h1>
+          <h1 class="panel-cover__title panel-title">Peculiar Coding Endeavours</h1>
         </a>
         <hr class="panel-cover__divider">
         <p class="panel-cover__description">Software engineer. Algorithm & data structures nut. On my way to mastering AI. Eternal student.</p>
@@ -81,17 +81,37 @@
 
           <nav class="cover-navigation cover-navigation--primary">
             <ul class="navigation">
-              <li class="navigation__item"><a href="/#blog" title="Tom van Schaijk blog" class="blog-button">Blog</a></li>
+              <li class="navigation__item"><a href="/#blog" title="Blog" class="blog-button">Blog</a></li>
             </ul>
           </nav>
 
           <nav class="cover-navigation navigation--social">
             <ul class="navigation">
+            
+              
+              <!-- YouTube -->
+              <li class="navigation__item">
+                <a href="https://www.youtube.com/@peculiar-coding-endeavours" title="YouTube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">YouTube</span>
+                </a>
+              </li>
+            
+
+            
+            <!-- GitHub -->
+            <li class="navigation__item">
+              <a href="https://www.github.com/tomvanschaijk" title="GitHub" target="_blank">
+                <i class="icon icon-social-github"></i>
+                <span class="label">GitHub</span>
+              </a>
+            </li>
+          
 
             
               <!-- LinkedIn -->
               <li class="navigation__item">
-                <a href="https://www.linkedin.com/in/tom-van-schaijk" title="Tom van Schaijk on LinkedIn" target="_blank">
+                <a href="https://www.linkedin.com/in/tom-van-schaijk" title="LinkedIn" target="_blank">
                   <i class="icon icon-social-linkedin"></i>
                   <span class="label">LinkedIn</span>
                 </a>
@@ -99,19 +119,9 @@
             
 
             
-              <!-- GitHub -->
-              <li class="navigation__item">
-                <a href="https://www.github.com/tomvanschaijk" title="Tom van Schaijk on GitHub" target="_blank">
-                  <i class="icon icon-social-github"></i>
-                  <span class="label">GitHub</span>
-                </a>
-              </li>
-            
-
-            
               <!-- Email -->
               <li class="navigation__item">
-                <a href="mailto:vanschaijktom@hotmail.com" title="Email vanschaijktom@hotmail.com" target="_blank">
+                <a href="mailto:vanschaijktom@hotmail.com" title="vanschaijktom@hotmail.com" target="_blank">
                   <i class="icon icon-mail"></i>
                   <span class="label">Email</span>
                 </a>
@@ -174,11 +184,11 @@
 
 <p>Let’s start with a basic explanation of what an MLP actually is. In fact, the description “multi-layer perceptron” pretty much says it all (and says nothing at the same time). I trust the “multi-layer” part will sort itself out from the moment you know a bit more about what a perceptron is. Here it is for you: a perceptron is quite simply the most basic neural network you can think of. You probably already know, like a biological neuron having dendrites, a cell body and an axon, like this charming specimen:</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/neuron.jpg" alt="neuron" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/neuron.jpg" alt="neuron" /></p>
 
 <p>the equivalents of that for an artificial neuron are the input channels, a processing stage, and an output, as displayed here:</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/singleperceptron.png" alt="Perceptron" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/singleperceptron.png" alt="Perceptron" /></p>
 
 <p>What happens here, is really rather simple (and I’m going to speed through this, so sit tight): image a simple function with a number of inputs x<sub>1</sub>, x<sub>2</sub>, … all the way to x<sub>n</sub>. When the inputs come in, each gets multiplied by the weight value that is assigned to the particular input: so x<sub>1</sub> gets multiplied by w<sub>1</sub>, x<sub>2</sub> by w<sub>2</sub> and so on. All the resulting values are then summed up to a single value. We also have what’s called a bias (nothing crazy, it’s like the constant in linear regression), which is also added to the sum. Finally, the result of these calculations has to be turned into an output signal. This is done by feeding the result to an <strong>activation function</strong>.</p>
 
@@ -186,7 +196,7 @@
 
 <p>The most basic use case is simple classification into 2 categories. So for example: if the result of the function is above a certain value, classify in one category. Otherwise, designate the other category. So, in reality, we are outputting a <strong>probability</strong>. We want to check the probability that the result of our function makes a certain set of input variables end up in one or the other category. So we use a sigmoid function for that (in this case, the logistic function as displayed below this paragraph), which takes any value and transforms it to a value between 0 and 1, which is basically our probability. There are many other activation functions (softmax for multiple classification, reactive linear unit or relu, hyperbolic tangent, …), each with their own uses and properties. I’m not going to go deep into those, there are several sources out there to learn more about them. For now: you’ll find below how the logistic sigmoid function looks like, in formula and in a chart.</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/logisticsigmoid.jpg" alt="Sigmoid" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/logisticsigmoid.jpg" alt="Sigmoid" /></p>
 
 <p>So, in very simple terms, that is what a perceptron is and does. So what can you do with it? Well, as I told you above, you could use it to do 2-class classification. For example, to predict whether a student passes a course based on the points he or she scored on several tests. Or you could emulate AND, OR, or NOT functions. They basically do the same thing, right? Based on a number of inputs (for example: TRUE, FALSE, FALSE, TRUE, TRUE) you determine whether the end result of applying a logical operator to those inputs, results in the output being TRUE or FALSE. So you could take a dataset of the results of applying, for example, the AND function to 4 input variables (each having the value TRUE or FALSE), and predict for any combination of 4 values whether the output is TRUE or FALSE. Or translated to neural network terms: given 4 input variables, what is the probability of the output being TRUE?</p>
 
@@ -200,15 +210,15 @@
 
 <p>So whereas 1 perceptron can classify an input in 2 categories, achieving (if displayed on a graph) something like this (basically finding that ideal line that separates the two blobs of points, thereby being able to categorize each new point in one of those 2 categories):</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/2classification.png" alt="2 class classification" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/2classification.png" alt="2 class classification" /></p>
 
 <p>a more elaborate amalgam (I love that word) of perceptrons, orchestrated in several layers (I love English in general) as such:</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/mlp.png" alt="mlp" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/mlp.png" alt="mlp" /></p>
 
 <p>where we see all inputs (in the first column) be <strong>fully connected</strong> to each neuron in the second layer (or column), which is in turn connected to each neuron in the third layer, whose inputs then go to the output layer, which then outputs a probability, could look something like this:</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/hyperplane.png" alt="hyperplane" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/hyperplane.png" alt="hyperplane" /></p>
 
 <p>Now please realize this is all explained in very simple basic terms, in order not to complicate matters in this tutorial. In reality, this kind of MLP will quickly turn into an almost obscure brew of linear functions, activation functions, backpropagation, hyperparameter optimalization, matrix multiplications and a mix of funny terms and techniques. But in reality, it all boils down to as simple an explanation as provided above. Just with much more grimy details (that matter a lot).</p>
 
@@ -336,7 +346,7 @@
 </span><span class="n">visualize_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cifarimages.png" alt="cifarimages" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/cifarimages.png" alt="cifarimages" /></p>
 
 <p>Let’s have a glimpse at our data. I think you can quite easily identify some categories here. Trucks, cars, horses, frogs, cats. Now you know what we are working with. These are the images we want our network to identify. Just by giving it the values of the pixels in the RGB range.</p>
 
@@ -459,9 +469,9 @@ Epoch 00100: val_loss did not improve from 1.69003
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">visualize_training</span><span class="p">(</span><span class="n">hist_mlp</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/mlp_hist_acc.png" alt="mlp_hist_acc" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/mlp_hist_acc.png" alt="mlp_hist_acc" /></p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/mlp_hist_loss.png" alt="mlp_hist_loss" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/mlp_hist_loss.png" alt="mlp_hist_loss" /></p>
 
 <p>Here, we visualize our training process. We see the accuracy on our training data move around quite a bit, and the validation set jumps all across the board. Same for the loss. Basically, this type of visualization can be handy to quickly pinpoint the  exact point we pass our <strong>goldilocks point</strong> and we start overfitting to our training set. I’d say, in time, it’s definitely getting worse. That could tell us that 100 is pretty much overkill. There are options you can set up in TensorFlow and Keras to make sure the process stops when accuracy doesn’t increase for x number of epochs, so that can save you some time.</p>
 
@@ -487,11 +497,11 @@ Epoch 00100: val_loss did not improve from 1.69003
 
 <p>When an image is pushed through a CNN, the network won’t know where the features we are looking for will be located, so it will look for them in every possible position. In order to calculate the matches to a feature across the whole image, we make it into a filter. The actual math that is used is called <strong>convolution</strong>, from which Convolutional Neural Networks take their name. The simple gist of it, is that each pixel in the feature is multiplied by the value of the corresponding pixel in the image. Then all results are summed up and divided by the total number of pixels in the feature. This way we can identify matches to a certain pattern in a particular part of the image. This process is then repeated for every part in the image. Using all the outputs of those calculations, a new 2-dimensional array is created, which is in fact a filtered version of the original image, “highlighting” the specific features we are looking for. Moving through the layers, more complicated features will be identified, which looks something like this visualized:</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/features.png" alt="features" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/features.png" alt="features" /></p>
 
 <p>An added benefit of this approach is that our layers do not need to be not fully connected. Not every node in a layer is connected to every node in a next layer. This avoids an explosion in the amount of parameters, and thus, we need to do much less work. If you don’t understand this, reconsider the fact that you slide a window over an image, calculating a result using the pixels in that small window and the corresponding values of the window. Within each window position, you calculate a certain result and don’t take the rest of the image into account. That only happens after you slide the window to its next position and redo the process. This principle is called <strong>local connectivity</strong>. An example of the actual way the calculation occurs can be seen here:</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/locality.jpg" alt="locality" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/locality.jpg" alt="locality" /></p>
 
 <p>I hope it’s somewhat clear that, by running a window of a certain small enough (another hyperparameter) size over an image and doing some simple elementwise matrix multiplications, we end up with identification of certain features, those being ever more complicated lines, shapes, and so on. Because we add several filters in each layer, we end up deepening our images. When inputting for example a 32x32x3 pixel image (32 pixels wide, 32 pixels high, and 3 layers in the case of RGB images), and throwing 16 filters at it, we end up with a 32x32x16 dimension matrix. Each layer will still represent the image, but will contain information about shapes and lines instead of simple color values.</p>
 
@@ -502,19 +512,19 @@ Epoch 00100: val_loss did not improve from 1.69003
   <li>MaxPooling layers take the average of the values that the kernel is currently sliding over, and takes the maximum value there. Quite simple, using an example, this looks like the picture below, effectively cutting the width and height dimensions in half. Note the term <em>stride</em>, which is nothing more than the steps the window takes. If it is 1, the window will just slide one pixel over after selecting the largest value. In this example, the window size is 2x2 and the stride is also 2, which means we will have a total of 4 positions to move to and calculate a new result.</li>
 </ul>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/maxpooling.png" alt="maxpooling" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/maxpooling.png" alt="maxpooling" /></p>
 
 <ul>
   <li>Global pooling layers do not use a stride or kernel size, but quite simply take the average of the entire set of values in a single feature map, and outputs 1 value. This is a more extreme way of reducing dimensionality.</li>
 </ul>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/globalpooling.png" alt="globalpooling" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/globalpooling.png" alt="globalpooling" /></p>
 
 <p>As such, the result of a Pooling layer is that a certain image gets reduced in width and height, while respecting the filters we added by using Convolutional layers. Slowly but surely, as we push through the network, our image is transformed from a matrix that is much wider and higher than it is deep, to a very small but very deep matrix, until it’s ready to go to a Dense layer, which as we know already requires a 1 dimensional vector.</p>
 
 <p>That’s all the theoretical gibberish you’ll get thrown at you! I hope you can agree it wasn’t that bad, and quite interesting as well to see how a computer treats the information in an image, as compared to the way humans do it! For those waiting for more code, now’s the time to put all that stuff into practice. As a summary, to hammer the point home, a complete CNN architecture could look something like the picture below. Again, realize that this explanation (even more so for CNN’s than was the case for MLP’s) is extremely brief and simple. Much more is to be said about all the intricacies here, but this short introduction does give you an idea of the basic concepts.</p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cnnexample.png" alt="cnnexample" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/cnnexample.png" alt="cnnexample" /></p>
 
 <h3 id="cnn-implementation">CNN implementation</h3>
 
@@ -640,9 +650,9 @@ Epoch 00020: val_loss did not improve from 0.95311
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">visualize_training</span><span class="p">(</span><span class="n">hist_cnn</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cnn_hist_acc.png" alt="cnn_hist_acc" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/cnn_hist_acc.png" alt="cnn_hist_acc" /></p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/cnn_hist_loss.png" alt="cnn_hist_loss" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/cnn_hist_loss.png" alt="cnn_hist_loss" /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnn</span><span class="p">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">cnn_weights_path</span><span class="p">)</span>
 <span class="n">score_cnn</span> <span class="o">=</span> <span class="n">cnn</span><span class="p">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">processed_data</span><span class="p">.</span><span class="n">x_test</span><span class="p">,</span> <span class="n">processed_data</span><span class="p">.</span><span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -879,9 +889,9 @@ Epoch 00225: val_loss did not improve from 0.39229
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">visualize_training</span><span class="p">(</span><span class="n">hist_optimized_cnn</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/optimized_cnn_hist_acc.png" alt="optimized_cnn_hist_acc" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/optimized_cnn_hist_acc.png" alt="optimized_cnn_hist_acc" /></p>
 
-<p><img src="https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/optimized_cnn_hist_loss.png" alt="optimized_cnn_hist_loss" /></p>
+<p><img src="http://localhost:4000/assets/mlp_vs_cnn/optimized_cnn_hist_loss.png" alt="optimized_cnn_hist_loss" /></p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"Accuracy optimized cnn: {0:.2f}%"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">score_optimized_cnn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
 </code></pre></div></div>
@@ -896,7 +906,7 @@ Epoch 00225: val_loss did not improve from 0.39229
 
     <script type="text/javascript">
       var disqus_config = function () {
-        this.page.url = 'https://www.peculiar-coding-endeavours.com/2019/mlp_vs_cnn/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.url = 'http://localhost:4000/2019/mlp_vs_cnn/';  // Replace PAGE_URL with your page's canonical URL variable
         this.page.identifier = '/2019/mlp_vs_cnn'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
       };
 
@@ -919,7 +929,7 @@ Epoch 00225: val_loss did not improve from 0.39229
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1671423775989348900"></script>
+<script type="text/javascript" src="/js/main.js?1671430147712920900"></script>
 
 
     </div>

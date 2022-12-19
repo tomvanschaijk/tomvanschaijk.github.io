@@ -3,7 +3,7 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/2022/prime-skills/</loc>
+      <loc>http://localhost:4000/2022/prime-skills/</loc>
       
         <lastmod>2022-05-20T18:00:00+02:00</lastmod>
       
@@ -18,7 +18,7 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/2022/how-ai-transforming-se/</loc>
+      <loc>http://localhost:4000/2022/how-ai-transforming-se/</loc>
       
         <lastmod>2022-03-07T18:30:00+01:00</lastmod>
       
@@ -33,7 +33,7 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/2020/through-the-trees/</loc>
+      <loc>http://localhost:4000/2020/through-the-trees/</loc>
       
         <lastmod>2020-12-20T17:30:00+01:00</lastmod>
       
@@ -48,7 +48,7 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/2019/mlp_vs_cnn/</loc>
+      <loc>http://localhost:4000/2019/mlp_vs_cnn/</loc>
       
         <lastmod>2019-12-12T21:30:00+01:00</lastmod>
       
@@ -66,9 +66,9 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/feed.xml</loc>
+      <loc>http://localhost:4000/feed.xml</loc>
       
-        <lastmod>2022-12-19T05:22:55+01:00</lastmod>
+        <lastmod>2022-12-19T07:09:07+01:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -85,9 +85,9 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/css/main.css</loc>
+      <loc>http://localhost:4000/css/main.css</loc>
       
-        <lastmod>2022-12-19T05:22:55+01:00</lastmod>
+        <lastmod>2022-12-19T07:09:07+01:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -102,9 +102,9 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/tags/</loc>
+      <loc>http://localhost:4000/tags/</loc>
       
-        <lastmod>2022-12-19T05:22:55+01:00</lastmod>
+        <lastmod>2022-12-19T07:09:07+01:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
@@ -117,9 +117,9 @@
   
     
     <url>
-      <loc>https://www.peculiar-coding-endeavours.com/assets/css/style.css</loc>
+      <loc>http://localhost:4000/assets/css/style.css</loc>
       
-        <lastmod>2022-12-19T05:22:55+01:00</lastmod>
+        <lastmod>2022-12-19T07:09:07+01:00</lastmod>
       
       
         <changefreq>monthly</changefreq>
