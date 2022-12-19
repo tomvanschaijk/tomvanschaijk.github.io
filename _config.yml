@@ -1,5 +1,5 @@
 # Site settings 
-title: Tom van Schaijk
+title: Peculiar Coding Endeavours
 description: 'Software engineer. Algorithm & data structures nut. On my way to mastering AI. Eternal student.'
 # url: 'https://tomvanschaijk.github.io'
 url: 'https://www.peculiar-coding-endeavours.com'
@@ -12,6 +12,7 @@ author:
   email: vanschaijktom@hotmail.com
   github_username:  tomvanschaijk
   linkedin_username:  tom-van-schaijk
+  youtube_id: peculiar-coding-endeavours
 
 defaults:
   -
