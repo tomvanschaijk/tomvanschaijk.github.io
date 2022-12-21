@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Peculiar Coding Endeavours</title>
-    <description>Software engineer. Algorithm &amp; data structures nut. On my way to mastering AI. Eternal student.</description>
+    <description>Software engineer. Algorithm &amp; data structures nut. On my way to learning AI. Eternal student.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 19 Dec 2022 07:09:07 +0100</pubDate>
-    <lastBuildDate>Mon, 19 Dec 2022 07:09:07 +0100</lastBuildDate>
+    <pubDate>Wed, 21 Dec 2022 07:39:07 +0100</pubDate>
+    <lastBuildDate>Wed, 21 Dec 2022 07:39:07 +0100</lastBuildDate>
     <generator>Jekyll v3.9.2</generator>
     
       <item>
@@ -1130,7 +1130,7 @@ Epoch 00100: val_loss did not improve from 1.69003
 
 &lt;p&gt;First and foremost, I will keep this explanation rather short and simple. Although CNN’s are not hard to understand, there’s a lot that can be said about them, and I just want to communicate the basic premise of how they work, as that is the main message I want to get across.&lt;/p&gt;
 
-&lt;p&gt;The main takeaway is that, when using CNN’s, you keep in mind the fact that image pixels that are close to eachother are more heavily related that pixels far away from eachother. So what we do not want, is to remove that spacial correlation, and “unpack” or “flatten” those pixels to a long array, as we did in the case of MLP’s. A better alternative would be to keep that matrix alive and look at pixel groups in order to process the raw data points in that matrix. Spacial information matters, and that is exactly the core idea that drives Convolutional layers.&lt;/p&gt;
+&lt;p&gt;The main takeaway is that, when using CNN’s, you keep in mind the fact that image pixels that are close to eachother are more heavily related than pixels far away from eachother. So what we do not want, is to remove that spacial correlation, and “unpack” or “flatten” those pixels to a long array, as we did in the case of MLP’s. A better alternative would be to keep that matrix alive and look at pixel groups in order to process the raw data points in that matrix. Spacial information matters, and that is exactly the core idea that drives Convolutional layers.&lt;/p&gt;
 
 &lt;p&gt;First, let’s introduce the concept of a &lt;strong&gt;feature&lt;/strong&gt;. A feature is nothing more than a small 2-dimensional array of values which represents a pattern that we are looking for. In order for a CNN to classify images, we will look for patterns in the image by scanning it piece by piece. We slide a small little 2-dimensional window (&lt;strong&gt;kernel&lt;/strong&gt;) over the image, and we will look for features. This way, CNN’s get a lot better at identifying parts of an image instead of taking the whole image in as one big chunk. Features recognize certain aspects of an image. In the case of our images, features at the start of our network could consist of horizontal, vertical or diagonal lines, and in later layers of our network, we could start recognizing ever more elaborate shapes, circles or squares, up to noses, eyes, lips, and so on.&lt;/p&gt;
 
