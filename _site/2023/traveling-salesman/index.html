@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Traveling salesman problem</title>
+  <meta name="description" content="The traveling salesman problem is one of those annoying interview questions you sometimes get hurled towards you, accompanied with “how would you solve this”? I remember a time where I was 
+a fresh hatchling straight out of college, finding myself in that exact situation. I’ll spare you the details, but I can tell you I didn’t get particularly far ;-)
+
+">
+  <meta name="author" content="Tom van Schaijk">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Traveling salesman problem">
+  <meta name="twitter:description" content="The traveling salesman problem is one of those annoying interview questions you sometimes get hurled towards you, accompanied with “how would you solve this”? I remember a time where I was 
+a fresh hatchling straight out of college, finding myself in that exact situation. I’ll spare you the details, but I can tell you I didn’t get particularly far ;-)
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Traveling salesman problem">
+  <meta property="og:description" content="The traveling salesman problem is one of those annoying interview questions you sometimes get hurled towards you, accompanied with “how would you solve this”? I remember a time where I was 
+a fresh hatchling straight out of college, finding myself in that exact situation. I’ll spare you the details, but I can tell you I didn’t get particularly far ;-)
+
+">
+  <meta property="og:image" content="/images/favicons/favicon.png?" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <!-- <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16"> -->
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" href="/images/favicons/favicon.png?">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1680374070173315573">
+  <link rel="canonical" href="http://localhost:4000/2023/traveling-salesman/">
+  <link rel="alternate" type="application/rss+xml" title="Peculiar Coding Endeavours" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <a href="/" title="Peculiar Coding Endeavours Home">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Peculiar Coding Endeavours</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Software engineer. Algorithm & data structures nut. On my way to learning AI. Eternal student.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Blog" class="blog-button">Blog</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+            
+              
+              <!-- YouTube -->
+              <li class="navigation__item">
+                <a href="https://www.youtube.com/@peculiar-coding-endeavours" title="YouTube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">YouTube</span>
+                </a>
+              </li>
+            
+
+            
+            <!-- GitHub -->
+            <li class="navigation__item">
+              <a href="https://www.github.com/tomvanschaijk" title="GitHub" target="_blank">
+                <i class="icon icon-social-github"></i>
+                <span class="label">GitHub</span>
+              </a>
+            </li>
+          
+
+            
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/tom-van-schaijk" title="LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+            
+
+            
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:vanschaijktom@hotmail.com" title="vanschaijktom@hotmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+            
+
+            <!-- RSS -->
+            <li class="navigation__item">
+              <a href="/feed.xml" title="Subscribe" target="_blank">
+                <i class="icon icon-rss"></i>
+                <span class="label">RSS</span>
+              </a>
+            </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="1 Apr 2023" class="post-meta__date date">1 Apr 2023</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#tsp">tsp</a> <a href="/tags/#algorithms">algorithms</a> <a href="/tags/#python">python</a> </span>
+      
+    </div>
+    <h1 class="post-title">Traveling salesman problem</h1>
+  </header>
+
+  <section class="post">
+    <p>The traveling salesman problem is one of those annoying interview questions you sometimes get hurled towards you, accompanied with “how would you solve this”? I remember a time where I was 
+a fresh hatchling straight out of college, finding myself in that exact situation. I’ll spare you the details, but I can tell you I didn’t get particularly far ;-)</p>
+
+<p>Times change though, and over the years I definitely grew into the type of software engineer that definitely prefers to work with data structures and algorithms over the next “best” framework to solve trivial problems like yeeting text and images on a screen.</p>
+
+<p><img src="http://localhost:4000/assets/tsp/salesmen.jpg" alt="salesmen" /></p>
+
+<h3 id="some-solutions">Some solutions…</h3>
+
+<p>So, quite a few years later, I thought it’d be a nice moment to provide a few potential solutions, and give you a little bit of a summary regarding how to go about it. I assume you know what the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem" target="_blank">Traveling Salesman Problem</a> entails, at least from a high level. It’s one of those nice annoying NP-hard ones, so more than enough ways to have fun with it. In this article, we’ll go over 4 example implementations of possible solutions to the problem:</p>
+<ul>
+  <li>a simple brute force algorithm, guaranteed to give you the optimal shortest distance, but obviously horribly slow</li>
+  <li>another guaranteed optimal solution, but quite a bit more efficient, using dynamic programming</li>
+  <li>an approximation of a solution using genetic algorithms</li>
+  <li>another approximation, using ant colony optimization</li>
+</ul>
+
+<p>I’ve been interested in genetic algorithms and ant colony optimization for a while now, and the traveling salesman problem is a nice use-case to apply these algorithms to. In case you are not familiar with one or either of them, you can find more information about <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Genetic algorithms</a> and <a href="https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms">Ant Colony Optimization</a> all over the internet. Or you can ask ChatGPT, apparently that’s quite the trend lately.</p>
+
+<h3 id="the-project">The project</h3>
+<p>The full code of the project is available on my <a href="https://github.com/tomvanschaijk/travelingsalesman" target="_blank">GitHub</a>. The requirements to run it are pretty basic. The code is all in Python, and I mainly use PyGame, Numpy, Asyncio and Aiostream. Just install the requirements in requirements.txt and you’ll be set. You can preview the end result right <a href="https://youtu.be/XCZSwM--vCA" target="_blank">here</a>. In fact, give that a quick gander and the following summary will quickly become clear.</p>
+
+<p>The PyGame window that pops up when running simply consists of 5 panes. The top center one is the one where you can simple click to add points. These points will be the destination our salesman will have to visit. The first point you create will be green, and will be the starting point and ending destination. All other blue ones are the cities to be visited before getting back to the starting point. Hitting spacebar will reset the screen, enter starts the algorithm.</p>
+
+<p>Since the brute force and dynamic programming solutions are inherently slow for anything more than a few points, you’ll notice there’s a cut-off point where those algorithms are not being taken along for the ride anymore. It would simply take more time, as the time complexity for both just explodes. Dynamic programming will be used for a bit longer than brute force, but when you start getting in the double digits in terms of destination count, both will not be executed anymore.</p>
+
+<p>In case you wish to follow along in the code and you check out the GitHub project, there’s not a lot of files of interest:</p>
+<ul>
+  <li>main.py: nothing you wouldn’t expect. The only code of slight interest in there is how to run the 4 algorithms concurrently. All the rest is setup for PyGame, running the main “game loop”.</li>
+  <li>graph.py: contains an implementation of an undirected weighted graph, slightly tailored to the current problem at hand</li>
+  <li>the folder /solvers contains the implementations of the 4 algorithms. The rest of the article will mostly focus on those.</li>
+</ul>
+
+<h3 id="processing-the-results">Processing the results</h3>
+<p>As stated earlier, the main.py file doesn’t contain much of interest regarding the actual problem. However, maybe one slight little thing to touch on is how the 4 algorithms are executed concurrently, and results are processed as they come in.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">algorithms</span> <span class="o">=</span> <span class="p">[</span><span class="n">algorithm</span> <span class="k">for</span> <span class="n">algorithm</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">__algorithms</span>
+              <span class="k">if</span> <span class="n">algorithm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">]</span>
+<span class="n">zipped</span> <span class="o">=</span> <span class="n">stream</span><span class="p">.</span><span class="n">ziplatest</span><span class="p">(</span><span class="o">*</span><span class="n">algorithms</span><span class="p">)</span>
+<span class="n">merged</span> <span class="o">=</span> <span class="n">stream</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">zipped</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+<span class="k">async</span> <span class="k">with</span> <span class="n">merged</span><span class="p">.</span><span class="n">stream</span><span class="p">()</span> <span class="k">as</span> <span class="n">streamer</span><span class="p">:</span>
+    <span class="k">async</span> <span class="k">for</span> <span class="n">resultset</span> <span class="ow">in</span> <span class="n">streamer</span><span class="p">:</span>
+
+</code></pre></div></div>
+
+<p>To explain the code, it might be nice to focus on what goes on in there, using another example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">aiostream</span> <span class="kn">import</span> <span class="n">stream</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">process_results_interleaved</span><span class="p">(</span><span class="n">races</span><span class="p">):</span>
+    <span class="n">combine</span> <span class="o">=</span> <span class="n">stream</span><span class="p">.</span><span class="n">merge</span><span class="p">(</span><span class="o">*</span><span class="n">races</span><span class="p">)</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">combine</span><span class="p">.</span><span class="n">stream</span><span class="p">()</span> <span class="k">as</span> <span class="n">streamer</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">streamer</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">process_results_packet</span><span class="p">(</span><span class="n">races</span><span class="p">):</span>
+    <span class="n">zipped</span> <span class="o">=</span> <span class="n">stream</span><span class="p">.</span><span class="n">ziplatest</span><span class="p">(</span><span class="o">*</span><span class="n">races</span><span class="p">)</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">stream</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">zipped</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+    <span class="k">async</span> <span class="k">with</span> <span class="n">merged</span><span class="p">.</span><span class="n">stream</span><span class="p">()</span> <span class="k">as</span> <span class="n">streamer</span><span class="p">:</span>
+        <span class="k">async</span> <span class="k">for</span> <span class="n">resultset</span> <span class="ow">in</span> <span class="n">streamer</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">resultset</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">race</span><span class="p">(</span><span class="n">racer</span><span class="p">,</span> <span class="n">sleep_time</span><span class="p">,</span> <span class="n">checkpoints</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">checkpoints</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">checkpoints</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">racer</span><span class="si">}</span><span class="s"> finished!"</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">racer</span><span class="si">}</span><span class="s"> hits checkpoint: </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s">"</span>
+
+
+<span class="k">def</span> <span class="nf">create_races</span><span class="p">(</span><span class="n">checkpoints</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">race</span><span class="p">(</span><span class="s">"Turtle"</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">checkpoints</span><span class="p">),</span>
+            <span class="n">race</span><span class="p">(</span><span class="s">"Hare"</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">checkpoints</span><span class="p">),</span>
+            <span class="n">race</span><span class="p">(</span><span class="s">"Dragster"</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">checkpoints</span><span class="p">)]</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">checkpoints</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Starting race, processing results as they come in from each contestant:"</span><span class="p">)</span>
+    <span class="n">races</span> <span class="o">=</span> <span class="n">create_races</span><span class="p">(</span><span class="n">checkpoints</span><span class="p">)</span>
+    <span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">process_results_interleaved</span><span class="p">(</span><span class="n">races</span><span class="p">))</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Starting race, processing results in packets:"</span><span class="p">)</span>
+    <span class="n">races</span> <span class="o">=</span> <span class="n">create_races</span><span class="p">(</span><span class="n">checkpoints</span><span class="p">)</span>
+    <span class="n">asyncio</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="n">process_results_packet</span><span class="p">(</span><span class="n">races</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>This little script gives you the following output:</p>
+
+<p><img src="http://localhost:4000/assets/tsp/race_results.png" alt="race_results" /></p>
+
+<h3 id="a-brute-force-approach">A brute force approach</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">brute_force</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">AlgorithmResult</span><span class="p">]:</span>
+    <span class="s">"""Solve the TSP problem with a brute force implementation, running through all permutations"""</span>
+    <span class="n">unique_permutations</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">paths_evaluated</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">evaluations_until_solved</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">key</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">sub_keys</span> <span class="o">=</span> <span class="n">keys</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">for</span> <span class="n">permutation</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">(</span><span class="n">sub_keys</span><span class="p">):</span>
+        <span class="n">permutation</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span><span class="p">,)</span> <span class="o">+</span> <span class="n">permutation</span> <span class="o">+</span> <span class="p">(</span><span class="n">start</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="n">permutation</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_permutations</span> <span class="ow">and</span> <span class="n">permutation</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_permutations</span><span class="p">:</span>
+            <span class="n">paths_evaluated</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">unique_permutations</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span>
+            <span class="n">current_path_length</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">start</span>
+            <span class="n">vertices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">permutation</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[(</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span>
+                <span class="n">current_path_length</span> <span class="o">+=</span> <span class="n">distance</span>
+                <span class="n">vertices</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">distance</span><span class="p">))</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">key</span>
+
+            <span class="n">graph</span><span class="p">.</span><span class="n">remove_vertices</span><span class="p">()</span>
+            <span class="n">graph</span><span class="p">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">current_path_length</span> <span class="o">&lt;</span> <span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle_length</span><span class="p">:</span>
+                <span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">ShortestPath</span><span class="p">(</span><span class="n">current_path_length</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
+                <span class="n">evaluations_until_solved</span> <span class="o">=</span> <span class="n">paths_evaluated</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">paths_evaluated</span><span class="p">,</span> <span class="n">evaluations_until_solved</span><span class="p">)</span>
+
+    <span class="n">graph</span><span class="p">.</span><span class="n">remove_vertices</span><span class="p">()</span>
+    <span class="n">graph</span><span class="p">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle</span><span class="p">.</span><span class="n">vertices</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">paths_evaluated</span><span class="p">,</span> <span class="n">evaluations_until_solved</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="dynamic-programming-to-the-rescue">Dynamic programming to the rescue</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">dynamic_programming</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]</span>
+                              <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">AlgorithmResult</span><span class="p">]:</span>
+    <span class="s">"""Solve the TSP problem with dynamic programming"""</span>
+    <span class="n">node_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">key</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">node_count</span><span class="p">)]</span> <span class="k">for</span> <span class="n">__</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">)]</span>
+    <span class="n">optimal_cycle</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">optimal_cycle_length</span> <span class="o">=</span> <span class="n">maxsize</span>
+    <span class="n">cycles_evaluated</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">evaluations_until_solved</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">memo</span> <span class="o">=</span> <span class="n">setup</span><span class="p">(</span><span class="n">memo</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">distances</span><span class="p">,</span> <span class="n">start</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">nodes_in_subcycle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">node_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">subcycle</span> <span class="ow">in</span> <span class="n">initialize_combinations</span><span class="p">(</span><span class="n">nodes_in_subcycle</span><span class="p">,</span> <span class="n">node_count</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">is_not_in</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">subcycle</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="n">cycles_evaluated</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="c1"># Look for the best next node to attach to the cycle
+</span>            <span class="k">for</span> <span class="n">next_node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">next_node</span> <span class="o">==</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">is_not_in</span><span class="p">(</span><span class="n">next_node</span><span class="p">,</span> <span class="n">subcycle</span><span class="p">):</span>
+                    <span class="k">continue</span>
+
+                <span class="n">subcycle_without_next_node</span> <span class="o">=</span> <span class="n">subcycle</span> <span class="o">^</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">next_node</span><span class="p">)</span>
+                <span class="n">min_cycle_length</span> <span class="o">=</span> <span class="n">maxsize</span>
+                <span class="k">for</span> <span class="n">last_node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">last_node</span> <span class="o">==</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">last_node</span> <span class="o">==</span> <span class="n">next_node</span> <span class="ow">or</span> <span class="n">is_not_in</span><span class="p">(</span><span class="n">last_node</span><span class="p">,</span> <span class="n">subcycle</span><span class="p">)):</span>
+                        <span class="k">continue</span>
+
+                    <span class="n">new_cycle_length</span> <span class="o">=</span> <span class="p">(</span><span class="n">memo</span><span class="p">[</span><span class="n">last_node</span><span class="p">][</span><span class="n">subcycle_without_next_node</span><span class="p">]</span> <span class="o">+</span> <span class="n">distances</span><span class="p">[(</span><span class="n">last_node</span><span class="p">,</span> <span class="n">next_node</span><span class="p">)])</span>
+                    <span class="k">if</span> <span class="n">new_cycle_length</span> <span class="o">&lt;</span> <span class="n">min_cycle_length</span><span class="p">:</span>
+                        <span class="n">min_cycle_length</span> <span class="o">=</span> <span class="n">new_cycle_length</span>
+                    <span class="n">memo</span><span class="p">[</span><span class="n">next_node</span><span class="p">][</span><span class="n">subcycle</span><span class="p">]</span> <span class="o">=</span> <span class="n">min_cycle_length</span>
+
+        <span class="n">evaluations_until_solved</span> <span class="o">=</span> <span class="n">cycles_evaluated</span>
+        <span class="n">optimal_cycle_length</span> <span class="o">=</span> <span class="n">calculate_optimal_cycle_length</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">nodes_in_subcycle</span><span class="p">,</span> <span class="n">memo</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+        <span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">find_optimal_cycle</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">nodes_in_subcycle</span><span class="p">,</span> <span class="n">memo</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+        <span class="n">vertices</span> <span class="o">=</span> <span class="n">create_vertices</span><span class="p">(</span><span class="n">optimal_cycle</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+        <span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">ShortestPath</span><span class="p">(</span><span class="n">optimal_cycle_length</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">cycles_evaluated</span><span class="p">,</span> <span class="n">evaluations_until_solved</span><span class="p">)</span>
+
+    <span class="n">optimal_cycle_length</span> <span class="o">=</span> <span class="n">calculate_optimal_cycle_length</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">node_count</span><span class="p">,</span> <span class="n">memo</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+    <span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">find_optimal_cycle</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">node_count</span><span class="p">,</span> <span class="n">memo</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+    <span class="n">vertices</span> <span class="o">=</span> <span class="n">create_vertices</span><span class="p">(</span><span class="n">optimal_cycle</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+    <span class="n">graph</span><span class="p">.</span><span class="n">remove_vertices</span><span class="p">()</span>
+    <span class="n">graph</span><span class="p">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+    <span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">ShortestPath</span><span class="p">(</span><span class="n">optimal_cycle_length</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">cycles_evaluated</span><span class="p">,</span> <span class="n">evaluations_until_solved</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">memo</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">],</span> <span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="s">"""Prepare the array used for memoization during the dynamic programming algorithm"""</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">==</span> <span class="n">node</span><span class="p">.</span><span class="n">key</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">memo</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">start</span> <span class="o">|</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[(</span><span class="n">start</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">memo</span>
+
+
+<span class="k">def</span> <span class="nf">initialize_combinations</span><span class="p">(</span><span class="n">nodes_in_subcycle</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">node_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="s">"""Initialize the combinations to consider in the next step of the algorithm"""</span>
+    <span class="n">subcycle_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">initialize_combination</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">nodes_in_subcycle</span><span class="p">,</span> <span class="n">node_count</span><span class="p">,</span> <span class="n">subcycle_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">subcycle_list</span>
+
+
+<span class="k">def</span> <span class="nf">initialize_combination</span><span class="p">(</span><span class="n">subcycle</span><span class="p">,</span> <span class="n">at</span><span class="p">,</span> <span class="n">nodes_in_subcycle</span><span class="p">,</span> <span class="n">node_count</span><span class="p">,</span> <span class="n">subcycle_list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="s">"""Initialize the combination to consider in the next step of the algorithm"""</span>
+    <span class="n">elements_left_to_pick</span> <span class="o">=</span> <span class="n">node_count</span> <span class="o">-</span> <span class="n">at</span>
+    <span class="k">if</span> <span class="n">elements_left_to_pick</span> <span class="o">&lt;</span> <span class="n">nodes_in_subcycle</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="k">if</span> <span class="n">nodes_in_subcycle</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">subcycle_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">subcycle</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">at</span><span class="p">,</span> <span class="n">node_count</span><span class="p">):</span>
+            <span class="n">subcycle</span> <span class="o">|=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+            <span class="n">initialize_combination</span><span class="p">(</span><span class="n">subcycle</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nodes_in_subcycle</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                                   <span class="n">node_count</span><span class="p">,</span> <span class="n">subcycle_list</span><span class="p">)</span>
+            <span class="n">subcycle</span> <span class="o">&amp;=</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">i</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">is_not_in</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">subcycle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="s">"""Checks if the bit at the given index is a 0"""</span>
+    <span class="k">return</span> <span class="p">((</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">index</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">subcycle</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+
+
+<span class="k">def</span> <span class="nf">calculate_optimal_cycle_length</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">node_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memo</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+                                   <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="s">"""Calculate the optimal cycle length"""</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">node_count</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">optimal_cycle_length</span> <span class="o">=</span> <span class="n">maxsize</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">start</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">cycle_cost</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">end</span><span class="p">]</span> <span class="o">+</span> <span class="n">distances</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">start</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">cycle_cost</span> <span class="o">&lt;</span> <span class="n">optimal_cycle_length</span><span class="p">:</span>
+            <span class="n">optimal_cycle_length</span> <span class="o">=</span> <span class="n">cycle_cost</span>
+
+    <span class="k">return</span> <span class="n">optimal_cycle_length</span>
+
+
+<span class="k">def</span> <span class="nf">find_optimal_cycle</span><span class="p">(</span><span class="n">start</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">node_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">memo</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+                       <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]):</span>
+    <span class="s">"""Recreate the optimal cycle"""</span>
+    <span class="n">last_index</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">node_count</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">optimal_cycle</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="n">start</span> <span class="ow">or</span> <span class="n">is_not_in</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">j</span>
+            <span class="n">prev_cycle_length</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[</span><span class="n">index</span><span class="p">][</span><span class="n">state</span><span class="p">]</span> <span class="o">+</span> <span class="n">distances</span><span class="p">[(</span><span class="n">index</span><span class="p">,</span> <span class="n">last_index</span><span class="p">)]</span>
+            <span class="n">new_cycle_length</span> <span class="o">=</span> <span class="n">memo</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">state</span><span class="p">]</span> <span class="o">+</span> <span class="n">distances</span><span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">last_index</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="n">new_cycle_length</span> <span class="o">&lt;</span> <span class="n">prev_cycle_length</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">j</span>
+
+        <span class="n">optimal_cycle</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">state</span> <span class="o">^</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">index</span><span class="p">)</span>
+        <span class="n">last_index</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="n">optimal_cycle</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+    <span class="n">optimal_cycle</span><span class="p">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="n">optimal_cycle</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">optimal_cycle</span>
+
+
+<span class="k">def</span> <span class="nf">create_vertices</span><span class="p">(</span><span class="n">optimal_cycle</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]</span>
+                    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+    <span class="s">"""Transform the list of visited node keys to something our graph can work with"""</span>
+    <span class="n">vertices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">optimal_cycle</span><span class="p">)):</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[(</span><span class="n">optimal_cycle</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">optimal_cycle</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+        <span class="n">vertices</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">optimal_cycle</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">optimal_cycle</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">weight</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">vertices</span>
+</code></pre></div></div>
+
+<h3 id="genetic-algorithm">Genetic algorithm</h3>
+
+<p>This is where the fun starts…</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">genetic_algorithm</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">],</span> <span class="n">population_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                            <span class="n">max_generations</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">max_no_improvement</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">AlgorithmResult</span><span class="p">]:</span>
+    <span class="s">"""Solve the TSP problem with a genetic algorithm"""</span>
+    <span class="n">generations_evaluated</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">generations_until_solved</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">generations_without_improvement</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">optimal_cycle</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">optimal_cycle_length</span> <span class="o">=</span> <span class="n">maxsize</span>
+    <span class="n">population</span> <span class="o">=</span> <span class="n">spawn</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">population_size</span><span class="p">)</span>
+    <span class="n">cycle_lengths</span> <span class="o">=</span> <span class="n">get_cycle_lengths</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_generations</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">generations_without_improvement</span> <span class="o">&gt;=</span> <span class="n">max_no_improvement</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">fitness</span> <span class="o">=</span> <span class="n">determine_fitness</span><span class="p">(</span><span class="n">cycle_lengths</span><span class="p">)</span>
+        <span class="n">improved</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cycle_length</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cycle_lengths</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">cycle_length</span> <span class="o">&lt;</span> <span class="n">optimal_cycle_length</span><span class="p">:</span>
+                <span class="n">improved</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">optimal_cycle_length</span> <span class="o">=</span> <span class="n">cycle_length</span>
+                <span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">generations_evaluated</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">improved</span><span class="p">:</span>
+            <span class="n">generations_until_solved</span> <span class="o">=</span> <span class="n">generations_evaluated</span>
+            <span class="n">generations_without_improvement</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">vertices</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">optimal_cycle</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">optimal_cycle</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[(</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span>
+                <span class="n">vertices</span><span class="p">.</span><span class="n">append</span><span class="p">((</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">distance</span><span class="p">))</span>
+                <span class="n">node</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="n">graph</span><span class="p">.</span><span class="n">remove_vertices</span><span class="p">()</span>
+            <span class="n">graph</span><span class="p">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+            <span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">ShortestPath</span><span class="p">(</span><span class="n">optimal_cycle_length</span><span class="p">,</span> <span class="n">vertices</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">generations_without_improvement</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">population</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">population</span><span class="p">,</span> <span class="n">cycle_lengths</span> <span class="o">=</span> <span class="n">create_next_population</span><span class="p">(</span><span class="n">population</span><span class="p">,</span> <span class="n">cycle_lengths</span><span class="p">,</span>
+                                                           <span class="n">fitness</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">generations_evaluated</span><span class="p">,</span> <span class="n">generations_until_solved</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">generations_evaluated</span><span class="p">,</span> <span class="n">generations_until_solved</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">spawn</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">population_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="s">"""Create the initial generation"""</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">graph</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">key</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">max_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">unique_permutations</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_permutations</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">population_size</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_permutations</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">max_size</span><span class="p">:</span>
+        <span class="n">permutation</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
+        <span class="n">shuffle</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span>
+        <span class="n">permutation</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span><span class="p">,)</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">start</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="n">permutation</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_permutations</span><span class="p">:</span>
+            <span class="n">unique_permutations</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span> <span class="k">for</span> <span class="n">permutation</span> <span class="ow">in</span> <span class="n">unique_permutations</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">create_next_population</span><span class="p">(</span><span class="n">current_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">cycle_lengths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+                           <span class="n">fitness</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">]</span>
+                           <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="s">"""Create the next generation"""</span>
+    <span class="n">new_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">population_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">current_population</span><span class="p">)</span>
+
+    <span class="c1"># Create the offspring of the current generation
+</span>    <span class="n">offspring</span> <span class="o">=</span> <span class="n">create_offspring</span><span class="p">(</span><span class="n">current_population</span><span class="p">,</span> <span class="n">fitness</span><span class="p">,</span> <span class="n">population_size</span><span class="p">)</span>
+
+    <span class="c1"># Perform a variation of elitism where we add the offspring to the current generation
+</span>    <span class="c1"># and only continue with the fittest list of size population_size
+</span>    <span class="n">new_population</span> <span class="o">=</span> <span class="n">current_population</span> <span class="o">+</span> <span class="n">offspring</span>
+    <span class="n">offspring_cycle_lengths</span> <span class="o">=</span> <span class="n">get_cycle_lengths</span><span class="p">(</span><span class="n">offspring</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+    <span class="n">new_population_cycle_lengths</span> <span class="o">=</span> <span class="n">cycle_lengths</span> <span class="o">+</span> <span class="n">offspring_cycle_lengths</span>
+    <span class="n">new_population_fitness</span> <span class="o">=</span> <span class="n">fitness</span> <span class="o">+</span> <span class="n">determine_fitness</span><span class="p">(</span><span class="n">offspring_cycle_lengths</span><span class="p">)</span>
+    <span class="n">survivor_candidates</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">new_population_fitness</span><span class="p">,</span> <span class="n">new_population</span><span class="p">)</span>
+    <span class="n">fittest_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">heapq</span><span class="p">.</span><span class="n">nlargest</span><span class="p">(</span><span class="n">population_size</span><span class="p">,</span> <span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">survivor_candidates</span><span class="p">)))]</span>
+    <span class="n">new_population</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_population</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fittest_indices</span><span class="p">]</span>
+    <span class="n">new_population_cycle_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">new_population_cycle_lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fittest_indices</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">new_population</span><span class="p">,</span> <span class="n">new_population_cycle_lengths</span>
+
+
+<span class="k">def</span> <span class="nf">create_offspring</span><span class="p">(</span><span class="n">current_population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">fitness</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span>
+                     <span class="n">population_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="s">"""Create a new generation"""</span>
+    <span class="n">offspring</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">offspring</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">population_size</span><span class="p">:</span>
+        <span class="n">parent1</span> <span class="o">=</span> <span class="n">parent2</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">parent1</span> <span class="o">==</span> <span class="n">parent2</span><span class="p">:</span>
+            <span class="n">parent1</span> <span class="o">=</span> <span class="n">get_parent</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+            <span class="n">parent2</span> <span class="o">=</span> <span class="n">get_parent</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+
+        <span class="n">child1</span> <span class="o">=</span> <span class="n">crossover</span><span class="p">(</span><span class="n">current_population</span><span class="p">[</span><span class="n">parent1</span><span class="p">],</span> <span class="n">current_population</span><span class="p">[</span><span class="n">parent2</span><span class="p">])</span>
+        <span class="n">child2</span> <span class="o">=</span> <span class="n">crossover</span><span class="p">(</span><span class="n">current_population</span><span class="p">[</span><span class="n">parent2</span><span class="p">],</span> <span class="n">current_population</span><span class="p">[</span><span class="n">parent1</span><span class="p">])</span>
+
+        <span class="n">child1</span> <span class="o">=</span> <span class="n">mutate</span><span class="p">(</span><span class="n">child1</span><span class="p">)</span>
+        <span class="n">child2</span> <span class="o">=</span> <span class="n">mutate</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+
+        <span class="n">offspring</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">child1</span><span class="p">)</span>
+        <span class="n">offspring</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">child2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">offspring</span>
+
+
+<span class="k">def</span> <span class="nf">get_parent</span><span class="p">(</span><span class="n">fitness</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+    <span class="s">"""Get a parent using either tournament selection or biased random selection"""</span>
+    <span class="k">if</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tournament_selection</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">biased_random_selection</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">tournament_selection</span><span class="p">(</span><span class="n">fitness</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="s">"""Perform basic tournament selection to get a parent"""</span>
+    <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">candidate1</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+    <span class="n">candidate2</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+    <span class="k">while</span> <span class="n">candidate1</span> <span class="o">==</span> <span class="n">candidate2</span><span class="p">:</span>
+        <span class="n">candidate2</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">candidate1</span> <span class="k">if</span> <span class="n">fitness</span><span class="p">[</span><span class="n">candidate1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">fitness</span><span class="p">[</span><span class="n">candidate2</span><span class="p">]</span> <span class="k">else</span> <span class="n">candidate2</span>
+
+
+<span class="k">def</span> <span class="nf">biased_random_selection</span><span class="p">(</span><span class="n">fitness</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="s">"""Perform biased random selection to get a parent"""</span>
+    <span class="n">random_specimen</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fitness</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fitness</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">fitness</span><span class="p">[</span><span class="n">random_specimen</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">i</span>
+
+    <span class="k">return</span> <span class="n">random_specimen</span>
+
+
+<span class="k">def</span> <span class="nf">crossover</span><span class="p">(</span><span class="n">parent1</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">parent2</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="s">"""Cross-breed a new set of children from the given parents"""</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">parent1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">parent1</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">parent1</span> <span class="o">=</span> <span class="n">parent1</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">parent2</span> <span class="o">=</span> <span class="n">parent2</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">parent2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">split</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">child</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">parent1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">split</span><span class="p">):</span>
+        <span class="n">child</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parent1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">remainder</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">parent2</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">child</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">remainder</span><span class="p">):</span>
+        <span class="n">child</span><span class="p">[</span><span class="n">split</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">start</span><span class="p">,</span> <span class="o">*</span><span class="n">child</span><span class="p">,</span> <span class="n">end</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="s">"""Mutate the child sequence"""</span>
+    <span class="k">if</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">child</span> <span class="o">=</span> <span class="n">swap_mutate</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+    <span class="n">child</span> <span class="o">=</span> <span class="n">rotate_mutate</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">child</span>
+
+
+<span class="k">def</span> <span class="nf">swap_mutate</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="s">"""Mutate the cycle by swapping 2 nodes"""</span>
+    <span class="n">index1</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">index2</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">child</span><span class="p">[</span><span class="n">index1</span><span class="p">],</span> <span class="n">child</span><span class="p">[</span><span class="n">index2</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="p">[</span><span class="n">index2</span><span class="p">],</span> <span class="n">child</span><span class="p">[</span><span class="n">index1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">child</span>
+
+
+<span class="k">def</span> <span class="nf">rotate_mutate</span><span class="p">(</span><span class="n">child</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="s">"""Mutate the cycle by rotating a part nodes"""</span>
+    <span class="n">split</span> <span class="o">=</span> <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">child</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">split</span><span class="p">]</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="n">child</span><span class="p">[</span><span class="n">split</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">tail</span> <span class="o">=</span> <span class="n">child</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:]</span>
+    <span class="n">child</span> <span class="o">=</span> <span class="n">head</span> <span class="o">+</span> <span class="n">mid</span> <span class="o">+</span> <span class="n">tail</span>
+
+    <span class="k">return</span> <span class="n">child</span>
+
+
+<span class="k">def</span> <span class="nf">get_cycle_lengths</span><span class="p">(</span><span class="n">population</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span>
+                      <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="s">"""Get the lengths of all cycles in the graph"""</span>
+    <span class="n">cycle_lengths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">specimen</span> <span class="ow">in</span> <span class="n">population</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">specimen</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">cycle_length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">specimen</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">cycle_length</span> <span class="o">+=</span> <span class="n">distances</span><span class="p">[(</span><span class="n">node</span><span class="p">,</span> <span class="n">key</span><span class="p">)]</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="n">cycle_lengths</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">cycle_length</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cycle_lengths</span>
+
+
+<span class="k">def</span> <span class="nf">determine_fitness</span><span class="p">(</span><span class="n">cycle_lengths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+    <span class="s">"""Determine the fitness of the specimens in the population"""</span>
+    <span class="c1"># Invert so that shorter paths get higher values
+</span>    <span class="n">fitness_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">cycle_lengths</span><span class="p">)</span>
+    <span class="n">fitness</span> <span class="o">=</span> <span class="p">[</span><span class="n">fitness_sum</span> <span class="o">/</span> <span class="n">cycle_length</span> <span class="k">for</span> <span class="n">cycle_length</span> <span class="ow">in</span> <span class="n">cycle_lengths</span><span class="p">]</span>
+
+    <span class="c1"># Normalize the fitness
+</span>    <span class="n">fitness_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">fitness</span><span class="p">)</span>
+    <span class="n">fitness</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="o">/</span> <span class="n">fitness_sum</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fitness</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">fitness</span>
+</code></pre></div></div>
+
+<h3 id="thousands-of-little-creepers">Thousands of little creepers…</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="k">def</span> <span class="nf">ant_colony</span><span class="p">(</span><span class="n">graph</span><span class="p">:</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">],</span>
+                     <span class="n">max_swarms</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">max_no_improvement</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AsyncIterator</span><span class="p">[</span><span class="n">AlgorithmResult</span><span class="p">]:</span>
+    <span class="s">"""Solve the TSP problem using ant colony optimization"""</span>
+    <span class="n">swarms_evaluated</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">evaluations_until_solved</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">swarms_without_improvement</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">node_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="p">.</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">pheromones</span> <span class="o">=</span> <span class="n">initialize_pheromones</span><span class="p">(</span><span class="n">node_count</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_swarms</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">swarms_without_improvement</span> <span class="o">&gt;=</span> <span class="n">max_no_improvement</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">vertices</span><span class="p">,</span> <span class="n">cycle_lengths</span> <span class="o">=</span> <span class="n">swarm_traversal</span><span class="p">(</span><span class="n">pheromones</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+        <span class="n">pheromones</span> <span class="o">=</span> <span class="n">pheromone_evaporation</span><span class="p">(</span><span class="n">pheromones</span><span class="p">)</span>
+        <span class="n">best_cycle_index</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">cycle_lengths</span><span class="p">)</span>
+        <span class="n">best_cycle</span> <span class="o">=</span> <span class="n">vertices</span><span class="p">[</span><span class="n">best_cycle_index</span><span class="p">]</span>
+        <span class="n">best_cycle_length</span> <span class="o">=</span> <span class="n">cycle_lengths</span><span class="p">[</span><span class="n">best_cycle_index</span><span class="p">]</span>
+        <span class="n">pheromones</span> <span class="o">=</span> <span class="n">pheromone_release</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">best_cycle</span><span class="p">,</span> <span class="n">best_cycle_length</span><span class="p">,</span> <span class="n">pheromones</span><span class="p">)</span>
+        <span class="n">pheromones</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">pheromones</span><span class="p">)</span>
+        <span class="n">swarms_evaluated</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">cycle_lengths</span><span class="p">[</span><span class="n">best_cycle_index</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle_length</span><span class="p">:</span>
+            <span class="n">graph</span><span class="p">.</span><span class="n">remove_vertices</span><span class="p">()</span>
+            <span class="n">graph</span><span class="p">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="n">best_cycle</span><span class="p">)</span>
+            <span class="n">graph</span><span class="p">.</span><span class="n">optimal_cycle</span> <span class="o">=</span> <span class="n">ShortestPath</span><span class="p">(</span><span class="n">best_cycle_length</span><span class="p">,</span> <span class="n">best_cycle</span><span class="p">)</span>
+            <span class="n">evaluations_until_solved</span> <span class="o">=</span> <span class="n">swarms_evaluated</span>
+            <span class="n">swarms_without_improvement</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">swarms_evaluated</span><span class="p">,</span> <span class="n">evaluations_until_solved</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">swarms_without_improvement</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">yield</span> <span class="n">AlgorithmResult</span><span class="p">(</span><span class="n">swarms_evaluated</span><span class="p">,</span> <span class="n">evaluations_until_solved</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">initialize_pheromones</span><span class="p">(</span><span class="n">node_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="s">"""Initialize the pheromone array"""</span>
+    <span class="n">pheromones</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">node_count</span><span class="p">,</span> <span class="n">node_count</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">pheromones</span><span class="p">.</span><span class="n">shape</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+            <span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+        <span class="n">row_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">row_sum</span> <span class="o">/</span> <span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="n">row_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/=</span> <span class="n">row_sum</span>
+    <span class="k">return</span> <span class="n">pheromones</span>
+
+
+<span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">pheromones</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="s">"""Normalize the pheromone matrix into probabilities"""</span>
+    <span class="n">node_count</span> <span class="o">=</span> <span class="n">pheromones</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+        <span class="n">row_sum</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/=</span> <span class="n">row_sum</span>
+    <span class="k">return</span> <span class="n">pheromones</span>
+
+
+<span class="k">def</span> <span class="nf">swarm_traversal</span><span class="p">(</span><span class="n">pheromones</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="s">"""Traverse the graph with a number of ants equal to the number of nodes"""</span>
+    <span class="n">node_count</span> <span class="o">=</span> <span class="n">pheromones</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">swarm_size</span> <span class="o">=</span> <span class="n">node_count</span> <span class="o">*</span> <span class="n">node_count</span>
+    <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">node_count</span><span class="p">]</span> <span class="o">*</span> <span class="n">swarm_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s">"i,i,i"</span><span class="p">)</span>
+    <span class="n">cycle_lengths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">swarm_size</span>
+    <span class="c1"># Traverse the graph swarm_size times
+</span>    <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">swarm_size</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+        <span class="n">futures</span> <span class="o">=</span> <span class="p">[</span><span class="n">executor</span><span class="p">.</span><span class="n">submit</span><span class="p">(</span><span class="n">traverse</span><span class="p">,</span> <span class="n">node_count</span><span class="p">,</span> <span class="n">pheromones</span><span class="p">,</span> <span class="n">distances</span><span class="p">)</span>
+                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">swarm_size</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">completed</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">)):</span>
+            <span class="n">cycle_length</span><span class="p">,</span> <span class="n">cycle</span> <span class="o">=</span> <span class="n">completed</span><span class="p">.</span><span class="n">result</span><span class="p">()</span>
+            <span class="n">vertices</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cycle</span>
+            <span class="n">cycle_lengths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cycle_length</span>
+    <span class="k">return</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">cycle_lengths</span>
+
+
+<span class="k">def</span> <span class="nf">traverse</span><span class="p">(</span><span class="n">node_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pheromones</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span>
+             <span class="n">distances</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">]:</span>
+    <span class="s">"""Perform a traversal through the graph"""</span>
+    <span class="c1"># Each traversal consists of node_count vertices
+</span>    <span class="n">current_node</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">current_node</span><span class="p">])</span>
+    <span class="n">cycle_length</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">node_count</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s">"i,i,i"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">row_sorted_indices</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pheromones</span><span class="p">[</span><span class="n">current_node</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="n">pheromones</span><span class="p">[</span><span class="n">current_node</span><span class="p">,</span> <span class="p">:],</span> <span class="n">row_sorted_indices</span><span class="p">)</span>
+        <span class="n">cumul</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">cumul</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">cumul</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">cumul</span>
+
+        <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">chance</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)):</span>
+            <span class="n">candidate</span> <span class="o">=</span> <span class="n">row_sorted_indices</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">k</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">chance</span> <span class="o">&lt;=</span> <span class="n">row</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="o">!=</span> <span class="n">current_node</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">):</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">candidate</span>
+                <span class="k">break</span>
+        <span class="c1"># If no suitable index was found, the generated chance was probably too low
+</span>        <span class="c1"># Pick the first index that's not itself and not visited yet
+</span>        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">candidate</span> <span class="o">=</span> <span class="n">row_sorted_indices</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">candidate</span> <span class="o">!=</span> <span class="n">current_node</span> <span class="ow">and</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">candidate</span>
+                    <span class="k">break</span>
+
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">current_node</span><span class="p">,</span> <span class="n">index</span><span class="p">]</span>
+        <span class="n">vertices</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_node</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span>
+        <span class="n">cycle_length</span> <span class="o">+=</span> <span class="n">distance</span>
+        <span class="n">visited</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">current_node</span> <span class="o">=</span> <span class="n">index</span>
+    <span class="c1"># Add the last vertex back to the starting node
+</span>    <span class="n">distance</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">current_node</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">vertices</span><span class="p">[</span><span class="n">node_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_node</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span>
+    <span class="n">cycle_length</span> <span class="o">+=</span> <span class="n">distance</span>
+    <span class="k">return</span> <span class="n">cycle_length</span><span class="p">,</span> <span class="n">vertices</span>
+
+
+<span class="k">def</span> <span class="nf">pheromone_evaporation</span><span class="p">(</span><span class="n">pheromones</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="s">"""Evaporation of pheromones after each traversal"""</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="p">.</span><span class="n">ndindex</span><span class="p">(</span><span class="n">pheromones</span><span class="p">.</span><span class="n">shape</span><span class="p">):</span>
+        <span class="n">pheromones</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pheromones</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pheromones</span>
+
+
+<span class="k">def</span> <span class="nf">pheromone_release</span><span class="p">(</span><span class="n">vertices</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">best_cycle</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">,</span>
+                      <span class="n">best_cycle_length</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">pheromones</span><span class="p">:</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="s">"""Perform pheromone release, with elitism towards shorter cycles"""</span>
+    <span class="k">for</span> <span class="n">cycle</span> <span class="ow">in</span> <span class="n">vertices</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">cycle</span><span class="p">:</span>
+            <span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">weight</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">best_cycle</span><span class="p">:</span>
+        <span class="n">pheromones</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">best_cycle_length</span>
+
+    <span class="k">return</span> <span class="n">pheromones</span>
+</code></pre></div></div>
+
+  </section>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/2023/traveling-salesman/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2023/traveling-salesman'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//peculiar-coding-endeavours.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2023 Tom van Schaijk. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1680374070173315573"></script>
+
+
+    </div>
+
+<!-- load mathjax -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  </body>
+</html>
