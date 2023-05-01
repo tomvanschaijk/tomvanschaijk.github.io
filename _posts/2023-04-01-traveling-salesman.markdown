@@ -412,12 +412,14 @@ This is where the actual work happens, and there's a bit to it. Make sure the ot
         yield AlgorithmResult(cycles_evaluated, evaluations_until_solved)
 ```
 
-As you can see, the outer loop increases the length of the cycle by 1 each iteration. In every iteration, we find the optimal cycle of a certain length, as we increase the cycle length until we have an optimal cycle equal to the amount of nodes. The first inner loop goes over all distinct subcycles we want to consider. Obviously, we only want to consider subcycles where the start node is actually part of the subcycle. Otherwise, that subcycle could not have started at the starting node. The function to check that is called is_not_in:
+As you can see, the outer loop increases the length of the cycle by 1 each iteration. In every iteration, we find the optimal cycle of a certain length, as we increase the cycle length until we have an optimal cycle equal to the amount of nodes. The first inner loop goes over all distinct subcycles we want to consider. Obviously, we only want to consider subcycles where the start node is actually part of the subcycle. Otherwise, that subcycle could not have started at the starting node. The function to check that is called is_not_in (I know it's a one-line function... in my defense: there's a npm package called "is_even". So hold your horses :-D ):
+
 ``` python
 def is_not_in(index, subcycle) -> bool:
     """Checks if the bit at the given index is a 0"""
     return ((1 << index) & subcycle) == 0
 ```
+
 and all that's done here is check whether or not the bit at the index position in the subcycle is a 0. If it is, the node is not part of the subcycle.
 
 After that, we loop over all potential next nodes. Here, we only want to consider nodes that are actually in the subcycle, and are not equal to our starting node. We then represent the next subcycle without this next node. We do this so we can use our memoization matrix to look up what the best partial tour length was without the next node already included. The last inner loop, where we cycle the last_node variable over the range of possible nodes, is there to to test all possible end nodes of the currently considered subcycle, and consider which node best optimizes that subcycle. This last node can of course not be the start node, next node that is fixed in the loop before, and should obviously be part of the current subcycle.
@@ -871,6 +873,8 @@ In any case, that's all in terms of the implementation. As I said before, the co
 
 ### Thousands of little creepers...
 
+Talking about wonderful... The next algorithm got me even more excited than genetic algorithms. We'll stick to nature, but switch gears from the wonders of evolution to the behavior of one of the most numerous animals on the plant: ants! I was extremely excited to dig my fingers into this one, and I hope it will get you equally excited. Ant colony optimization is a very interesting algorithm where we mimic the behavior of ant swarms. We will unleash a number of waves of ants onto our starting node, and have them explore our graph until they visited all nodes and end up back at the starting node. As they explore the graph, they leave behind a pheromone trail that will encourage other ants to also take that route. The better (shorter, in our case) a route is, the stronger the pheromone trail, and the more chance there is that another ant will prefer to take that route, leaving behind additional pheromones to further strenghten that path. To also introduce some sense of exploration, and to avoid local minima, pheromones will evaporate over time. While getting myself familiar with the overall concept and the details behind it, several clips of HK Lam, [like this one and others](https://www.youtube.com/watch?v=jNd7QJQH-kk){:target="_blank"} helped my understanding out tremendously. He has playlists on several interesting topics in the same sphere, definitely check them out! The full code of the algorithm:
+
 ``` python
 async def ant_colony(graph: Graph, distances: dict[tuple[int, int], int],
                      max_swarms: int, max_no_improvement: int) -> AsyncIterator[AlgorithmResult]:
@@ -1016,10 +1020,141 @@ def pheromone_release(vertices: np.ndarray, best_cycle: np.ndarray,
     return pheromones
 ```
 
+#### Follow the crumbs, or pheromones really...
+
+You notice we use similar ideas as we did for the genetic algorithm. We'll exit when we have a certain amount of swarm traversals without improvement in terms of finding better routes, and parameters such as the amount of swarms and the size of a swarm are very much subject to trial and error. Just like we initialized a starting generation to kick off the genetic algorithm, we'll have some initialization going on here, namely the pheromone matrix that will drive the behavior of the ants as they choose a certain route.
+
+``` python
+def initialize_pheromones(node_count: int, distances: dict[tuple[int, int], int]) -> np.ndarray:
+    """Initialize the pheromone array"""
+    pheromones = np.zeros((node_count, node_count), dtype=float)
+    for i, j in np.ndindex(pheromones.shape):
+        if i != j:
+            pheromones[i, j] = distances[(i, j)]
+    for i in range(node_count):
+        row_sum = sum(pheromones[i, :])
+        for j in range(node_count):
+            if i != j:
+                pheromones[i, j] = row_sum / pheromones[i, j]
+        row_sum = sum(pheromones[i, :])
+        for j in range(node_count):
+            if i != j:
+                pheromones[i, j] /= row_sum
+    return pheromones
+```
+
+We fill up a NxN matrix with zeros, where N is the amount of nodes to visit. Then we add the distances from each node to each other node to that matrix. After that, we simply normalize these distances for each row into probabilities, just like we did for the genetic algorithm. Shorter distances between 2 nodes will result in a higher probability of that path being chosen. It's really quite simple, and once that concept clicks with you, it's not hard to imagine what follows. We will use this pheromone matrix to influence the routes that the ants take. Whenever an ant is at a node, their decision for the next node to go to, depends on whether that node was already visited and the probability assigned to that node.
+
+
+#### Unleashing the swarms
+
+Now that our initial pheromone matrix is set up, we'll set loose a swarm of ants on the starting node and have them traverse the entire graph. Tey will each visit every node exactly once, and end up back at the strating node. The amount of ants in a swarm up for debate and theoretical discussion, but we'll limit ourselfves to n² ants per swarm. We spin up a number of threads to process each swarm traversal, and collect the results of each traversal, which are the cycle lengths and the vertices traveled in sequence.
+
+``` python
+def swarm_traversal(pheromones: np.ndarray, distances: dict[tuple[int, int], int]) -> tuple[np.ndarray, list[int]]:
+    """Traverse the graph with a number of ants equal to the number of nodes"""
+    node_count = pheromones.shape[0]
+    swarm_size = node_count * node_count
+    vertices = np.array([[(0, 0, 0)] * node_count] * swarm_size, dtype="i,i,i")
+    cycle_lengths: list[int] = [0] * swarm_size
+    # Traverse the graph swarm_size times
+    with ThreadPoolExecutor(max_workers=min(swarm_size, 50)) as executor:
+        futures = [executor.submit(traverse, node_count, pheromones, distances)
+                   for i in range(swarm_size)]
+        for i, completed in enumerate(as_completed(futures)):
+            cycle_length, cycle = completed.result()
+            vertices[i] = cycle
+            cycle_lengths[i] = cycle_length
+    return vertices, cycle_lengths
+```
+
+Each traversal is simply a sequence of decisions going from one node to the next. We use the pheromone matrix to help us determine which next candidate now we will visit next. We generate a random number between 0 and 1, and loop over all candidates. We compare the generated random probability to each candidate (in the row in the pheromone matrix for that node, sorted to make this selection possible), and the first node we find that has a probability high enough to satisfy the generated number is the one we will go for (if it is not visited already, or equal to the actual node we are at). As a fallback, we just take the first node that was not visited yet. The code looks more involved that what is actually behind it, and there are undoubtley more terse ways to express this, but this code allows you to following along much easier if you decide to step through he code yourself.
+
+``` python
+def traverse(node_count: int, pheromones: np.ndarray,
+             distances: dict[tuple[int, int], int]) -> tuple[int, np.ndarray]:
+    """Perform a traversal through the graph"""
+    # Each traversal consists of node_count vertices
+    current_node = 0
+    visited = set([current_node])
+    cycle_length = 0
+    vertices = np.array([(0, 0, 0)] * node_count, dtype="i,i,i")
+    for j in range(node_count - 1):
+        row_sorted_indices = np.argsort(pheromones[current_node, :])
+        row = np.take(pheromones[current_node, :], row_sorted_indices)
+        cumul = 0
+        for k, _ in enumerate(row):
+            if row[k] == 0.0:
+                continue
+            row[k], cumul = row[k] + cumul, row[k] + cumul
+
+        index = -1
+        chance = random()
+        for k in range(1, len(row)):
+            candidate = row_sorted_indices[k]
+            if (row[k - 1] < chance <= row[k] and candidate != current_node and candidate not in visited):
+                index = candidate
+                break
+        # If no suitable index was found, the generated chance was probably too low
+        # Pick the first index that's not itself and not visited yet
+        if index == -1:
+            for k in range(len(row) - 1, 0, -1):
+                candidate = row_sorted_indices[k]
+                if candidate != current_node and candidate not in visited:
+                    index = candidate
+                    break
+
+        distance = distances[current_node, index]
+        vertices[j] = (current_node, index, distance)
+        cycle_length += distance
+        visited.add(index)
+        current_node = index
+    # Add the last vertex back to the starting node
+    distance = distances[current_node, 0]
+    vertices[node_count - 1] = (current_node, 0, distance)
+    cycle_length += distance
+    return cycle_length, vertices
+```
+
+Once we found a next node to visit, we simply add that to the set of already visited nodes so we can avoid visiting the same node twice. At the end, we simply make the last hop back to our starting node, and return the completed cycle and its length.
+
+#### Pheromone release and evaporation
+
+After each traversal, we are hopefully a bit wiser as to which sequence of nodes results in a more ideal path. However, ants wouldn't be ants if there wasn't some sort of overarching mechanism to guide the whole swarm to more desirable circumstances. The pheromone matrix we initialized at the start will enable us to do just that. Based on the results of each traversal, we can implement kind of a feedback loop back into the swarm, that will guide us to make even better decisions the next time we decide to make the journey. The functions pheromone_evaporation and pheromone_release do exactly that. Let's look at each of them, starting with pheromone evaporation:
+
+``` python
+def pheromone_evaporation(pheromones: np.ndarray) -> np.ndarray:
+    """Evaporation of pheromones after each traversal"""
+    for index in np.ndindex(pheromones.shape):
+        pheromones[index] *= 1 - pheromones[index]
+    return pheromones
+```
+
+Why would we want to dissolve the pheromone trail in the first place? Well, specifically for our problem, we want to avoid strengthening paths that look more interesting intially, but do not ultimately lead to a close to optimal solution. Remember, during the pheromone matrix initialization, we already favored shorter paths by giving them a higher probability. Although some randomization is built into the path choice, we want to keep some sense of exploration into the system, and as such, we do not want to infinitely strengthen already strong paths, while at the same time discouraging paths that seemed to be very unlikely to lead to ideal results. So we slightly lower the intensity of each pheromone trail over time. Practically, when a certain node path has a probability of 0.45, its new value will be (1 - 0.45) x 0.45 = 0.2475. A path with a probability of 0.1 will evaporate to (1 - 0.1) x 0 .1 = 0.09. Stronger paths will have a stronger evaporation than weak paths.
+
+Of course, paths that lead to great overal results (meaning shorter cycle lengths) are to be encouraged. This is why we also have a positive feedback loop in the form of releasing pheromones:
+``` python
+def pheromone_release(vertices: np.ndarray, best_cycle: np.ndarray,
+                      best_cycle_length: int, pheromones: np.ndarray) -> np.ndarray:
+    """Perform pheromone release, with elitism towards shorter cycles"""
+    for cycle in vertices:
+        for i, j, weight in cycle:
+            pheromones[i, j] += 1 / weight
+    for i, j, _ in best_cycle:
+        pheromones[i, j] += 1 / best_cycle_length
+
+    return pheromones
+```
+
+For each vertex in the cycle, we increase the pheromones on that vertex with 1 divided by the weight (in our case the distance between the nodes on each side of the vertex). Simply put: shorter paths will be rewarded more than longer paths, and see their pheromone trail enforced much more strongly. On top of this, just like we implemented a form of elitism in the case of our genetic algorithm, we will do so here. We'll also add some extra pheromone strength to each path in the best cycle we found so far.
+
+The combination of this negative and positive feedback loop, applied to the results of the traversals of each ant in the swarm, over multiple swarms in time, will very quickly lead to a close to optimal shortest path through the entire graph. The code is quite easy and quickly implemented. Compared to the genetic algorithm though, the explainability of the entire algorithm (although the steps in and of themselves are fairly clear) is lower than in the case of genetic algorithms. Intuitively, it's much easier to reason about how and exactly why genetic algorithms lead to a high quality approximation, than for ant colony optimization. Maybe you feel differently though. In any case, both are amazing algorithms, quite easy to implement and it doesn't stop to amaze me how quickly both of them converge to a very high quality approximation of the ideal solution.
+
+
 ### Concluding
-Well, that's about all I have to say about this topic so far. Since I always wanted to dabble into genetic algorithms and ant colony optimization, this was a nice little project to keep me occupied. I'm currently
-investing pretty much all my spare time into learning Rust, so this is definitely the last Python project I'll post for a while. I already use Python in my day-to-day work, and since I do heavily prefer statically-typed compiled languages, and I'm a sucker for performance, expect a lot of Rust in the future. I'm currently playing around with cloth simulation, wave function collapse and procedural generation, so expect several of those (and other) little adventures to appear here soon. I played around with a fractal zoomer for the Mandelbrot set using [Taichi](https://github.com/taichi-dev/taichi){:target="_blank"} to get it to run on the GPU, but I'm thinking to<br/>
+
+Well, that's about all I have to say about this topic for now. Since I always wanted to dabble into genetic algorithms and ant colony optimization, this was a nice little project to keep me occupied for a few days. It took me a few months to get the start this actual blog, but I'm currently investing pretty much all my spare time into learning Rust, so this is definitely the last Python project I'll post for a while. I already use Python in my day-to-day work, and since I do heavily prefer statically-typed compiled languages, and I'm a sucker for performance, expect a lot of Rust in the future. I'm currently playing around with cloth simulation, wave function collapse and procedural generation, so expect several of those (and other) little adventures to appear here soon. I played around with a fractal zoomer for the Mandelbrot set using [Taichi](https://github.com/taichi-dev/taichi){:target="_blank"} to get it to run on the GPU, but I'm thinking to<br/>
 ![rewrite in rust]({{ site.url }}/assets/tsp/rewriteinrust.jpg)<br/>
 and use [Bevy](https://bevyengine.org/){:target="_blank"}, since that will probably enable me to zoom into fractals even further than what Python allows me to crunch out. We'll see. If not, I'll update this article with the github link to my project in Python. So much to do, so little time ;-)
 
-In any case, thank you for reading this, I do hope it sparked some interest, and you learned something! I'm 100% only a rookie concerning genetic algorithms and ant colony optimization, but this project and the little bit of study I needed to crank it out at least familiarized me with the concepts involved. I hope this inspires at least some people to lay off the ChatGPT's of the world, and learn new stuff the old school way, because it's just a whole lot of fun ;-)
+In any case, thank you for reading this (if you got through it at all, wouldn't blame you otherwise), I do hope it sparked some interest, and you learned something! I'm 100% only a rookie concerning genetic algorithms and ant colony optimization, but this project and the little bit of study I needed to crank it out at least familiarized me with the concepts involved. I hope this inspires at least some people to lay off the ChatGPT's of the world, and learn new stuff the old school way, because it's just a whole lot of fun ;-) Take it from me though: don't learn a few new algorithms, make an example implementation in 3 days, and then set it aside for 4 months so you have to relearn it all real quick for the blog post :-D not the most efficient use of time.
