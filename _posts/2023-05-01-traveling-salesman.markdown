@@ -1,6 +1,6 @@
 ---
 title:  "Traveling salesman problem"
-date:   2023-04-01 16:00:00
+date:   2023-05-01 16:00:00
 categories: [Tech, Algorithms] 
 tags: [tsp, algorithms, python]
 ---
