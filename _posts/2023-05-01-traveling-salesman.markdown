@@ -323,7 +323,7 @@ def create_vertices(optimal_cycle: list[int], distances: dict[tuple[int, int], i
     return vertices
 ```
 
-Again, in case you want to understand the steps at a high level, change the sleep time to about a second or so, and you will see what happens. Starting with a cycle of 2 nodes, building up to a cycle including all the points, we find the shortest possible path using the points we include in the cycle. Whenever an optimal solution is found for 3 points, we find an optimal solution for those 2 points plus 1 more, reusing what we have already learned so far. We keep doing that until the full set of nodes has been traveled. It's really quite beautiful to see in action, in my opinion. How to achieve it, though?
+Again, in case you want to understand the steps at a high level, change the sleep time to about a second or so, and you will see what happens. Starting with a cycle of 2 nodes, building up to a cycle including all the points, we find the shortest possible path using the points we include in the cycle. Whenever an optimal solution is found for 2 points, we find an optimal solution for those 2 points plus 1 more, reusing what we have already learned so far. We keep doing that until the full set of nodes has been traveled. It's really quite beautiful to see in action, in my opinion. How to achieve it, though?
 
 #### Getting the memoization matrix set up
 
