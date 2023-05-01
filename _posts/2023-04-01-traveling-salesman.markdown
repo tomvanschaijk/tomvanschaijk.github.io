@@ -25,7 +25,7 @@ I've been interested in genetic algorithms and ant colony optimization for a whi
 
 
 ### The project
-The full code of the project is available on my [GitHub](https://github.com/tomvanschaijk/travelingsalesman){:target="_blank"}. The requirements to run it are pretty basic. It's all Python code, and I mainly use PyGame, Numpy, Asyncio and Aiostream. Just install the requirements in requirements.txt and you'll be set. You can preview the end result right [here](https://youtu.be/XCZSwM--vCA){:target="_blank"}. In fact, give that a quick gander, keep it open in your browser, and the rest of the article will quickly become clear. Obviously, cloning it yourself and running it will help your understanding even more.
+The full code of the project is available on my [GitHub](https://github.com/tomvanschaijk/travelingsalesman){:target="_blank"}. The requirements to run it are pretty basic. It's all Python code, and I mainly use PyGame, Numpy, Asyncio and Aiostream. Just install the requirements in requirements.txt and you'll be set. You can preview the end result right [here](https://youtu.be/XCZSwM--vCA){:target="_blank"}. In fact, give that a quick gander, keep it open in your browser to get back to every now and then, and the rest of the article will quickly become clear. Obviously, cloning it yourself and running it will help your understanding even more.
 
 The PyGame window that pops up when running shows you 5 panes. The top center one is the one where you can left-click to add points. These points will be the destinations our supposed salesman will have to visit. The first point you create will be green, and will be the starting point and end destination. All other blue ones are the cities to be visited before getting back to the starting point. Hitting spacebar will reset the screen, enter starts the algorithm. The distances between points is simply the Euclidean distance in pixels between the points.
 
@@ -123,7 +123,7 @@ Quite simple, and quite powerful. Ok, let's get to the interesting parts now!
 
 
 ### A brute force approach
-Whenever you start implementing a non-trivial algorithm, it's always a good idea to start with an implementation that is focussed on getting the correct result, disregarding any tendency you might have to go for early optimizations. Make it as simple and clear as you can, but focus on achieving a 100% correct solution. Explore the full set of possible solutions, perform an exhaustive search and simply keep updating the candidate solution every time there's an improvement until there are no more candidate solutions, and you just found yourself the optimal solution. It will help you understand the problem, and you can use this initial iteration as a reference to compare future solutions with, and doublecheck them for correctness.
+Whenever you start implementing a non-trivial algorithm, it's always a good idea to start with an implementation that is focussed on getting the correct result, disregarding any tendency you might have to go for early optimizations. Make it as simple and clear as you can, but focus on achieving a 100% correct solution. Explore the full set of possible solutions, perform an exhaustive search and simply keep updating the candidate solution every time there's an improvement until there are no more candidate solutions, and you just found yourself the optimal solution. It will help you understand the problem, and you can use this initial iteration as a reference to compare future solutions to, and doublecheck them for correctness.
 
 In case of the TSP, implementing a brute force solution is quite easy. We simply generate all possible permutations of the set of destinations, evaluate the full path distance from start through all nodes back to the initial node, and store the optimal path length and the sequence of nodes traveled in order to achieve it. Contrary to what I just said a sentence or 2 ago, I'd say some small optimizations are permitted. One such obvious thing is that a sequence of A - B - C - A is identical in length to the sequence A - C - B - A, and as such, both do not need to be evaluated. We only consider unique permutations. We obviously don't need to continuously build the actual graph under consideration for the algorithm to work. However, I wanted to display the paths under evaluation as the algorithm does its work, so that little bit of extra effort is worth it for this project.
 
@@ -434,9 +434,13 @@ A final word of warning if you play around with this yourself: there's quite a b
 
 ### Genetic algorithm
 
-Finally, this is where the real fun starts... Now that we have 2 ways of solving the TSP that give us a guaranteed optimal result, even though it might take a bit to get there, we'll dig into some approximation algorithms. Firstly, genetic algorithms. You will see that the code isn't terribly complex at all, which allows me to focus on the high level concepts of these interesting algorithms and apply them on this problem. If the dynamic programming section was a bit of a head-scratcher: no worries, it's all fun from here on out.
+Finally, this is where the real fun starts... Now that we have 2 ways of solving the TSP that give us a guaranteed optimal result, even though it might take a bit to get there, we'll dig into some approximation algorithms. Firstly, genetic algorithms. You will see that the code isn't terribly complex at all, which allows me to focus on the high level concepts of these interesting algorithms and apply them on this problem. If the dynamic programming section was a bit of a head-scratcher: no worries, it's all fun and games from here on out.
 
-First and foremost: what are genetic algorithms..?
+#### Genetic? Evolution?
+
+First and foremost: what are genetic algorithms..? They are an optimization technique, using concepts from evolutionary biology to search for a global optimal solution. As you would expect when drawing the analogy to evolution, we start with an initial population. We will crossbreed certain entities from the population with eachother to obtain a new generation. There are various techniques we can apply to this process, and as you would expect, strong specimens will be more likely to breed, and some random mutation will also occur. As such, it really mimics the process of evolutionary biology where we have non-random survival with non-random reproduction and random mutation. The survival of a certain specimen (or the spreading of its 'genes) is steered by a fitness function that measures how well it can optimize for its purpose (in our case, finding the shortest route between a set of nodes). Stronger specimens have a higher chance propagating their DNA through the generations, as they are more likely to be chosen for reproduction. To make sure there is some sense of discovery built into the whole system, random mutation will be an important part of the process.
+
+When I first read about these algorithms, I got incredibly excited to learn about them, take a swing at them myself and I'm still amazed at how well the whole concept works. You will see that close to optimal results can be achieved very quickly, both in terms of generations needed to do so, as in processing time. Each step is fairly simple, very visual and easy to implement. Most of the difficulty regarding the efficacy behind these algorithms lie in the details and many of the parameters. How big is my population? How many generations will I evolve before I stop and accept the result as close enough to optimal? What techniques will I use to steer the crossbreeding? How will I introduce genetic mutation in new specimens? A lot of these questions are often a matter of experimentation. Since I'm still very much a beginner in terms of these algorithms, I'd encourage you to start your own learning journey if all of this spikes your interest. For now, let me show you the implementation I came up with, after experimenting with all of the above:
 
 ``` python
 async def genetic_algorithm(graph: Graph, distances: dict[tuple[int, int], int], population_size: int,
@@ -652,6 +656,218 @@ def determine_fitness(cycle_lengths: list[int]) -> list[float]:
 
     return fitness
 ```
+
+#### The initial population
+
+If you take your time to go over the implementation and maybe step through it yourself, I think your first impression will be that the complexity here is fairly low. Let's go over what exactly happens, and focus on some of the functions in detail. Our first task is to spawn an initial population:
+
+``` python
+population = spawn(graph, population_size)
+...
+def spawn(graph: Graph, population_size: int) -> list[list[int]]:
+    """Create the initial generation"""
+    start = graph[0].key
+    keys = list(graph.nodes.keys())[1:]
+    max_size = int(factorial(len(keys)) / 2)
+    unique_permutations = set()
+    while len(unique_permutations) < population_size and len(unique_permutations) < max_size:
+        permutation = list(keys)
+        shuffle(permutation)
+        permutation = (start,) + tuple(permutation) + (start,)
+        if permutation[::-1] not in unique_permutations:
+            unique_permutations.add(permutation)
+
+    return [list(permutation) for permutation in unique_permutations]
+```
+
+So what does it mean to have a "population"? For our particular problem, each specimen in the population is basically a candidate route that starts out at our designated starting node, visits every other node exactly once, and arrives back at that starting node. Whether or not that's an optimal route or not is of no signifiicance at this point. We trust that an approximation of the ideal route can be achieved through evolution, and we won't have to perform an exhaustive search through all permutations. That last part is the whole point of it, especially for problems that are NP-hard: we do not want to generate the full set of potential solutions and go through them one by one. We will simply generate a number of candidate solutions and start the process off from there. Also, it's important that these initial candidate solutions are chosen randomly. When we use heuristics to already pre-optimize candidates, this leads to a low diversity in the population, which can yield suboptimal solutions. There is no need to increase the initial fitness of the population. It's the diversity of the solutions that will lead to optimality.
+
+That begs another question: how do we determine the size of our initial population? If we start with a high initial population count, this can cause the algorithm to perform very poorly, which we want to avoid. Then again, an overly small population may not be enough to create a high quality and diverse mating pool. A lot of trial and error can go into finding out a population size that suits the specific problem. In this case, I have settled on half of n!, where n is the set of nodes excluding the starting node. For example, if we have a set of 8 total nodes, the initial population size would consist of (7!) / 2 = 2520. Putting it in perspective, in this case there would be 40320 potential solutions, so we're still far from generating the full set of candidates. In case you want to learn more, there are several whitepapers out there that just focus on techniques to determine the ideal initial population size alone.
+
+
+#### Keep on spinning forever?
+
+So now that we decided on an initial population, the next question is: how long will we keep this little eco-system doing its thing? Remember 2 sentences back? Yeah, there's also enough research going on regarding that question. At some point, there simply is either no improvement possible since we converged on the optimal solution, or the whole cycle doesn't yield any improvement anymore. Since we'll never know whether we actually found an optimal solution (not without some "help" from the outside at least), we'll just decide to stop running the algorithm when we haven't seen any improvement for a certain amount of generations:
+
+``` python
+    for _ in range(max_generations):
+        if generations_without_improvement >= max_no_improvement:
+            break
+```
+
+ What that number is, will be dependent on the size of the problem and many other factors. In main.py, you see that some experimentation made me settle on some numbers of population size and max_generations that seemed to work well for a certain number of nodes:
+
+``` python
+    def __determine_ga_parameters(self, node_count: int) -> tuple[int, int]:
+        match node_count:
+            case _ if node_count <= 5: return 50, 5
+            case _ if node_count <= 10: return 250, 10
+            case _ if node_count <= 15: return 500, 30
+            case _ if node_count <= 20: return 750, 50
+            case _ if node_count <= 25: return 1000, 75
+            case _ if node_count <= 30: return 1250, 100
+            case _ if node_count <= 35: return 1500, 150
+            case _ if node_count <= 50: return 5000, 250
+        return 25000, 500
+```
+
+#### Nature calls
+
+And after that, you could say it's off to the races. We first determine the fitness of our current population, which is fairly simple. All we do is take the total sum of the cycle lengths and divide the length of each 
+cycle by that number. That way, shorter paths get higher values. We then just normalize those values so they all sum up to 1.
+
+``` python
+def determine_fitness(cycle_lengths: list[int]) -> list[float]:
+    """Determine the fitness of the specimens in the population"""
+    # Invert so that shorter paths get higher values
+    fitness_sum = sum(cycle_lengths)
+    fitness = [fitness_sum / cycle_length for cycle_length in cycle_lengths]
+
+    # Normalize the fitness
+    fitness_sum = sum(fitness)
+    fitness = [f / fitness_sum for f in fitness]
+
+    return fitness
+```
+
+After this step, we check if we found a shorter cycle in this generation, and update the shortest known cycle to that specific candidate. We then do some bookkeeping to update our graph to this newly found solution, which is just something we do for this particular project in order to display intermediary results. The next important thing we need to do is create a whole new generation. There's a lot of possibilities to experiment here, from the methods for selection to the way we introduce mutation, and even the size of the new population. 
+
+##### Non-random selection
+
+What determines which specimens get to propagate their DNA through the generations? The temptation might be the simply select only the strongest candidate solutions. This will inevitably lead to getting stuck in local optimal solutions, low diversity in the population and ultimately, far from a close-to-optimal solution in the long run. There are 2 quite popular methods to go about selecting parents, called tournament selection and biased random selection. We will randomly select either one of them. If you think "that sounds awefully random to me, where does the non-random part come in": no worries, both still favor more fit specimens.
+
+Tournament selection works as follows: we pick 2 completely random candidate solutions out of the population, and which ever has the highest fitness wins. Yeah. That's it. I told you the code was simple. Here it is:
+
+``` python
+def tournament_selection(fitness: list[float]) -> int:
+    """Perform basic tournament selection to get a parent"""
+    start, end = 0, len(fitness) - 1
+    candidate1 = randint(start, end)
+    candidate2 = randint(start, end)
+    while candidate1 == candidate2:
+        candidate2 = randint(start, end)
+
+    return candidate1 if fitness[candidate1] > fitness[candidate2] else candidate2
+```
+
+As an alternative, biased random selection works a bit differently. We select a random specimen, and we look for the first speciment in the list that has a higher fitness score than that random one. If we find one, we'll return that. If not, the initially randomly selected specimen is the one that will return. Quite literally random, but... biased.
+
+``` python
+def biased_random_selection(fitness: list[float]) -> int:
+    """Perform biased random selection to get a parent"""
+    random_specimen = randint(0, len(fitness) - 1)
+    for i, _ in enumerate(fitness):
+        if fitness[i] >= fitness[random_specimen]:
+            return i
+
+    return random_specimen
+```
+
+##### Crossover
+
+Great, so now we have 2 parents. We all know what part comes next. Detail: we don't have to limit ourselves to only 2 parents in the case of crossover during genetic algorithms, there's no reason why we would not use 3/4 or more parents when creating a new specimen for the next generation (also, wipe that smirk off your face). In this case, let's be nice about it and stick to 2 parents. Our crossover function looks as follows:
+
+``` python
+def crossover(parent1: list[int], parent2: list[int]) -> list[int]:
+    """Cross-breed a new set of children from the given parents"""
+    start = parent1[0]
+    end = parent1[len(parent1) - 1]
+    parent1 = parent1[1:len(parent1) - 1]
+    parent2 = parent2[1:len(parent2) - 1]
+    split = randint(1, len(parent1) - 1)
+    child: list[int] = [0] * len(parent1)
+    for i in range(split):
+        child[i] = parent1[i]
+
+    remainder = [i for i in parent2 if i not in child]
+    for i, data in enumerate(remainder):
+        child[split + i] = data
+
+    return [start, *child, end]
+```
+
+"A part of mommy, a part of daddy". It sounds clumsily simple, but that is really all there is to it. We take a part of the first parent, and assign it to our offspring. That "part", in case you are wondering, is just the start of the route as described by the parent specimen. A certain sequence of nodes, starting from our designated starting node, up to some cut-off point that is randomly decided on. That is basically our DNA. After this, we need to complete the route from the cut-off point back to the starting node. In this case though, we need to respect the problem at hand and make sure we only visit each node once. So we loop through the nodes of parent2 and only add each node to the child if it was not visited yet. You could say that potentially scrambles up the second part of the offspring candidate, and that is true. We literally take the exact sequence of nodes of parent1 up to the cut-off point, but will not respect the sequence of nodes of parent2 as we add them to the child.
+
+
+##### Mutation
+
+As we all know, biology isn't perfect, so let's include some random mutation just like it happens in nature. After generating our offspring per parent pair, we mutate them using one of 2 possible methods. Swap mutate, and rotate mutate. Why introduce mutation at all? We want to maintain genetic diversity in our population so we don't get stuck in local mimima. Usually, in genetic algorithms, mutation is really only done sporadically. Here, you see that I mutate every single offspring specimen. Experiment yourself when implementing genetic algorithms to your specific problem to see what works and what doesn't.
+
+Swap mutate is a really simple and low-impact mutation that will simply swap 2 nodes in the sequence, and it looks like this:
+
+``` python
+def swap_mutate(child: list[int]) -> list[int]:
+    """Mutate the cycle by swapping 2 nodes"""
+    index1 = randint(1, len(child) - 2)
+    index2 = randint(1, len(child) - 2)
+    child[index1], child[index2] = child[index2], child[index1]
+
+    return child
+```
+
+On the other hand, rotate mutation really scrambles up the specimen. We chose a split point, excluding the start node and divide our sequence into a head, mid and tail. We then completely reverse the mid and reconstruct the sequence. This adds quite some diversity into the population.
+
+
+``` python
+def rotate_mutate(child: list[int]) -> list[int]:
+    """Mutate the cycle by rotating a part nodes"""
+    split = randint(1, len(child) - 2)
+    head = child[0:split]
+    mid = child[split:len(child) - 1][::-1]
+    tail = child[len(child) - 1:]
+    child = head + mid + tail
+
+    return child
+```
+
+And that is all there is to it. As a reminder, the full create_offspring function with all these building blocks put together, looks like this:
+
+``` python
+def create_offspring(current_population: list[list[int]], fitness: list[float],
+                     population_size: int) -> list[list[int]]:
+    """Create a new generation"""
+    offspring: list[list[int]] = []
+    while len(offspring) < population_size:
+        parent1 = parent2 = 0
+        while parent1 == parent2:
+            parent1 = get_parent(fitness)
+            parent2 = get_parent(fitness)
+
+        child1 = crossover(current_population[parent1], current_population[parent2])
+        child2 = crossover(current_population[parent2], current_population[parent1])
+
+        child1 = mutate(child1)
+        child2 = mutate(child2)
+
+        offspring.append(child1)
+        offspring.append(child2)
+
+    return offspring
+```
+
+Now that we focussed on each individual step, the complete function is very simple to understand. We simply keep pairing up 2 selected parents, create 2 children per parent, apply mutation to each of them and add them to the new generation.
+
+##### Let's get fancy about it
+
+Just one more thing though. We did create a whole new generation of candidate solutions, equal in size to the previous generation. We introduced a bunch of randomization along the way, both in selection parents as well as how their DNA was propagated to the next generation. And just like in nature, the parents have now played their parts, and they die a lonely death, assured in the knowledge that all that was best about them lives on their children as they wither away. Wait, that got way too grim, way too fast. Also, this isn't nature. Or is it? We're still playing survival of the fittest, and there's no need to brush aside our strong performers just because we got a new generation waiting to take over.
+
+So we'll introduce another little technique called elitism, and is implemented as such:
+
+``` python
+    new_population = current_population + offspring
+    offspring_cycle_lengths = get_cycle_lengths(offspring, distances)
+    new_population_cycle_lengths = cycle_lengths + offspring_cycle_lengths
+    new_population_fitness = fitness + determine_fitness(offspring_cycle_lengths)
+    survivor_candidates = zip(new_population_fitness, new_population)
+    fittest_indices = [i for _, i in heapq.nlargest(population_size, ((x, i) for i, x in enumerate(survivor_candidates)))]
+    new_population = [new_population[i] for i in fittest_indices]
+    new_population_cycle_lengths = [new_population_cycle_lengths[i] for i in fittest_indices]
+```
+
+We simply add the new generation of offspring to the current generation. And then we execute our fitness function again. If you're a visual thinker, imagine we're having ourselves a good old brawl which will knock out half of the population, leaving the strongest ones standing. It's these specimens that we'll keep on board to continue the algorithm. Also, notice we're using a priority queue, which has a max binary heap implementation under the hood to only select the best x largest of elements without having to order the full list. I actually implemented that myself [here](https://www.peculiar-coding-endeavours.com/2020/through-the-trees/){:target="_blank"} - well it's a min binary heap there, same idea though - before I knew that there was an implementation built-in ;-) Still, I strongly believe that you should know about, and be able to implement these kinds of basic data structures on your own. Don't depend on others to do all the thinking for you. I always valued fundamentals, algorithms and data structures way more over cobbling together packages and frameworks. And it seems like, in these ChatGPT times where example implementations of frameworks are a prompt away, that'll be even more useful than ever.
+
+In any case, that's all in terms of the implementation. As I said before, the code isn't really that involved at all, and each step can be easily visualised. This is only a very basic implementation though, and there's so much to uncover about genetic algorithsm, techniques to perform crossover, selection, mutation, optimization of the parameters and so much more. I hope this small little example does trigger your interest to start researching more about them. It's really quite wonderful how such a simple concept can yield very good results in a short time.
+
 
 ### Thousands of little creepers...
 
