@@ -22,7 +22,9 @@ These few incredibly simple rules can manifest suprisingly complex patterns and 
 
 ### My own spin on it
 
-During this project, I familiarized myself with several language constructs and frameworks specific to Python, and tried several approaches to tackle the inherent slowness of Python for computational CPU-heavy work. You can check out a little summary video of what I'll be working toward in this [YouTube video](https://youtu.be/2HOLWExgwzU){:target="_blank"}. All the code is available on my [GitHub](https://github.com/tomvanschaijk/wayoflife){:target="_blank"}. The complete code contains all the optimizations and little features I came up with. 
+During this project, I familiarized myself with several language constructs and frameworks specific to Python, and tried several approaches to tackle the inherent slowness of Python for computational CPU-heavy work. You can check out a little summary video of what I'll be working toward right here:
+{% include youtube.html id="2HOLWExgwzU" %}
+All the code is available on my [GitHub](https://github.com/tomvanschaijk/wayoflife){:target="_blank"}. The complete code contains all the optimizations and little features I came up with. 
 
 One change I introduced, compared to the usual implementations you will find online, is that there are not 2 states for each cell, but 3:
 * New: a cell that just became alive because of the game rules

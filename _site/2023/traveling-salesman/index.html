@@ -52,7 +52,7 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1682971069682511608">
+  <link rel="stylesheet" href="/css/main.css?1683033199674833714">
   <link rel="canonical" href="http://localhost:4000/2023/traveling-salesman/">
   <link rel="alternate" type="application/rss+xml" title="Peculiar Coding Endeavours" href="/feed.xml">
 </head>
@@ -184,7 +184,30 @@ front-end related tech.</p>
 <p>I’ve been interested in genetic algorithms and ant colony optimization for a while now, and the traveling salesman problem is a nice use-case to apply these algorithms to. In case you are not familiar with one or both of them, you can find more information about <a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Genetic algorithms</a> and <a href="https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms">Ant Colony Optimization</a> all over the internet. Or you can ask ChatGPT, apparently that’s quite the trend lately. There are several other ways to go about finding solutions, like simulated annealing, n-opt and several of its variations, but I wanted to stick to what triggered my curiosity the most.</p>
 
 <h3 id="the-project">The project</h3>
-<p>The full code of the project is available on my <a href="https://github.com/tomvanschaijk/travelingsalesman" target="_blank">GitHub</a>. The requirements to run it are pretty basic. It’s all Python code, and I mainly use PyGame, Numpy, Asyncio and Aiostream. Just install the requirements in requirements.txt and you’ll be set. You can preview the end result right <a href="https://youtu.be/XCZSwM--vCA" target="_blank">here</a>. In fact, give that a quick gander, keep it open in your browser to get back to every now and then, and the rest of the article will quickly become clear. Obviously, cloning it yourself and running it will help your understanding even more.</p>
+<p>The full code of the project is available on my <a href="https://github.com/tomvanschaijk/travelingsalesman" target="_blank">GitHub</a>. The requirements to run it are pretty basic. It’s all Python code, and I mainly use PyGame, Numpy, Asyncio and Aiostream. Just install the requirements in requirements.txt and you’ll be set. You can preview the end result right here:</p>
+<div class="embed-container">
+    <iframe width="640" height="390" src="https://www.youtube.com/embed/XCZSwM--vCA" frameborder="0" allowfullscreen=""></iframe>
+</div>
+<style>
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+<p>In fact, give that a quick gander, keep it open in your browser to get back to every now and then, and the rest of the article will quickly become clear. Obviously, cloning it yourself and running it will help your understanding even more.</p>
 
 <p>The PyGame window that pops up when running shows you 5 panes. The top center one is the one where you can left-click to add points. These points will be the destinations our supposed salesman will have to visit. The first point you create will be green, and will be the starting point and end destination. All other blue ones are the cities to be visited before getting back to the starting point. Hitting the spacebar will reset the screen, enter starts the algorithm. The distances between points are simply the Euclidean distance in pixels between the points.</p>
 
@@ -1312,7 +1335,7 @@ and use <a href="https://bevyengine.org/" target="_blank">Bevy</a>, since that w
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1682971069682511608"></script>
+<script type="text/javascript" src="/js/main.js?1683033199674833714"></script>
 
 
     </div>
