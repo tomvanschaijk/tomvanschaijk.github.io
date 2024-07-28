@@ -52,7 +52,7 @@
   <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
   <meta name="theme-color" content="#ffffff">
   
-  <link rel="stylesheet" href="/css/main.css?1683033199674833714">
+  <link rel="stylesheet" href="/css/main.css?1722193461317724300">
   <link rel="canonical" href="http://localhost:4000/2023/traveling-salesman/">
   <link rel="alternate" type="application/rss+xml" title="Peculiar Coding Endeavours" href="/feed.xml">
 </head>
@@ -500,7 +500,7 @@ front-end related tech.</p>
     <span class="k">return</span> <span class="n">vertices</span>
 </code></pre></div></div>
 
-<p>Again, in case you want to understand the steps at a high level, change the sleep time to about a second or so, and you will see what happens. Starting with a cycle of 2 nodes, building up to a cycle including all the points, we find the shortest possible path using the points we include in the cycle. Whenever an optimal solution is found for 3 points, we find an optimal solution for those 2 points plus 1 more, reusing what we have already learned so far. We keep doing that until the full set of nodes has been traveled. It’s really quite beautiful to see in action, in my opinion. How to achieve it, though?</p>
+<p>Again, in case you want to understand the steps at a high level, change the sleep time to about a second or so, and you will see what happens. Starting with a cycle of 2 nodes, building up to a cycle including all the points, we find the shortest possible path using the points we include in the cycle. Whenever an optimal solution is found for 2 points, we find an optimal solution for those 2 points plus 1 more, reusing what we have already learned so far. We keep doing that until the full set of nodes has been traveled. It’s really quite beautiful to see in action, in my opinion. How to achieve it, though?</p>
 
 <h4 id="getting-the-memoization-matrix-set-up">Getting the memoization matrix set up</h4>
 
@@ -612,7 +612,7 @@ front-end related tech.</p>
 
 <h4 id="genetic-evolution">Genetic? Evolution?</h4>
 
-<p>First and foremost, what are genetic algorithms..? They are an optimization technique, using concepts from evolutionary biology to search for a global optimal solution. As you would expect when drawing the analogy to evolution, we start with an initial population. We will crossbreed certain entities from the population with each other to obtain a new generation. There are various techniques we can apply to this process, and as you would expect, strong specimens will be more likely to breed, and some random mutations will also occur. As such, it really mimics the process of evolutionary biology, where we have non-random survival, with non-random , and random mutation. The survival of a certain specimen (or the spreading of its ‘genes) is steered by a fitness function that measures how well it can optimize for its purpose (in our case, finding the shortest route between a set of nodes). Stronger specimens have a higher chance of propagating their DNA through the generations, as they are more likely to be chosen for reproduction. To make sure there is some sense of discovery built into the whole system, random mutation will be an important part of the process.</p>
+<p>First and foremost, what are genetic algorithms..? They are an optimization technique, using concepts from evolutionary biology to search for a global optimal solution. As you would expect when drawing the analogy to evolution, we start with an initial population. We will crossbreed certain entities from the population with each other to obtain a new generation. There are various techniques we can apply to this process, and as you would expect, strong specimens will be more likely to breed, and some random mutations will also occur. As such, it really mimics the process of evolutionary biology, where we have non-random survival, with non-random selection, and random mutation. The survival of a certain specimen (or the spreading of its ‘genes) is steered by a fitness function that measures how well it can optimize for its purpose (in our case, finding the shortest route between a set of nodes). Stronger specimens have a higher chance of propagating their DNA through the generations, as they are more likely to be chosen for reproduction. To make sure there is some sense of discovery built into the whole system, random mutation will be an important part of the process.</p>
 
 <p>When I first read about these algorithms, I got incredibly excited to learn about them, take a swing at them myself, and I’m still amazed at how well the whole concept works. You will see that close to optimal results can be achieved very quickly, both in terms of generations needed to do so and in terms of processing time. Each step is fairly simple, very visual, and easy to implement. Most of the difficulty regarding the efficacy of these algorithms lies in the details and many of the parameters. How big is my population? How many generations will I evolve before I stop and accept the result as close enough to optimal? What techniques will I use to steer the crossbreeding? How will I introduce genetic mutations in new specimens? A lot of these questions are often a matter of experimentation. Since I’m still very much a beginner in terms of these algorithms, I’d encourage you to start your own learning journey if all of this spikes your interest. For now, let me show you the implementation I came up with after experimenting with all of the above:</p>
 
@@ -1331,11 +1331,11 @@ and use <a href="https://bevyengine.org/" target="_blank">Bevy</a>, since that w
       </div>
 
       <footer class="footer">
-  <span class="footer__copyright">&copy; 2023 Tom van Schaijk. All rights reserved.</span>
+  <span class="footer__copyright">&copy; 2024 Tom van Schaijk. All rights reserved.</span>
 </footer>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="/js/main.js?1683033199674833714"></script>
+<script type="text/javascript" src="/js/main.js?1722193461317724300"></script>
 
 
     </div>
