@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Advent of Code Day 1: Rust versus Python</title>
+  <meta name="description" content="The end-of-year holiday season is always the time where Advent of Code comes out. It’s an annual event in December that provides a series of daily programming puzzles, designed to challenge and entertain programmers of all skill levels. It runs from December 1st to December 25th, with a new puzzle released each day. Solving the first part unlocks the second, which is often a twist or an extension of the first part. The puzzles typically start easier in the early days and become progressively more challenging as the event progresses.
+
+">
+  <meta name="author" content="Tom van Schaijk">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Advent of Code Day 1: Rust versus Python">
+  <meta name="twitter:description" content="The end-of-year holiday season is always the time where Advent of Code comes out. It’s an annual event in December that provides a series of daily programming puzzles, designed to challenge and entertain programmers of all skill levels. It runs from December 1st to December 25th, with a new puzzle released each day. Solving the first part unlocks the second, which is often a twist or an extension of the first part. The puzzles typically start easier in the early days and become progressively more challenging as the event progresses.
+
+">
+  
+  <meta name="twitter:image" content="/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Advent of Code Day 1: Rust versus Python">
+  <meta property="og:description" content="The end-of-year holiday season is always the time where Advent of Code comes out. It’s an annual event in December that provides a series of daily programming puzzles, designed to challenge and entertain programmers of all skill levels. It runs from December 1st to December 25th, with a new puzzle released each day. Solving the first part unlocks the second, which is often a twist or an extension of the first part. The puzzles typically start easier in the early days and become progressively more challenging as the event progresses.
+
+">
+  <meta property="og:image" content="/images/favicons/favicon.png?" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicons/apple-touch-icon-180x180.png">
+  <!-- <link rel="icon" type="image/png" href="/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/images/favicons/favicon-16x16.png" sizes="16x16"> -->
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" href="/images/favicons/favicon.png?">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/css/main.css?1737851978490887900">
+  <link rel="canonical" href="http://localhost:4000/2025/advent-of-code-day-1-rust-vs-python/">
+  <link rel="alternate" type="application/rss+xml" title="Peculiar Coding Endeavours" href="/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <a href="/" title="Peculiar Coding Endeavours Home">
+          <img src="/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Peculiar Coding Endeavours</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Software engineer. Algorithm & data structures nut. On my way to learning AI. Eternal student.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/#blog" title="Blog" class="blog-button">Blog</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+            
+              
+              <!-- YouTube -->
+              <li class="navigation__item">
+                <a href="https://www.youtube.com/@peculiar-coding-endeavours" title="YouTube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">YouTube</span>
+                </a>
+              </li>
+            
+
+            
+            <!-- GitHub -->
+            <li class="navigation__item">
+              <a href="https://www.github.com/tomvanschaijk" title="GitHub" target="_blank">
+                <i class="icon icon-social-github"></i>
+                <span class="label">GitHub</span>
+              </a>
+            </li>
+          
+
+            
+              <!-- LinkedIn -->
+              <li class="navigation__item">
+                <a href="https://www.linkedin.com/in/tom-van-schaijk" title="LinkedIn" target="_blank">
+                  <i class="icon icon-social-linkedin"></i>
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+            
+
+            
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:vanschaijktom@hotmail.com" title="vanschaijktom@hotmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+            
+
+            <!-- RSS -->
+            <li class="navigation__item">
+              <a href="/feed.xml" title="Subscribe" target="_blank">
+                <i class="icon icon-rss"></i>
+                <span class="label">RSS</span>
+              </a>
+            </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="25 Jan 2025" class="post-meta__date date">25 Jan 2025</time>
+      
+      &#8226; <span class="post-meta__tags">on <a href="/tags/#aoc">aoc</a> <a href="/tags/#algorithms">algorithms</a> <a href="/tags/#performance">performance</a> <a href="/tags/#optimisation">optimisation</a> <a href="/tags/#rust">rust</a> <a href="/tags/#python">python</a> </span>
+      
+    </div>
+    <h1 class="post-title">Advent of Code Day 1: Rust versus Python</h1>
+  </header>
+
+  <section class="post">
+    <p>The end-of-year holiday season is always the time where <a href="https://adventofcode.com" target="_blank">Advent of Code</a> comes out. It’s an annual event in December that provides a series of daily programming puzzles, designed to challenge and entertain programmers of all skill levels. It runs from December 1st to December 25th, with a new puzzle released each day. Solving the first part unlocks the second, which is often a twist or an extension of the first part. The puzzles typically start easier in the early days and become progressively more challenging as the event progresses.</p>
+
+<p>Solutions are time-sensitive, and participants can compete on a global leaderboard for the fastest solutions. The puzzles are designed to be fun, often involving creative themes or storylines. They encourage problem-solving, algorithm design, and optimisation skills. In short: a must for everybody that looks for an out during those boring days off. Many people use it to brush up on their skills, learn a new language, or just for the sake of the challenge.</p>
+
+<p>Since the language of choice is free, and people will be comparing their implementations, you know the inevitable happens: a lot of back-and-forth regarding what language is the best/most efficient/easy to write. Since my language of choice is Rust, I was interested in trying to compare an implementation in Rust to one in Python, and see how far I could take it.</p>
+
+<p><img src="http://localhost:4000/assets/aoc_rust_python/rust_vs_python.jpeg" alt="aoc" /></p>
+
+<h3 id="the-assignment">The assignment</h3>
+
+<p>I got late to the party this year since I was learning some other stuff, but I saw a post from <a href="https://www.linkedin.com/in/antoine-vm/" target="_blank">Antoine Van Malleghem</a> (check out his work if you like robotics and golf), using the challenges of this year to learn Rust, and also comparing it with Python which is the language he already knows. I saw a lot of arguments about the fact that Rust would be faster, but Python would be easier. The usual language wars, as I said 😉. Now, this is not quite an honest comparison. We are comparing a system level compiled language, that has performance on par with C/C++, to an interpreted language where a for-loop can bring your system down. However, if you know what you are doing, you can still leverage the fact that Python is a fine glue language, to achieve more than decent speeds for some use-cases. You know where this is going.</p>
+
+<p>The specific assignment was the first part of <a href="https://adventofcode.com/2024/day/1" target="_blank">day 1</a> of Advent of Code, so quite a small little assignment. You can read the full problem statement, but the gist of it was quite basic. Process a text file with 1000 entries like the following:</p>
+
+<p>61087     87490<br />
+31697     16584<br />
+57649     82503<br />
+75864     27659<br />
+27509     96436</p>
+
+<p>sort each side, and calculate the difference between the smallest entries on each side, then the second smallest entries on each side, and so forth. Then add up all those differences to obtain the final solution for the assignment. To illustrate, if the list of entries would look like this:</p>
+
+<p>3     4<br />
+4     3<br />
+2     5<br />
+1     3<br />
+3     9<br />
+3     3</p>
+
+<p>the pairs and distances would be as follows:</p>
+
+<ul>
+  <li>the smallest number in the left list is <strong>1</strong>, and the smallest number in the right list is 3. The distance between them is <strong>2</strong>.</li>
+  <li>the second-smallest number in the left list is <strong>2</strong>, and the second-smallest number in the right list is another <strong>3</strong>. The distance between them is <strong>1</strong>.</li>
+  <li>the third-smallest number in both lists is <strong>3</strong>, so the distance between them is <strong>0</strong>.</li>
+  <li>the next numbers to pair up are <strong>3</strong> and <strong>4</strong>, a distance of <strong>1</strong>.</li>
+  <li>the fifth-smallest numbers in each list are <strong>3</strong> and <strong>5</strong>, a distance of <strong>2</strong>.</li>
+  <li>finally, the largest number in the left list is <strong>4</strong>, while the largest number in the right list is <strong>9</strong>; these are a distance <strong>5</strong> apart.</li>
+</ul>
+
+<p>To find the total distance between the left list and the right list, add up the distances between all of the pairs you found. In the example above, this is <strong>2</strong> + <strong>1</strong> + <strong>0</strong> + <strong>1</strong> + <strong>2</strong> + <strong>5</strong>, a total distance of <strong>11</strong>. Quite simple.</p>
+
+<h3 id="a-matter-of-scale">A matter of scale</h3>
+
+<p>Obviously, the basic implementation in whichever language would always be “fast enough” (whatever that means), unless you do something really inefficient. After all, we’re handling a small list of 1000 entries. The real judge of quality is how well an implementation scales. Also, quite a few people gave the comment that offloading much of the work to libraries like Pandas and Numpy, would be super fast. After all, Pandas and Numpy are implemented in C, and Python would just play its part as a “glue language”. Since I’ve got a strong positive prejudice/obsession towards Rust, I thought I would check if I could somehow improve on the results of this “glueing together of popular Python frameworks” by implementing as much as possible in Rust. A true “rewrite in Rust” exercise, so to speak.</p>
+
+<p>Instead of sticking to 1000 entries, I created lists of 1k, 10k, 100k, 1M, 10M, 50M and 100M entries. I compared very basic implementations in both languages, iterated a lot and tried several things to get some decent speed out of both implementations. The chapters below will give you a rundown of all the steps I took to get the most speed out of both languages. For Rust, I leaned more towards implementing as much as possible myself (because, of course I did). On the Python side of things, I mostly used familiar frameworks like Pandas/Polars and Numpy.</p>
+
+<p>In the end, though, one fundamental change yielded a 40-50% speedup in both language implementations, without depending on external frameworks. You can check out the <a href="https://github.com/tomvanschaijk/aoc_1_python_vs_rust" target="_blank">GitHub repository</a> and look at all 5 branches, each containing an additional step towards optimisation, or a completely different approach. I have no doubt that the Rust/Python wizards out there can get even more performance out of this, and if you do, please let me know!</p>
+
+<h3 id="a-basic-implementation">A basic implementation</h3>
+
+<p>Initially, I wrote and compared basic implementations in Rust and Python. The main use of this is to get a very simple implementation on both sides that we can use as a baseline and to verify the correctness of what we implemented. I started out with using nothing but the standard library in both the Rust (ok ok, I’m using anyhow, but this has no bearing on the outcome) and Python implementations.</p>
+
+<p>I kept the larger input files for later optimisations, and decided to stick to a maximum of a million entries for this basic implementation. The main steps of the solution are simple:</p>
+<ul>
+  <li>read the data files line by line</li>
+  <li>parse each line by extracting both numbers and placing them in their own lists</li>
+  <li>sort each list</li>
+  <li>loop through both lists and calculate the distance for each entry at the same index in each list</li>
+  <li>sum these distances</li>
+</ul>
+
+<p>Both the Rust and Python versions will not differ substantially at all, which makes sense. Nonetheless, I will go over each implementation quickly, to make sure we’re all on the same page regarding the starting situation. All code in this section can be found in the various commits on the master branch of the repository.</p>
+
+<h4 id="the-rust-code">The Rust code</h4>
+
+<p>The main code of the Rust version simply loops over all files. Per file, we build 2 lists of sorted numbers for the first and second columns of the file, respectively. We’ll then compute the sum of all distances between the entries of each list and print out the answer.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">files</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">"./data/input_1k.txt"</span><span class="p">,</span>
+        <span class="s">"./data/input_10k.txt"</span><span class="p">,</span>
+        <span class="s">"./data/input_100k.txt"</span><span class="p">,</span>
+        <span class="s">"./data/input_1m.txt"</span><span class="p">,</span>
+    <span class="p">];</span>
+
+    <span class="k">for</span> <span class="n">file</span> <span class="n">in</span> <span class="n">files</span><span class="nf">.iter</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"Processing {}..."</span><span class="p">,</span> <span class="n">file</span><span class="p">);</span>
+
+        <span class="k">let</span> <span class="n">now</span> <span class="o">=</span> <span class="nn">Instant</span><span class="p">::</span><span class="nf">now</span><span class="p">();</span>
+
+        <span class="k">match</span> <span class="nf">get_sorted_vectors</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">Ok</span><span class="p">((</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="k">let</span> <span class="n">distance</span> <span class="o">=</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v2</span><span class="p">);</span>
+                <span class="nd">println!</span><span class="p">(</span>
+                    <span class="s">"The answer is: {}, completed in {}ms</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+                    <span class="n">distance</span><span class="p">,</span>
+                    <span class="n">now</span><span class="nf">.elapsed</span><span class="p">()</span><span class="nf">.as_millis</span><span class="p">()</span>
+                <span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+                <span class="nd">eprintln!</span><span class="p">(</span><span class="s">"Error processing file '{}': {:?}</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">e</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nf">Ok</span><span class="p">(())</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The get_sorted_vectors function reads all lines in the file, and we’ll use the combination of filter_map and fold functions to split each line and parse the entries, as well as pushing all numbers in their respective vectors. Before returning the list, we sort each vector.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">get_sorted_vectors</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">,</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">lines</span> <span class="o">=</span> <span class="nf">read_lines</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+        <span class="nf">.with_context</span><span class="p">(||</span> <span class="nd">format!</span><span class="p">(</span><span class="s">"Failed to read lines from file: {}"</span><span class="p">,</span> <span class="n">file_path</span><span class="p">))</span><span class="o">?</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="p">(</span><span class="k">mut</span> <span class="n">col1</span><span class="p">,</span> <span class="k">mut</span> <span class="n">col2</span><span class="p">):</span> <span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">,</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=</span> <span class="n">lines</span>
+        <span class="nf">.map_while</span><span class="p">(</span><span class="nn">Result</span><span class="p">::</span><span class="n">ok</span><span class="p">)</span>
+        <span class="nf">.filter_map</span><span class="p">(|</span><span class="n">line</span><span class="p">|</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="k">mut</span> <span class="n">nums</span> <span class="o">=</span> <span class="n">line</span><span class="nf">.split_whitespace</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span><span class="py">.parse</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">());</span>
+            <span class="k">match</span> <span class="p">(</span><span class="n">nums</span><span class="nf">.next</span><span class="p">(),</span> <span class="n">nums</span><span class="nf">.next</span><span class="p">())</span> <span class="p">{</span>
+                <span class="p">(</span><span class="nf">Some</span><span class="p">(</span><span class="nf">Ok</span><span class="p">(</span><span class="n">value1</span><span class="p">)),</span> <span class="nf">Some</span><span class="p">(</span><span class="nf">Ok</span><span class="p">(</span><span class="n">value2</span><span class="p">)))</span> <span class="k">=&gt;</span> <span class="nf">Some</span><span class="p">((</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">)),</span>
+                <span class="mi">_</span> <span class="k">=&gt;</span> <span class="nb">None</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+        <span class="nf">.fold</span><span class="p">(</span>
+            <span class="p">(</span><span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">(),</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">()),</span>
+            <span class="p">|(</span><span class="k">mut</span> <span class="n">col1</span><span class="p">,</span> <span class="k">mut</span> <span class="n">col2</span><span class="p">),</span> <span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)|</span> <span class="p">{</span>
+                <span class="n">col1</span><span class="nf">.push</span><span class="p">(</span><span class="n">v1</span><span class="p">);</span>
+                <span class="n">col2</span><span class="nf">.push</span><span class="p">(</span><span class="n">v2</span><span class="p">);</span>
+                <span class="p">(</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">)</span>
+            <span class="p">},</span>
+        <span class="p">);</span>
+
+    <span class="n">col1</span><span class="nf">.sort_unstable</span><span class="p">();</span>
+    <span class="n">col2</span><span class="nf">.sort_unstable</span><span class="p">();</span>
+
+    <span class="nf">Ok</span><span class="p">((</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The compute_distance function uses the zip function to combine iterators over both lists, and process the resulting iterator by taking pairs of numbers of each list, subtracting one from the other, taking the absolute value, and summing the resulting set of numbers. Rust combinator functions (map, filter, fold, flat_map, zip, reduce, …) are truly awesome at processing collections this way.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i32</span><span class="p">],</span> <span class="n">v2</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i32</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">i32</span> <span class="p">{</span>
+    <span class="n">v1</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.zip</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span><span class="nf">.map</span><span class="p">(|(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)|</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="nf">.abs</span><span class="p">())</span><span class="nf">.sum</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The read_lines function isn’t doing anything surprising either. We use a BufReader to achieve an iterator over the lines in the given file, and return this iterator in a Result:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="n">read_lines</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="n">P</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">Lines</span><span class="o">&lt;</span><span class="n">BufReader</span><span class="o">&lt;</span><span class="n">File</span><span class="o">&gt;&gt;&gt;</span>
+<span class="k">where</span>
+    <span class="n">P</span><span class="p">:</span> <span class="n">AsRef</span><span class="o">&lt;</span><span class="n">Path</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">{</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="o">&amp;</span><span class="n">filename</span><span class="p">)</span>
+        <span class="nf">.with_context</span><span class="p">(||</span> <span class="nd">format!</span><span class="p">(</span><span class="s">"Failed to open file: {:?}"</span><span class="p">,</span> <span class="n">filename</span><span class="nf">.as_ref</span><span class="p">()))</span><span class="o">?</span><span class="p">;</span>
+    <span class="nf">Ok</span><span class="p">(</span><span class="nn">BufReader</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="nf">.lines</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="the-python-code">The Python code</h4>
+
+<p>It’s no surprise that, on the Python side, we have the same basic steps. The main function simply loops over all files, gets the sorted vectors and uses them to compute the total distance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s">"./data/input_1k.txt"</span><span class="p">,</span>
+        <span class="s">"./data/input_10k.txt"</span><span class="p">,</span>
+        <span class="s">"./data/input_100k.txt"</span><span class="p">,</span>
+        <span class="s">"./data/input_1m.txt"</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Processing </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">get_sorted_vectors</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">elapsed_time_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"The answer is: </span><span class="si">{</span><span class="n">distance</span><span class="si">}</span><span class="s">, completed in </span><span class="si">{</span><span class="n">elapsed_time_ms</span><span class="p">:.</span><span class="mi">0</span><span class="n">f</span><span class="si">}</span><span class="s">ms</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The get_sorted_vectors function just reads all lines (this time without a separate function to read the file and return the buffered lines), extracts both numbers, and places them in their own lists. At the end, we return both sorted lists. By the way, granted, we could rename get_sorted_vectors to get_sorted_lists in the Python code, but I’ll let my prejudice shine through here. Speaking about superior methods of handling errors, goddamn, I do hate try-catch/try-except constructs… Errors are values! But I digress.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_sorted_vectors</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="n">col1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">col2</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">value1</span><span class="p">,</span> <span class="n">value2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="p">.</span><span class="n">split</span><span class="p">())</span>
+                <span class="n">col1</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">value1</span><span class="p">)</span>
+                <span class="n">col2</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">value2</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s">"Error parsing the file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s">"File not found: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">col1</span><span class="p">),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">col2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>And the compute_distance function performs the required calculations to obtain the sum of all distances of every pair of entries:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">e1</span> <span class="o">-</span> <span class="n">e2</span><span class="p">)</span> <span class="k">for</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>Even if you’re not that experienced in Rust or Python, I’m sure the code is quite easy to follow and reason through. Obviously, Rust was way faster, which should surprise nobody. Some initial results for the lists up to 1M items:
+<img src="http://localhost:4000/assets/aoc_rust_python/basic_comparison.png" alt="basic_results" /></p>
+
+<p>On the left half of the screenshot, you will simply see the timing of the Python implementation and the Rust implementation using only the standard library. Obviously, as we move up in scale towards 100k or 1M entries, you see that the difference between Python and Rust becomes bigger, which is already a serious hint towards the problems regarding scaling the Python implementation. On the other hand, whether we spend 68ms or 30ms on processing a list of 100k entries, is probably not that important. To spare Python, I won’t mention the resource use of both solutions (oops, I just did 😉), we all know how the picture would look. Python consumes substantially more memory and CPU. Let’s keep it fair and not focus on that right now; all we care about is processing speed at the moment.</p>
+
+<p>After this, I decided to try some other strategies on the Rust side, the results of which you will see on the right side of the screenshot:</p>
+<ol>
+  <li>I used memmap to read the files instead of BufReader. This allows us to process the file as a memory-mapped file. Memory-mapped files allow you to map the file’s contents directly into the process’s address space. This enables accessing file data as if it were in memory, avoiding explicit read or write system calls. This enables handling files larger than the available physical memory by leveraging the operating system’s virtual memory system. This is particularly beneficial when working with datasets that are too large to fit into memory all at once. The results show that we clearly pay some overhead costs for the smaller files, but since we will be focusing on a bigger scale, this is worth it when we move towards millions of entries.</li>
+  <li>To parallelise iteration of the lists, I used Rayon. Again, for smaller lists, the overhead of parallelisation would not be worth it. But for larger files, we would see a big speed-up.</li>
+</ol>
+
+<p>You can see this result in the screenshot (memmap + rayon column). Additionally, I added tokio and processed all files concurrently. The results can be seen in the memmap + rayon + tokio column, and the code is in the <a href="https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/async_tokio" target="_blank">async_tokio</a> branch. I’ll not focus on concurrent handling of files, but I just wanted to add an example on how to combine Rayon and Tokio for this kind of work.</p>
+
+<h3 id="where-are-we-so-far">Where are we so far?</h3>
+
+<p>Now, processing 1 million lines is nice, but to really see the scalability of the implementations, let’s dial it up a few notches and increase the length of the files by a few orders of magnitude. I created some additional lists of 10M, 50M and 100M entries. To give you an idea of where we are at the moment, let’s run the current implementations for Rust and Python (which you can find in the <a href="https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/master" target="_blank">master</a> branch), up to 100M entries. This will help you appreciate the speed-ups that we will achieve in the work we will do in the upcoming sections.</p>
+
+<p>To get an idea about the file sizes: the 100M entry file is about 1.3Gb in size. As you can see, the results are nothing to write home about. We need several seconds to process tens of millions of entries, and in the Python implementation we need several minutes. Quite abysmal, but this is to be expected, as we didn’t really put any effort into optimisation yet. On the Rust side, at least we are using Rayon and memmap to get a bit of a speed-up. The real work to achieve decent performance on either side is yet to be done though.</p>
+
+<p><img src="http://localhost:4000/assets/aoc_rust_python/not_scalable.png" alt="not_scalable" /></p>
+
+<h3 id="lets-dial-it-up">Let’s dial it up</h3>
+
+<p>Now, we all know Python is slow. Making the Python implementation fast is just not possible if we stick to “true Python”. So we won’t. We’ll use one of the (in my opinion at least) redeeming properties that Python has: it’s a great glue language. So, we will offload all the heavy lifting:</p>
+<ul>
+  <li><a href="https://pola.rs/" target="_blank">Polars</a> to load the files and parse each entry</li>
+  <li><a href="https://numpy.org/" target="_blank">NumPy</a> to calculate the distances</li>
+  <li><a href="https://numba.pydata.org/" target="_blank">Numba</a> to speed up the remaining Python code.</li>
+</ul>
+
+<p>In Rust, I tried to implement as much as possible myself, and tried to come up with improvements to avoid the annoying white space splitting and converting to numbers, and leveraged techniques like SIMD to crank out as much as I could. Some good old ingenuity and software engineering, or at least a brave attempt at it. A bit more of an artisanal approach, but I’d lie if I said that isn’t why I got into the profession.</p>
+
+<p>The implementations I will discuss below can be found in the <a href="https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/optimisation_big_files" target="_blank">optimisation_big_files</a> branch.</p>
+
+<h4 id="yeah-yeah-yeah-python">Yeah, yeah yeah… Python</h4>
+<p>To get the Python implementation out of the way (I’m sorry, Pythonistas), there’s a few simple changes. The first thing that needs some explanation is probably the start of main. I’m calling the compute_distance function on 2 small hard-coded NumPy arrays. The reason for that is that the compute_distance function has the @jit attribute from Numba on it. This signifies that the function will be pre-compiled into C and executed as C code from then on. However, for that to happen, it needs to run 1 time for that pre-compilation to be triggered, which takes a bit of time. In order for us to not pay that cost while the actual data is processed, we execut the function on 2 small arrays to get the compilation done.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="n">pl</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">jit</span>
+<span class="kn">from</span> <span class="nn">concurrent.futures</span> <span class="kn">import</span> <span class="n">ThreadPoolExecutor</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Warm-up call with small dummy inputs to precompile the Numba function
+</span>    <span class="n">dummy_v1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">dummy_v2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">compute_distance</span><span class="p">(</span><span class="n">dummy_v1</span><span class="p">,</span> <span class="n">dummy_v2</span><span class="p">)</span>  <span class="c1"># This triggers the compilation
+</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">...</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Processing </span><span class="si">{</span><span class="nb">file</span><span class="si">}</span><span class="s">..."</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">get_sorted_vectors</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">elapsed_time_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"The answer is: </span><span class="si">{</span><span class="n">distance</span><span class="si">}</span><span class="s">, completed in </span><span class="si">{</span><span class="n">elapsed_time_ms</span><span class="p">:.</span><span class="mi">0</span><span class="n">f</span><span class="si">}</span><span class="s">ms</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The get_sorted_vectors function slightly changed as well. We use Polars to read the file, and push the data into NumPy arrays. This gets all splitting and parsing out of the way, and Polars will conveniently do it all for us. Additionally, we sort both arrays concurrently to achieve some speed-up there as well.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_sorted_vectors</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s">" "</span><span class="p">,</span> <span class="n">has_header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="n">col1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">].</span><span class="n">to_numpy</span><span class="p">()</span>
+        <span class="n">col2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">].</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">except</span> <span class="nb">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s">"Error parsing the file: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="nb">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s">"File not found: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+        <span class="n">future1</span> <span class="o">=</span> <span class="n">executor</span><span class="p">.</span><span class="n">submit</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">,</span> <span class="n">col1</span><span class="p">)</span>
+        <span class="n">future2</span> <span class="o">=</span> <span class="n">executor</span><span class="p">.</span><span class="n">submit</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">,</span> <span class="n">col2</span><span class="p">)</span>
+        <span class="n">sorted_col1</span> <span class="o">=</span> <span class="n">future1</span><span class="p">.</span><span class="n">result</span><span class="p">()</span>
+        <span class="n">sorted_col2</span> <span class="o">=</span> <span class="n">future2</span><span class="p">.</span><span class="n">result</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">sorted_col1</span><span class="p">,</span> <span class="n">sorted_col2</span>
+</code></pre></div></div>
+
+<p>And finally, the compute_distance function, for what it’s worth, will be speed up using Numba. Now, we’re already speeding up the numerical operations with NumPy, but running the full function through Numba did result in some milliseconds of speed-up, so it was still worth it. In general, I recommend everybody wanting to perform some heavy computation (especially if it occurs in loops) to check out Numba. Before you do that, NumPy will probably get you very far, but it’s worth knowing about and experimenting with Numba. It allows you to dial in the speed of C without paying a heavy cost (as you can see, a simple attribute on the function in question is all you need). In the last implementation in the article, Numba will play a bigger role, stay tuned!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Using Numba's JIT compiler to speed up the distance computation
+</span><span class="o">@</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v2</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h4 id="how-about-rust">How about Rust?</h4>
+
+<p>Now things are about to get interesting. We’ll scale up our Rust code to be able to handle millions of entries, up to 100 million. We already did that for the Python implementation, by leveraging the power of NumPy, Polars and Numba to get as much as we can out of that solution. Now, we’ll do the same for Rust, but we’ll try to not use too many external dependencies. We could easily use <a href="https://crates.io/crates/ndarray" target="_blank">ndarray</a> as a Rust alternative to NumPy, and <a href="https://crates.io/crates/polars" target="_blank">Polars</a> in Rust.</p>
+
+<p>However, the actual fun and learning in this kind of a challenge is found in expanding your own knowledge about how computers work, how to apply algorithms, and thinking outside of the box. It’s what brought technology to the point of having all the great things we have today, and it will serve us well into the future, so it’s not something we should take for granted. It helps I’m doing this in my own time, instead of on the companies’ dime 😉</p>
+
+<p>So, let’s get to work! Without even doing the recommended thing and profile the application (always do this by the way!), I think we can all agree that this line of code:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">line</span><span class="nf">.split_whitespace</span><span class="p">()</span><span class="nf">.map</span><span class="p">(|</span><span class="n">x</span><span class="p">|</span> <span class="n">x</span><span class="py">.parse</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">i32</span><span class="o">&gt;</span><span class="p">());</span>
+</code></pre></div></div>
+
+<p>where we split every line in the file on the whitespace, and parse each side to an i32, will be a quite expensive operation. Especially since we know that we’ll do that millions of times. Let’s revisit our problem statement, more specifically our source data. We have a list of entries where each entry consists of a 5-digit number, a space, and another 5-digit number. That’s quite useful to know. If we could use this knowledge to avoid the splitting, and somehow also find a better way to do the parsing, this could save us a LOT of time! So, after some experimentation, I did just that. Let’s inspect the changes:</p>
+
+<p>The get_sorted_vectors function uses memmap to treat the file as a memory-mapped file, as explained before. There’s still a split present, but we split on a newline character. The filter_map function now uses the parse_line function. We’ll send the resulting bytes of the split operation to parse_line, and we’ll parse the line there. The fold call did not substantially change. We’ll leverage rayon to sort both resulting lists, and we’ll sort each of them in parallel too.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">get_sorted_vectors</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">,</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="nf">.context</span><span class="p">(</span><span class="s">"Failed to open file"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">mmap</span> <span class="o">=</span> <span class="k">unsafe</span> <span class="p">{</span> <span class="nn">MmapOptions</span><span class="p">::</span><span class="nf">new</span><span class="p">()</span><span class="nf">.map</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file</span><span class="p">)</span><span class="o">?</span> <span class="p">};</span>
+
+    <span class="k">let</span> <span class="p">(</span><span class="k">mut</span> <span class="n">col1</span><span class="p">,</span> <span class="k">mut</span> <span class="n">col2</span><span class="p">):</span> <span class="p">(</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">,</span> <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=</span> <span class="n">mmap</span>
+        <span class="nf">.split</span><span class="p">(|</span><span class="o">&amp;</span><span class="n">line</span><span class="p">|</span> <span class="n">line</span> <span class="o">==</span> <span class="n">b</span><span class="sc">'\n'</span><span class="p">)</span> 
+        <span class="nf">.filter_map</span><span class="p">(</span><span class="n">parse_line</span><span class="p">)</span>
+        <span class="nf">.fold</span><span class="p">((</span><span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">(),</span> <span class="nn">Vec</span><span class="p">::</span><span class="nf">new</span><span class="p">()),</span> <span class="p">|(</span><span class="k">mut</span> <span class="n">c1</span><span class="p">,</span> <span class="k">mut</span> <span class="n">c2</span><span class="p">),</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)|</span> <span class="p">{</span>
+            <span class="n">c1</span><span class="nf">.push</span><span class="p">(</span><span class="n">a</span><span class="p">);</span>
+            <span class="n">c2</span><span class="nf">.push</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+            <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">c2</span><span class="p">)</span>
+        <span class="p">});</span>
+
+    <span class="nn">rayon</span><span class="p">::</span><span class="nf">join</span><span class="p">(||</span> <span class="n">col1</span><span class="nf">.par_sort_unstable</span><span class="p">(),</span> <span class="p">||</span> <span class="n">col2</span><span class="nf">.par_sort_unstable</span><span class="p">());</span>
+
+    <span class="nf">Ok</span><span class="p">((</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now, about that parse_line function… I could understand if you wondered “what the hell is this” when reading the code below. However, knowing about the assumptions we made earlier about each line being identical in layout, should largely explain what’s happening. As said, the function receives an array of u8 bytes, representing our line of data. Since we assume that each line contains 2 5-digit numbers, separated by a space, we will return None whenever our amount of bytes is less than 11 (now I read that again, we should probably change that to bytes.len() != 11, but we’ll let that slide).</p>
+
+<p>After that point in the code, we know we have 11 bytes to work with, and we know the byte at index 5 represents a space, so we can ignore it. We’ll take each entry in the byte-array and subtract b’0’ from it, which is the byte literal for the number 0. So we’ll convert the contents of that entry to its numeric value. The obtained digits are then scaled by their positional value:</p>
+<ul>
+  <li>the first digit is multiplied by 10000</li>
+  <li>the second digit is multiplied by 1000</li>
+  <li>…</li>
+</ul>
+
+<p>An example will explain it better: for bytes[0..5] = b”12345”, this calculates</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    1 * 10000 + 2 * 1000 + 3 * 100 + 4 * 10 + 5 = 12345
+</code></pre></div></div>
+
+<p>So we’ll obtain the actual number, without performing costly split_whitespace and parse operations. This works very well in our case, but is predicated on the ability of placing some strong assumptions on our input data. However, if we can guarantee things about our data, it often opens the door to tremendous speed-ups, as you will see soon.</p>
+
+<p>A last remark. Looking at the code, some of you might think “well, you could implement this in a loop as well”. Of course, we can, but I preferred to do some <a href="https://www.youtube.com/watch?v=zXg5gvlxJkI" target="_blank">loop unrolling</a>. It doesn’t hurt clarity at all, in fact I would argue it makes the logic more explicit in this particular case. I have no doubt that our compiler could/would perform the same unrolling, but doing it manually does clarify the intention of our code better.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">parse_line</span><span class="p">(</span><span class="n">bytes</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">i64</span><span class="p">,</span> <span class="nb">i64</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">bytes</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">11</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">None</span><span class="p">;</span> <span class="p">}</span>
+
+    <span class="k">let</span> <span class="n">num1</span> <span class="o">=</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">10000</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">num2</span> <span class="o">=</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">10000</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i64</span><span class="p">;</span>
+
+    <span class="nf">Some</span><span class="p">((</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In the compute_distance function, we just replace the .iter() call from the original implementation by the par_iter() equivalent from Rayon. Obviously, we can use the standard library to create a number of threads that would achieve the same, or very similar results, and process the lists in parallel. However, Rayon will do the annoying part of determining the number of threads and allocating memory for each of them for us, So the extra dependency is worth avoiding the annoying trial &amp; error of determining the optimal setup. When running in constrained environments, know that this is perfectly viable to implement using the standard library. In the last implementation of the article, we’re actually performing a lot of the work manually after all, but for now, let’s keep it simple.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">],</span> <span class="n">v2</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+    <span class="n">v1</span><span class="nf">.par_iter</span><span class="p">()</span><span class="nf">.zip</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span><span class="nf">.map</span><span class="p">(|(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)|</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="nf">.abs</span><span class="p">())</span><span class="nf">.sum</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="simd-to-the-rescue">SIMD to the rescue</h3>
+
+<p>Before showing the comparative results between our handywork in Rust and the combination of NumPy, Polars and Numba, we’ll pull off one more trick, which is the use of SIMD. Some explanation on what SIMD is, can be found on <a href="https://en.wikipedia.org/wiki/Single_instruction,_multiple_data" target="_blank">Wikipedia</a> or <a href="https://youtu.be/o_n4AKwdfiA" target="_blank">YouTube</a> for a quick explanation. A longer lecture can be found <a href="https://youtu.be/Kj8Hgc80VYo" target="_blank">right here</a>. Warning here: to use SIMD, we’ll have to switch to the nightly build of Rust, as (at the time of writing), the SIMD implementations are not yet stabilised. This isn’t stopping us, of course. The SIMD implementation can be found in the <a href="https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/optimisation_big_files_simd" target="_blank">optimisation_big_files_simd</a> branch.</p>
+
+<p>So, how exactly can we use SIMD to speed up our code? Well, the parse_line function is particularly suited here. As you saw, we multiplied the entries of the byte-array with multiples of 10, depending on their position in the array, to obtain the actual number. What if, instead of multiplying each entry individually, we could perform this multiplication on all numbers in one single instruction? Of course, we would have to extract the right bytes out of the original array, but it’s worth checking whether the overhead from this extraction is amortised by the speed-up gained by the SIMD instruction. After some testing, it was very clear that it was worth it. So, I changed the parse_line function to the following implementation:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">parse_line</span><span class="p">(</span><span class="n">bytes</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">u8</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">Option</span><span class="o">&lt;</span><span class="p">(</span><span class="nb">i64</span><span class="p">,</span> <span class="nb">i64</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">bytes</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">11</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">None</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">let</span> <span class="n">num1_simd</span> <span class="o">=</span> <span class="nn">i32x8</span><span class="p">::</span><span class="nf">from</span><span class="p">([</span>
+        <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> 
+        <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="p">]);</span>
+    <span class="k">let</span> <span class="n">num2_simd</span> <span class="o">=</span> <span class="nn">i32x8</span><span class="p">::</span><span class="nf">from</span><span class="p">([</span>
+        <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> 
+        <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span>
+        <span class="p">(</span><span class="n">bytes</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">-</span> <span class="n">b</span><span class="sc">'0'</span><span class="p">)</span> <span class="k">as</span> <span class="nb">i32</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="p">]);</span>
+
+    <span class="c">// SIMD vector for powers of 10 for multiplication</span>
+    <span class="k">let</span> <span class="n">powers_of_ten</span> <span class="o">=</span> <span class="nn">i32x8</span><span class="p">::</span><span class="nf">from</span><span class="p">([</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]);</span>
+
+
+    <span class="c">// Do the multiplication</span>
+    <span class="k">let</span> <span class="n">num1</span> <span class="o">=</span> <span class="p">(</span><span class="n">num1_simd</span> <span class="o">*</span> <span class="n">powers_of_ten</span><span class="p">)</span><span class="nf">.reduce_sum</span><span class="p">()</span> <span class="k">as</span> <span class="nb">i64</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">num2</span> <span class="o">=</span> <span class="p">(</span><span class="n">num2_simd</span> <span class="o">*</span> <span class="n">powers_of_ten</span><span class="p">)</span><span class="nf">.reduce_sum</span><span class="p">()</span> <span class="k">as</span> <span class="nb">i64</span><span class="p">;</span>
+
+    <span class="nf">Some</span><span class="p">((</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>We can also change our compute_distance function to leverage SIMD, to some extent. Before, we simply used Rayon to compute the distances in parallel:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">],</span> <span class="n">v2</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+    <span class="n">v1</span><span class="nf">.par_iter</span><span class="p">()</span><span class="nf">.zip</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span><span class="nf">.map</span><span class="p">(|(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)|</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="nf">.abs</span><span class="p">())</span><span class="nf">.sum</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>But the implementation below did prove to be quite a bit faster. We still use Rayon (as you can see by the into_par_iter() call), but we also manually chunk our input arrays, and calculate the differences using SIMD vectors.</p>
+<ul>
+  <li>the subtraction of the two SIMD vectors (v1_simd - v2_simd) is done in a vectorized manner. This means that the CPU performs 8 subtractions in parallel for the 8 corresponding elements of v1 and v2 in each chunk.</li>
+  <li>the .reduce_sum() function is used to sum up the 8 values in the SIMD vector diff. This operation reduces the SIMD vector to a single scalar value, which is the sum of the absolute differences for that chunk. The use of SIMD reduces the number of individual addition operations by performing 8 additions in parallel.</li>
+  <li>After processing the chunks, any remaining elements (if the total length isn’t a multiple of CHUNK_SIZE) are handled in a regular, sequential manner. This ensures that no elements are left out of the calculation.</li>
+</ul>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">],</span> <span class="n">v2</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">[</span><span class="nb">i64</span><span class="p">])</span> <span class="k">-&gt;</span> <span class="nb">i64</span> <span class="p">{</span>
+    <span class="k">const</span> <span class="n">CHUNK_SIZE</span><span class="p">:</span> <span class="nb">usize</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span> <span class="c">// Changed to match SIMD vector size</span>
+    <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="n">v1</span><span class="nf">.len</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">chunks</span> <span class="o">=</span> <span class="n">len</span> <span class="o">/</span> <span class="n">CHUNK_SIZE</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">sum</span><span class="p">:</span> <span class="nb">i64</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="n">chunks</span><span class="p">)</span>
+        <span class="nf">.into_par_iter</span><span class="p">()</span>
+        <span class="nf">.map</span><span class="p">(|</span><span class="n">i</span><span class="p">|</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">CHUNK_SIZE</span><span class="p">;</span>
+            <span class="k">let</span> <span class="n">v1_simd</span> <span class="o">=</span> <span class="nn">i64x8</span><span class="p">::</span><span class="nf">from_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v1</span><span class="p">[</span><span class="n">start</span><span class="o">..</span><span class="n">start</span> <span class="o">+</span> <span class="n">CHUNK_SIZE</span><span class="p">]);</span>
+            <span class="k">let</span> <span class="n">v2_simd</span> <span class="o">=</span> <span class="nn">i64x8</span><span class="p">::</span><span class="nf">from_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v2</span><span class="p">[</span><span class="n">start</span><span class="o">..</span><span class="n">start</span> <span class="o">+</span> <span class="n">CHUNK_SIZE</span><span class="p">]);</span>
+            <span class="k">let</span> <span class="n">diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">v1_simd</span> <span class="o">-</span> <span class="n">v2_simd</span><span class="p">)</span><span class="nf">.abs</span><span class="p">();</span>
+            <span class="n">diff</span><span class="nf">.reduce_sum</span><span class="p">()</span>
+        <span class="p">})</span>
+        <span class="nf">.sum</span><span class="p">();</span>
+
+    <span class="c">// Handle remaining elements if any</span>
+    <span class="k">let</span> <span class="n">remainder_sum</span><span class="p">:</span> <span class="nb">i64</span> <span class="o">=</span> <span class="p">(</span><span class="n">chunks</span> <span class="o">*</span> <span class="n">CHUNK_SIZE</span><span class="o">..</span><span class="n">len</span><span class="p">)</span>
+        <span class="nf">.map</span><span class="p">(|</span><span class="n">i</span><span class="p">|</span> <span class="p">(</span><span class="n">v1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">v2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="nf">.abs</span><span class="p">())</span>
+        <span class="nf">.sum</span><span class="p">();</span>
+
+    <span class="n">sum</span> <span class="o">+</span> <span class="n">remainder_sum</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The results: Rust on the left, Python on the right. Racing through and processing 100 million entries (a 1.3Gb file) in 2.6 secs is pretty satisfying. I was able to get it down to 2.7 secs with Python, but again, literally all the code that actually does something is in Numpy or Polars, and I’m using Numba to precompile the functions to C. So it’s basically my own implementation in Rust versus the fastest possible frameworks in Python written in C and Rust, glued together.</p>
+
+<p><img src="http://localhost:4000/assets/aoc_rust_python/simd_vs_numpy.png" alt="simd_vs_numpy" /></p>
+
+<h4 id="so-about-polars">So, about Polars…</h4>
+
+<p>As an aside, talking about Python frameworks: Pandas is known as the reference Python library for data processing. A while ago (at the time of writing), Polars came out as a solid alternative. It’s implemented in Rust, and offers quite a bit of speed-up compared to Pandas. It’s available in Rust, but also has great Python bindings. To demonstrate, I took the code that resulted in the numbers above on the Python side, and changed 1 thing: I threw out Polars and used Pandas to read the files. The difference in code is absolutely minimal. The difference in performance, though, doesn’t paint the prettiest picture for Pandas:</p>
+
+<p><img src="http://localhost:4000/assets/aoc_rust_python/pandas_vs_polars.png" alt="pandas_vs_polars" /></p>
+
+<p>Again, this is the same Python code on both sides, and the only difference is the use of Pandas instead of Polars. The change in code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s">" "</span><span class="p">,</span> <span class="n">has_header</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+<p>versus</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">" "</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This should probably encourage you to at least check out Polars as a drop-in replacement for Pandas. You can check out more about Polars <a href="https://youtu.be/TDF39Yd-gA8" target="_blank">here</a>.</p>
+
+<h3 id="algorithms">Algorithms!!</h3>
+
+<p>After implementing the code above, I was actually quite happy with the results so far. I mean, zipping through a 1.3 Gb file (for the 100M entries) in 2.5 seconds isn’t too shabby, is it? However, I then did myself in by deciding to check the time it took to only read the file. For the 100M file, just reading and not processing anything took about 1.3 seconds. Humble pie right there. For sure I could shave off some time off that 1.2 seconds of processing…!? So, I went back to the drawing board and checked if I could use the assumptions I put on the data to get even faster.</p>
+
+<p>My intuition immediately went to the sorting part of the work. The whole parsing exercise is probably quite efficient already, but could we sort the lists in a more time-efficient way? At first, I thought about implementing a <a href="https://youtu.be/AE5I0xACpZs" target="_blank">min binary heap</a>. But, then again, we do need to obtain the whole list as a sorted list eventually, so that’s probably a no-go. The current sorting method that’s executed by par_sort_unstable is a <a href="https://github.com/orlp/pdqsort" target="_blank">pattern-defeating quicksort</a>, which combines the fast average case of randomised quicksort with the fast worst-case of heapsort. On average, we are still bound to a O(n log n) running time. We’re still doing a comparative sort. However, what if we can get away by not doing a comparative sort? It turns out  that, since we know a thing or 2 about or input data, we can!</p>
+
+<h4 id="bucket-sort">Bucket sort</h4>
+
+<p>Bucket sort is a sorting algorithm that works by distributing the elements into a number of buckets (or “bins”) and then sorting each bucket individually. The key idea behind bucket sort is that it divides a large problem into smaller, easier-to-solve subproblems and then combines the results to get the final sorted array. It is especially efficient when the input elements are uniformly distributed across a range.</p>
+
+<p>And it just so happens that the range of our input elements is indeed well-known. Since all our input elements are 5-digit numbers, all of them are between 10,000 and 99,999. So, we can use the principles behind bucket sort, such as bucketing and efficient lookup, without explicitly sorting the entire data set. That’s worth a go!</p>
+
+<h4 id="the-implementation">The implementation</h4>
+
+<p>The implementation I will discuss below can be found in the <a href="https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/optimisation_big_files_bucketsort" target="_blank">optimisation_big_files_bucketsort</a> branch.</p>
+
+<p>Here is the implementation in Rust. There are several steps:</p>
+<ul>
+  <li>first, we’ll define the range of our inputs, which is between 10,000 and 99,000.</li>
+  <li>then, we create the buckets as vectors, each of size equal to the range. These buckets will store the counts of occurrences of each number in the respective lists.</li>
+  <li>we’ll memory-map the file, as we did before</li>
+  <li>
+    <p>we’ll then process each line and populate the buckets. For each line, we parse the two 5-digit numbers with the familiar parse_line function. The numbers are mapped to their corresponding index in the buckets by subtracting MIN_VAL. This essentially “places” the number in the appropriate bucket based on its value.</p>
+
+    <p>For example, if num1 is 10,123, it will go to index 10,123 - 10,000 = 123.</p>
+  </li>
+  <li>we’ll then perform bucket matching: The function iterates over all the buckets (i from 0 to RANGE). For each bucket:
+    <ul>
+      <li>we check if there are any remaining numbers in buckets1[i].</li>
+      <li>we then look for a non-zero bucket in buckets2 starting from j. This is similar to matching elements from two sorted sets, which is done by traversing both buckets1 and buckets2 in a greedy fashion.</li>
+      <li>when a matching number is found, we calculate the absolute distance between num1 and num2, add this to total_distance, and decrease the count in both buckets1[i] and buckets2[j].</li>
+      <li>the j pointer ensures that buckets2 is traversed efficiently, skipping over empty buckets. This helps avoid unnecessary comparisons and speeds up the matching process.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Instead of sorting the entire set of numbers (which would take O(n log n) time), this approach works by counting occurrences of each number and then processing them in a way that avoids the overhead of comparison-based sorting. This results in a worst-case time complexity of O(n²) when all elements fall into a single bucket (which would be an absolute disaster). However, on average with good distribution, we can achieve O(n). Learn more about bucket sort <a href="https://www.youtube.com/watch?v=VuXbEb5ywrU" target="_blank">here</a>.</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="o">&amp;</span><span class="nb">str</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="n">Result</span><span class="o">&lt;</span><span class="nb">i64</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="c">// Define the range for 5-digit numbers</span>
+    <span class="k">const</span> <span class="n">MIN_VAL</span><span class="p">:</span> <span class="nb">i64</span> <span class="o">=</span> <span class="mi">10_000</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">MAX_VAL</span><span class="p">:</span> <span class="nb">i64</span> <span class="o">=</span> <span class="mi">99_999</span><span class="p">;</span>
+    <span class="k">const</span> <span class="n">RANGE</span><span class="p">:</span> <span class="nb">usize</span> <span class="o">=</span> <span class="p">(</span><span class="n">MAX_VAL</span> <span class="o">-</span> <span class="n">MIN_VAL</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">;</span>
+
+    <span class="c">// Initialize buckets</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">buckets1</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">0i64</span><span class="p">;</span> <span class="n">RANGE</span><span class="p">];</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">buckets2</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">0i64</span><span class="p">;</span> <span class="n">RANGE</span><span class="p">];</span>
+
+    <span class="c">// Open file and memory-map it</span>
+    <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">File</span><span class="p">::</span><span class="nf">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="nf">.context</span><span class="p">(</span><span class="s">"Failed to open file"</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">mmap</span> <span class="o">=</span> <span class="k">unsafe</span> <span class="p">{</span> <span class="nn">Mmap</span><span class="p">::</span><span class="nf">map</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file</span><span class="p">)</span><span class="nf">.context</span><span class="p">(</span><span class="s">"Failed to memory-map file"</span><span class="p">)</span><span class="o">?</span> <span class="p">};</span>
+
+    <span class="c">// Process lines from the memory-mapped file</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="n">in</span> <span class="n">mmap</span><span class="nf">.split</span><span class="p">(|</span><span class="o">&amp;</span><span class="n">byte</span><span class="p">|</span> <span class="n">byte</span> <span class="o">==</span> <span class="n">b</span><span class="sc">'\n'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="o">!</span><span class="n">line</span><span class="nf">.is_empty</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">((</span><span class="n">num1</span><span class="p">,</span> <span class="n">num2</span><span class="p">))</span> <span class="o">=</span> <span class="nf">parse_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">buckets1</span><span class="p">[(</span><span class="n">num1</span> <span class="o">-</span> <span class="n">MIN_VAL</span><span class="p">)</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">buckets2</span><span class="p">[(</span><span class="n">num2</span> <span class="o">-</span> <span class="n">MIN_VAL</span><span class="p">)</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c">// Compute total distance</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">total_distance</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="n">RANGE</span><span class="p">)</span><span class="nf">.for_each</span><span class="p">(|</span><span class="n">i</span><span class="p">|</span> <span class="p">{</span>
+        <span class="k">while</span> <span class="n">buckets1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">RANGE</span> <span class="o">&amp;&amp;</span> <span class="n">buckets2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">RANGE</span> <span class="p">{</span>
+                <span class="k">let</span> <span class="n">actual_num1</span> <span class="o">=</span> <span class="n">i</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">+</span> <span class="n">MIN_VAL</span><span class="p">;</span>
+                <span class="k">let</span> <span class="n">actual_num2</span> <span class="o">=</span> <span class="n">j</span> <span class="k">as</span> <span class="nb">i64</span> <span class="o">+</span> <span class="n">MIN_VAL</span><span class="p">;</span>
+                <span class="n">total_distance</span> <span class="o">+=</span> <span class="p">(</span><span class="n">actual_num1</span> <span class="o">-</span> <span class="n">actual_num2</span><span class="p">)</span><span class="nf">.abs</span><span class="p">();</span>
+                <span class="n">buckets1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+                <span class="n">buckets2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+    <span class="nf">Ok</span><span class="p">(</span><span class="n">total_distance</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>For Python, we’ll once again annotate the function with @jit to compile it in C and get the most speed-up we can.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">compute_distance</span><span class="p">(</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">):</span>
+    <span class="c1">#  Define the range for 5-digit numbers
+</span>    <span class="n">MIN_VAL</span> <span class="o">=</span> <span class="mi">10_000</span>
+    <span class="n">MAX_VAL</span> <span class="o">=</span> <span class="mi">99_999</span>
+    <span class="n">RANGE</span> <span class="o">=</span> <span class="n">MAX_VAL</span> <span class="o">-</span> <span class="n">MIN_VAL</span> <span class="o">+</span> <span class="mi">1</span>
+    
+    <span class="c1"># Initialize buckets
+</span>    <span class="n">buckets1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">RANGE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+    <span class="n">buckets2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">RANGE</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+    
+    <span class="c1"># Populate buckets
+</span>    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">col1</span><span class="p">:</span>
+        <span class="n">buckets1</span><span class="p">[</span><span class="n">num</span> <span class="o">-</span> <span class="n">MIN_VAL</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">col2</span><span class="p">:</span>
+        <span class="n">buckets2</span><span class="p">[</span><span class="n">num</span> <span class="o">-</span> <span class="n">MIN_VAL</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="c1"># Process buckets
+</span>    <span class="n">total_distance</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">RANGE</span><span class="p">):</span>
+        <span class="k">while</span> <span class="n">buckets1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">RANGE</span> <span class="ow">and</span> <span class="n">buckets2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">j</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">RANGE</span><span class="p">:</span>
+                <span class="n">actual_num1</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="n">MIN_VAL</span>
+                <span class="n">actual_num2</span> <span class="o">=</span> <span class="n">j</span> <span class="o">+</span> <span class="n">MIN_VAL</span>
+                <span class="n">total_distance</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">actual_num1</span> <span class="o">-</span> <span class="n">actual_num2</span><span class="p">)</span>
+                <span class="n">buckets1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">buckets2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+    
+    <span class="k">return</span> <span class="n">total_distance</span>
+</code></pre></div></div>
+
+<p>And this results in the last set of results I will show you. I was quite happy to see my Rust implementation could still keep up and at times outwork the Python implementation. In the end, after running both implementations many times, it was clear that there was hardly a difference between both. However, knowing that Python relies completely on C or Rust libraries, and most of the work on the Rust side was done by myself, was quite satisfying. Really looking at your source data and continuously learning about algorithms and techniques like SIMD, are never wasted efforts. Learn your craft!</p>
+
+<p>Saying that, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, …). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, processing 100 million entries takes about 1.5 seconds, which is where I will leave it. Thanks for reading through the entire article; I hope it sparked your interest!</p>
+
+<p><img src="http://localhost:4000/assets/aoc_rust_python/bucketsort.png" alt="bucketsort" /></p>
+
+  </section>
+  <section id="disqus_thread"></section><!-- /#disqus_thread -->
+</article>
+
+    <script type="text/javascript">
+      var disqus_config = function () {
+        this.page.url = 'http://localhost:4000/2025/advent-of-code-day-1-rust-vs-python/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = '/2025/advent-of-code-day-1-rust-vs-python'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+
+      (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//peculiar-coding-endeavours.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+       })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2025 Tom van Schaijk. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1737851978490887900"></script>
+
+
+    </div>
+
+<!-- load mathjax -->
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  </body>
+</html>
