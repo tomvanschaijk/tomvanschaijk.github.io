@@ -2,7 +2,7 @@
 title:  "Traveling salesman problem"
 date:   2023-05-01 16:00:00
 categories: [Tech, Algorithms] 
-tags: [tsp, algorithms, python]
+tags: [tsp, algorithms, performance optimisation, python]
 ---
 
 The traveling salesman problem is one of those annoying interview questions you sometimes get hurled at you, accompanied by "How would you solve this"? I remember a time when I was a fresh hatchling straight out of college, finding myself in that exact situation. I'll spare you the details, but I can tell you I didn't get particularly far 😉

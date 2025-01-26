@@ -2,7 +2,7 @@
 title:  "A way of life"
 date:   2023-02-11 16:00:00
 categories: [Tech, Algorithms] 
-tags: [game of life, conway, algorithms, python]
+tags: [game of life, conway, algorithms, performance optimisation, python]
 ---
 
 Everybody and their grandma probably tried their hand at an implementation of Conway's Game of Life at some point, in one or the other language. It's a straightforward and elegant little algorithm that can give you cool looking results, and a nice goal to work towards while learning a language. Drilling plain syntax or frameworks is incredibly boring. When learning any new language, having a concrete goal in mind besides "just learning it", helps speed the process along and makes it more enjoyable by far. So, while learning Python, I took a swing at it.

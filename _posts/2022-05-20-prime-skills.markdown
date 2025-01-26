@@ -2,7 +2,7 @@
 title:  "Prime skills?"
 date:   2022-05-20 16:00:00
 categories: [Tech, Algorithms] 
-tags: [algorithms, eratosthenes, prime numbers, mathematics]
+tags: [algorithms, eratosthenes, performance optimisation, prime numbers, mathematics]
 ---
 
 I was always charmed by the idea and the practice of algorithm-heavy programming. The heavy lifting, making seemingly complex and daunting tasks run like <nowiki>****</nowiki> of a shovel. 
