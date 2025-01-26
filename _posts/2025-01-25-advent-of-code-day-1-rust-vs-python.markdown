@@ -2,7 +2,7 @@
 title:  "Advent of Code Day 1: Rust versus Python"
 date:   2025-01-25 16:00:00
 categories: [Tech, Rust, Algorithms] 
-tags: [aoc, algorithms, performance,  optimisation, rust, python]
+tags: [aoc, algorithms, performance optimisation, rust, python]
 ---
 
 The end-of-year holiday season is always the time where [Advent of Code](https://adventofcode.com){:target="_blank"} comes out. It's an annual event in December that provides a series of daily programming puzzles, designed to challenge and entertain programmers of all skill levels. It runs from December 1st to December 25th, with a new puzzle released each day. Solving the first part unlocks the second, which is often a twist or an extension of the first part. The puzzles typically start easier in the early days and become progressively more challenging as the event progresses.
