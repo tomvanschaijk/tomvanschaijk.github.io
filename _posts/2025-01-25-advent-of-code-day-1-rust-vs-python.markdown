@@ -598,8 +598,120 @@ def compute_distance(col1, col2):
     return total_distance
 ```
 
-And this results in the last set of results I will show you. I was quite happy to see my Rust implementation could still keep up and at times outwork the Python implementation. In the end, after running both implementations many times, it was clear that there was hardly a difference between both. However, knowing that Python relies completely on C or Rust libraries, and most of the work on the Rust side was done by myself, was quite satisfying. Really looking at your source data and continuously learning about algorithms and techniques like SIMD, are never wasted efforts. Learn your craft!
-
-Saying that, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, processing 100 million entries takes about 1.5 seconds, which is where I will leave it. Thanks for reading through the entire article; I hope it sparked your interest!
+These efforts resulted in the measurements shown below. I was quite happy to see that my Rust implementation could still keep up and at times outwork the Python implementation. In the end, after running both implementations many times, it was clear that there was hardly a difference between both. However, knowing that Python relies completely on C or Rust libraries, and most of the work on the Rust side was done by myself, was quite satisfying. Really looking at your source data and continuously learning about algorithms and techniques like SIMD, are never wasted efforts.
 
 ![bucketsort]({{ site.url }}/assets/aoc_rust_python/bucketsort.png)
+
+#### One final touch
+
+After inspecting the code one final time, I did notice a few more things I could improve. Mainly, this following bit in the compute_distance function:
+
+``` rust
+for line in mmap.split(|&byte| byte == b'\n') {
+    if !line.is_empty() {
+    ...
+    }
+    ...
+}
+```
+
+We're being all efficient with our parsing of lines, looking at the individual bytes and avoiding calling parse functions. But we're still splitting on \n... Additionally, we're testing every line to see if it's empty. Since we've been relying on some assumptions regarding our input data, let's continue that trend and optimise these last few issues as well. After all, splitting the entire file on these returns, and testing if each line is empty, will be costly, and we should try to avoid it or perform these steps more efficiently.
+
+We'll use the memchr crate to help us find occurrences of the \n in each line. It leverages low-level optimizations, such as SIMD instructions to speed up searches, making it significantly faster than a straightforward byte-by-byte iteration in many cases. Besides that, instead of using a for loop, we'll use a while loop and a position index to read the file in byte chunks. We'll start at position 0, look for the first occurrence of \n in the memory-mapped file, and process the chunk of bytes that we get. We'll then update the position counter, and repeat until we processed the entire memory-map.
+
+``` rust
+fn compute_distance(file_path: &str) -> Result<i64> {
+    // Define the range for 5-digit numbers
+    const MIN_VAL: i64 = 10_000;
+    const MAX_VAL: i64 = 99_999;
+    const RANGE: usize = (MAX_VAL - MIN_VAL + 1) as usize;
+
+    // Initialize buckets
+    let mut buckets1 = vec![0i32; RANGE];
+    let mut buckets2 = vec![0i32; RANGE];
+
+    // Open file and memory-map it
+    let file = File::open(file_path).context("Failed to open file")?;
+    let mmap = unsafe { Mmap::map(&file).context("Failed to memory-map file")? };
+
+    // Chunk the file by looking for the \n
+    let mut pos = 0;
+    while pos < mmap.len() {
+        let end = match memchr(b'\n', &mmap[pos..]) {
+            Some(p) => pos + p,
+            None => mmap.len(),
+        };
+
+        let line = &mmap[pos..end - 1];
+        pos = end + 1;
+
+        if line.len() >= 11 {
+            if let Some((num1, num2)) = parse_line(line) {
+                unsafe {
+                    *buckets1.get_unchecked_mut((num1 - MIN_VAL) as usize) += 1;
+                    *buckets2.get_unchecked_mut((num2 - MIN_VAL) as usize) += 1;
+                }
+            }
+        }
+    }
+
+    // Compute total distance
+    let mut total_distance = 0i64;
+    let mut j = 0;
+    (0..RANGE).for_each(|i| {
+        while buckets1[i] > 0 {
+            while j < RANGE && buckets2[j] == 0 {
+                j += 1;
+            }
+
+            if j >= RANGE {
+                break;
+            }
+
+            let count = std::cmp::min(buckets1[i], buckets2[j]);
+            let diff = (i as i64 - j as i64).abs();
+            total_distance += count as i64 * diff;
+            buckets1[i] -= count;
+            buckets2[j] -= count;
+        }
+    });
+
+    Ok(total_distance)
+}
+```
+
+Let's also change the way we parse lines. Nothing overly crazy, however: we'll remove the use of SIMD from handling of the byte arrays, and we'll instead sprinkle some unsafe code in there. Again, we're really relying on the assumptions we placed on the data, having chunks of 11 bytes. We will, however, add a check in there to see if the byte at index 5 is indead a space. For readability, we moved the parsing bit of our logic to another function. We'll annotate it with an inline(always) attribute, so that the compiler always inlines the code instead of having millions of calls to a separate function. Some experimentation showed that these changes also shaved of some tens of milliseconds on the largest files.
+
+``` rust
+fn parse_line(bytes: &[u8]) -> Option<(i64, i64)> {
+    if bytes.len() < 11 || unsafe { *bytes.get_unchecked(5) } != b' ' {
+        return None;
+    }
+
+    // Unsafe slice access (validated by line length check)
+    let num1 = parse_digits(unsafe { bytes.get_unchecked(0..5) })?;
+    let num2 = parse_digits(unsafe { bytes.get_unchecked(6..11) })?;
+
+    Some((num1, num2))
+}
+
+#[inline(always)]
+fn parse_digits(bytes: &[u8]) -> Option<i64> {
+    if bytes.len() != 5 {
+        return None;
+    }
+
+    // Safe to parse now
+    let d0 = (bytes[0] - b'0') as i64;
+    let d1 = (bytes[1] - b'0') as i64;
+    let d2 = (bytes[2] - b'0') as i64;
+    let d3 = (bytes[3] - b'0') as i64;
+    let d4 = (bytes[4] - b'0') as i64;
+
+    Some(d0 * 10000 + d1 * 1000 + d2 * 100 + d3 * 10 + d4)
+}
+```
+
+And this results in the final set of results I will show you. I'm glad to see we're shaving off another few 100ms from the 100M entry file. On a relative scale, that's about 20% of a speed increase, which is pretty amazing. These changes bring the measurements within a few 10's of ms of just reading the file without performing processing at all, so I'm going to leave it at that. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 1.3 seconds, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!
+
+![bucketsort]({{ site.url }}/assets/aoc_rust_python/bucketsort_final.png)
