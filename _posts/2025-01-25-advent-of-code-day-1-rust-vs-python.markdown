@@ -617,7 +617,11 @@ for line in mmap.split(|&byte| byte == b'\n') {
 
 We're being all efficient with our parsing of lines, looking at the individual bytes and avoiding calling parse functions. But we're still splitting on \n... Additionally, we're testing every line to see if it's empty. Since we've been relying on some assumptions regarding our input data, let's continue that trend and optimise these last few issues as well. After all, splitting the entire file on these returns, and testing if each line is empty, will be costly, and we should try to avoid it or perform these steps more efficiently.
 
-We'll use the memchr crate to help us find occurrences of the \n in each line. It leverages low-level optimizations, such as SIMD instructions to speed up searches, making it significantly faster than a straightforward byte-by-byte iteration in many cases. Besides that, instead of using a for loop, we'll use a while loop and a position index to read the file in byte chunks. We'll start at position 0, look for the first occurrence of \n in the memory-mapped file, and process the chunk of bytes that we get. We'll then update the position counter, and repeat until we processed the entire memory-map.
+We make the assumption that each line
+* is 13 bytes long
+* consists of 5 digits, a space, another 5 digits, and a \n to get to the next line
+
+Let's really use that to avoid all splitting whatsoever. We'll use a while loop and a start index to read the file in byte chunks. We'll start at position 0, take the next 13 bytes in the memory-mapped file, and process the chunk of bytes that we get. We'll then update the start index, and repeat until we processed the entire memory-map.
 
 ``` rust
 fn compute_distance(file_path: &str) -> Result<i64> {
@@ -625,32 +629,22 @@ fn compute_distance(file_path: &str) -> Result<i64> {
     const MIN_VAL: i64 = 10_000;
     const MAX_VAL: i64 = 99_999;
     const RANGE: usize = (MAX_VAL - MIN_VAL + 1) as usize;
-
+    
     // Initialize buckets
     let mut buckets1 = vec![0i32; RANGE];
     let mut buckets2 = vec![0i32; RANGE];
-
+    
     // Open file and memory-map it
     let file = File::open(file_path).context("Failed to open file")?;
     let mmap = unsafe { Mmap::map(&file).context("Failed to memory-map file")? };
-
-    // Chunk the file by looking for the \n
-    let mut pos = 0;
-    while pos < mmap.len() {
-        let end = match memchr(b'\n', &mmap[pos..]) {
-            Some(p) => pos + p,
-            None => mmap.len(),
-        };
-
-        let line = &mmap[pos..end - 1];
-        pos = end + 1;
-
-        if line.len() >= 11 {
-            if let Some((num1, num2)) = parse_line(line) {
-                unsafe {
-                    *buckets1.get_unchecked_mut((num1 - MIN_VAL) as usize) += 1;
-                    *buckets2.get_unchecked_mut((num2 - MIN_VAL) as usize) += 1;
-                }
+    
+    // Since we know the exact length in bytes of each line, we can simply step through it
+    const STEP: usize = 13;
+    for line in mmap.chunks_exact(STEP) {
+        if let Some((num1, num2)) = parse_line(line) {
+            unsafe {
+                *buckets1.get_unchecked_mut((num1 - MIN_VAL) as usize) += 1;
+                *buckets2.get_unchecked_mut((num2 - MIN_VAL) as usize) += 1;
             }
         }
     }
@@ -668,9 +662,8 @@ fn compute_distance(file_path: &str) -> Result<i64> {
                 break;
             }
 
-            let count = std::cmp::min(buckets1[i], buckets2[j]);
-            let diff = (i as i64 - j as i64).abs();
-            total_distance += count as i64 * diff;
+            let count = buckets1[i].min(buckets2[j]);
+            total_distance += count as i64 * (i as i64 - j as i64).abs();
             buckets1[i] -= count;
             buckets2[j] -= count;
         }
@@ -680,11 +673,11 @@ fn compute_distance(file_path: &str) -> Result<i64> {
 }
 ```
 
-Let's also change the way we parse lines. Nothing overly crazy, however: we'll remove the use of SIMD from handling of the byte arrays, and we'll instead sprinkle some unsafe code in there. Again, we're really relying on the assumptions we placed on the data, having chunks of 11 bytes. We will, however, add a check in there to see if the byte at index 5 is indead a space. For readability, we moved the parsing bit of our logic to another function. We'll annotate it with an inline(always) attribute, so that the compiler always inlines the code instead of having millions of calls to a separate function. Some experimentation showed that these changes also shaved of some tens of milliseconds on the largest files.
+Let's also change the way we parse lines. Nothing overly crazy, however: we'll remove the use of SIMD from handling of the byte arrays, and we'll instead sprinkle some unsafe code in there. Again, we're really relying on the assumptions we placed on the data, having chunks of 13 bytes. We will, however, add a check in there to see if the byte at index 5 is indead a space. For readability, we moved the parsing bit of our logic to another function. We'll annotate it with an inline(always) attribute, so that the compiler always inlines the code instead of having millions of calls to a separate function. Some experimentation showed that these changes also shaved of some tens of milliseconds on the largest files.
 
 ``` rust
 fn parse_line(bytes: &[u8]) -> Option<(i64, i64)> {
-    if bytes.len() < 11 || unsafe { *bytes.get_unchecked(5) } != b' ' {
+    if bytes.len() < 13 || unsafe { *bytes.get_unchecked(5) } != b' ' {
         return None;
     }
 
@@ -712,6 +705,6 @@ fn parse_digits(bytes: &[u8]) -> Option<i64> {
 }
 ```
 
-And this results in the final set of results I will show you. I'm glad to see we're shaving off another few 100ms from the 100M entry file. On a relative scale, that's about 20% of a speed increase, which is pretty amazing. These changes bring the measurements within a few 10's of ms of just reading the file without performing processing at all, so I'm going to leave it at that. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 1.3 seconds, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!
+And this results in the final set of results I will show you. I'm glad to see we're shaving off close to 40% of the time spent, which is pretty amazing. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 950 milliseconds, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!
 
 ![bucketsort]({{ site.url }}/assets/aoc_rust_python/bucketsort_final.png)
