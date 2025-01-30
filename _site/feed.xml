@@ -5,8 +5,8 @@
     <description>Software engineer. Algorithm &amp; data structures nut. On my way to learning AI. Eternal student.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 30 Jan 2025 02:43:18 +0100</pubDate>
-    <lastBuildDate>Thu, 30 Jan 2025 02:43:18 +0100</lastBuildDate>
+    <pubDate>Thu, 30 Jan 2025 03:04:05 +0100</pubDate>
+    <lastBuildDate>Thu, 30 Jan 2025 03:04:05 +0100</lastBuildDate>
     <generator>Jekyll v3.9.3</generator>
     
       <item>
@@ -616,7 +616,7 @@
   &lt;li&gt;consists of 5 digits, a space, another 5 digits, and a \n to get to the next line&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Let’s really use that to avoid all splitting whatsoever. We’ll use a while loop and a start index to read the file in byte chunks. We’ll start at position 0, take the next 13 bytes in the memory-mapped file, and process the chunk of bytes that we get. We’ll then update the start index, and repeat until we processed the entire memory-map.&lt;/p&gt;
+&lt;p&gt;Let’s really use that to avoid all splitting whatsoever. We’ll use the chunks_exact function to step through the file in 13-byte chunks. For each chunk, we’ll simply parse the bytes, and bucket the obtained numbers.&lt;/p&gt;
 
 &lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;compute_distance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;file_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;i64&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;c&quot;&gt;// Define the range for 5-digit numbers&lt;/span&gt;
@@ -667,7 +667,7 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Let’s also change the way we parse lines. Nothing overly crazy, however: we’ll remove the use of SIMD from handling of the byte arrays, and we’ll instead sprinkle some unsafe code in there. Again, we’re really relying on the assumptions we placed on the data, having chunks of 13 bytes. We will, however, add a check in there to see if the byte at index 5 is indead a space. For readability, we moved the parsing bit of our logic to another function. We’ll annotate it with an inline(always) attribute, so that the compiler always inlines the code instead of having millions of calls to a separate function. Some experimentation showed that these changes also shaved of some tens of milliseconds on the largest files.&lt;/p&gt;
+&lt;p&gt;Let’s also change the way we parse lines. Nothing overly crazy, however: we’ll remove the use of SIMD from handling of the byte arrays, and we’ll instead sprinkle some unsafe code in there. For readability, I moved the parsing portion of our logic to another function. We’ll annotate it with an inline(always) attribute, so that the compiler always inlines the code instead of having millions of calls to a separate function. Some experimentation showed that these changes also shaved of some tens of milliseconds on the largest files.&lt;/p&gt;
 
 &lt;div class=&quot;language-rust highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;fn&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;parse_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;u8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;Option&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;i64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;i64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;unsafe&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;.get_unchecked&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;sc&quot;&gt;&apos; &apos;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
@@ -698,7 +698,7 @@
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;And this results in the final set of results I will show you. I’m glad to see we’re shaving off close to 40% of the time spent, which is pretty amazing. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, …). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 950 milliseconds, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!&lt;/p&gt;
+&lt;p&gt;And this results in the final set of results I will show you. I’m glad to see that these last set of changes decreased the time spent by another 35-40%, which is pretty amazing. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, …). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 1 second, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/aoc_rust_python/bucketsort_final.png&quot; alt=&quot;bucketsort&quot; /&gt;&lt;/p&gt;
 </description>

@@ -621,7 +621,7 @@ We make the assumption that each line
 * is 13 bytes long
 * consists of 5 digits, a space, another 5 digits, and a \n to get to the next line
 
-Let's really use that to avoid all splitting whatsoever. We'll use a while loop and a start index to read the file in byte chunks. We'll start at position 0, take the next 13 bytes in the memory-mapped file, and process the chunk of bytes that we get. We'll then update the start index, and repeat until we processed the entire memory-map.
+Let's really use that to avoid all splitting whatsoever. We'll use the chunks_exact function to step through the file in 13-byte chunks. For each chunk, we'll simply parse the bytes, and bucket the obtained numbers.
 
 ``` rust
 fn compute_distance(file_path: &str) -> Result<i64> {
@@ -673,7 +673,7 @@ fn compute_distance(file_path: &str) -> Result<i64> {
 }
 ```
 
-Let's also change the way we parse lines. Nothing overly crazy, however: we'll remove the use of SIMD from handling of the byte arrays, and we'll instead sprinkle some unsafe code in there. Again, we're really relying on the assumptions we placed on the data, having chunks of 13 bytes. We will, however, add a check in there to see if the byte at index 5 is indead a space. For readability, we moved the parsing bit of our logic to another function. We'll annotate it with an inline(always) attribute, so that the compiler always inlines the code instead of having millions of calls to a separate function. Some experimentation showed that these changes also shaved of some tens of milliseconds on the largest files.
+Let's also change the way we parse lines. Nothing overly crazy, however: we'll remove the use of SIMD from handling of the byte arrays, and we'll instead sprinkle some unsafe code in there. For readability, I moved the parsing portion of our logic to another function. We'll annotate it with an inline(always) attribute, so that the compiler always inlines the code instead of having millions of calls to a separate function. Some experimentation showed that these changes also shaved of some tens of milliseconds on the largest files.
 
 ``` rust
 fn parse_line(bytes: &[u8]) -> Option<(i64, i64)> {
@@ -705,6 +705,6 @@ fn parse_digits(bytes: &[u8]) -> Option<i64> {
 }
 ```
 
-And this results in the final set of results I will show you. I'm glad to see we're shaving off close to 40% of the time spent, which is pretty amazing. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 950 milliseconds, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!
+And this results in the final set of results I will show you. I'm glad to see that these last set of changes decreased the time spent by another 35-40%, which is pretty amazing. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 1 second, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!
 
 ![bucketsort]({{ site.url }}/assets/aoc_rust_python/bucketsort_final.png)
