@@ -1,26 +1,25 @@
-# Site settings 
+# Site settings
 title: Peculiar Coding Endeavours
-description: 'Software engineer. Algorithm & data structures nut. On my way to learning AI. Eternal student.'
+description: "Software engineer. Loving high-performance and quality. Lifelong learner."
 # url: 'https://tomvanschaijk.github.io'
-url: 'https://www.peculiar-coding-endeavours.com'
-baseurl: ''
-google_analytics: 'UA-118965289-1'
-disqus_shortname: 'peculiar-coding-endeavours'
+url: "https://www.peculiar-coding-endeavours.com"
+baseurl: ""
+google_analytics: "UA-118965289-1"
+disqus_shortname: "peculiar-coding-endeavours"
 
 author:
-  name: 'Tom van Schaijk'
+  name: "Tom van Schaijk"
   email: vanschaijktom@hotmail.com
-  github_username:  tomvanschaijk
-  linkedin_username:  tom-van-schaijk
+  github_username: tomvanschaijk
+  linkedin_username: tom-van-schaijk
   youtube_id: peculiar-coding-endeavours
 
 defaults:
-  -
-    scope:
-      path: ''
-      type: 'posts'
+  - scope:
+      path: ""
+      type: "posts"
     values:
-        layout: 'post'
+      layout: "post"
 
 # Build settings
 destination: _site
@@ -30,8 +29,8 @@ markdown: kramdown
 highlighter: rouge
 
 sass:
-    sass_dir: _sass
-    style: compressed
+  sass_dir: _sass
+  style: compressed
 
 kramdown:
   # use Github Flavored Markdown
@@ -39,7 +38,7 @@ kramdown:
   # do not replace newlines by <br>s
   hard_wrap: false
 
-plugins: ['jekyll-paginate', 'jekyll-feed']
-exclude: ['README.md', 'Gemfile', 'Gemfile.lock', 'screenshot.png']
+plugins: ["jekyll-paginate"]
+exclude: ["README.md", "Gemfile", "Gemfile.lock", "screenshot.png"]
 
 theme: jekyll-theme-hacker
