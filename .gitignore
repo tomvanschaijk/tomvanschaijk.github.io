@@ -1,0 +1,36 @@
+# Jekyll build files
+_site/
+.jekyll-cache/
+
+# Dependencies
+.bundle/
+vendor/
+Gemfile.lock
+
+# Logs and temp files
+.log/
+*.log
+.DS_Store
+*.swp
+*.swo
+.sass-cache/
+
+# System files
+Thumbs.db
+ehthumbs.db
+
+# VS Code settings (optional)
+.vscode/
+
+# Node dependencies (if using npm/yarn with Jekyll)
+node_modules/
+package-lock.json
+yarn.lock
+
+# GitHub Pages cache (if deploying to GitHub Pages)
+.jekyll-metadata
+
+# Environment variables (if using .env)
+.env
+
+_site/
