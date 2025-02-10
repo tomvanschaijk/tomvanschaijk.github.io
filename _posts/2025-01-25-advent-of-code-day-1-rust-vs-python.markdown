@@ -36,7 +36,7 @@ sort each side, and calculate the difference between the smallest entries on eac
 
 the pairs and distances would be as follows:
 
-* the smallest number in the left list is __1__, and the smallest number in the right list is 3. The distance between them is __2__.
+* the smallest number in the left list is __1__, and the smallest number in the right list is __3__. The distance between them is __2__.
 * the second-smallest number in the left list is __2__, and the second-smallest number in the right list is another __3__. The distance between them is __1__.
 * the third-smallest number in both lists is __3__, so the distance between them is __0__.
 * the next numbers to pair up are __3__ and __4__, a distance of __1__.
