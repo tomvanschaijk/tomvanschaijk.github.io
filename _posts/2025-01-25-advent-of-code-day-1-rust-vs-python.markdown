@@ -9,7 +9,7 @@ The end-of-year holiday season is always the time where [Advent of Code](https:/
 
 Solutions are time-sensitive, and participants can compete on a global leaderboard for the fastest solutions. The puzzles are designed to be fun, often involving creative themes or storylines. They encourage problem-solving, algorithm design, and optimisation skills. In short: a must for everybody that looks for an out during those boring days off. Many people use it to brush up on their skills, learn a new language, or just for the sake of the challenge.
 
-Since the language of choice is free, and people will be comparing their implementations, you know the inevitable happens: a lot of back-and-forth regarding what language is the best/most efficient/easy to write. Since my language of choice is Rust, I was interested in trying to compare an implementation in Rust to one in Python, and see how far I could take it.
+Since the language of choice is free, and people will be comparing their implementations, you know the inevitable happens: a lot of back-and-forth regarding what language is the best/most efficient/easy to write. Since my language of choice is Rust, I was interested in trying to compare an implementation in Rust to one in Python, and see how far I could take it. As a teaser: in the end, we'll be processing __100 million lines of data__, about __1.3GB__, in less than a second.
 
 ![aoc]({{ site.url }}/assets/aoc_rust_python/rust_vs_python.jpeg)
 
@@ -51,7 +51,7 @@ Obviously, the basic implementation in whichever language would always be "fast 
  
 Instead of sticking to 1000 entries, I created lists of 1k, 10k, 100k, 1M, 10M, 50M and 100M entries. I compared very basic implementations in both languages, iterated a lot and tried several things to get some decent speed out of both implementations. The chapters below will give you a rundown of all the steps I took to get the most speed out of both languages. For Rust, I leaned more towards implementing as much as possible myself (because, of course I did). On the Python side of things, I mostly used familiar frameworks like Pandas/Polars and Numpy.
 
-In the end, though, one fundamental change yielded a 40-50% speedup in both language implementations, without depending on external frameworks. You can check out the [GitHub repository](https://github.com/tomvanschaijk/aoc_1_python_vs_rust){:target="_blank"} and look at all 5 branches, each containing an additional step towards optimisation, or a completely different approach. I have no doubt that the Rust/Python wizards out there can get even more performance out of this, and if you do, please let me know!
+In the end, though, one fundamental change yielded a __40-50%__ speedup in both language implementations, without depending on external frameworks. You can check out the [GitHub repository](https://github.com/tomvanschaijk/aoc_1_python_vs_rust){:target="_blank"} and look at all 5 branches, each containing an additional step towards optimisation, or a completely different approach. I have no doubt that the Rust/Python wizards out there can get even more performance out of this, and if you do, please let me know!
 
 
 ### A basic implementation
@@ -705,6 +705,6 @@ fn parse_digits(bytes: &[u8]) -> Option<i64> {
 }
 ```
 
-And this results in the final set of results I will show you. I'm glad to see that these last set of changes decreased the time spent by another 35-40%, which is pretty amazing. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 1 second, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!
+And this results in the final set of results I will show you. I'm glad to see that these last set of changes decreased the time spent by another __35-40%__, which is pretty amazing. However, I hope some of you can completely leave my Rust implementation in the dust and introduce massive speedups (maybe using the GPU, even more interesting and innovative algorithms or approaches, ...). Again, if so, definitely contact me; I always want to learn. For the time being, on my machine, loading the file and processing 100 million entries takes about 1 second, which is fine by me. Thanks for reading through the entire article; I hope it sparked your interest!
 
 ![bucketsort]({{ site.url }}/assets/aoc_rust_python/bucketsort_final.png)
