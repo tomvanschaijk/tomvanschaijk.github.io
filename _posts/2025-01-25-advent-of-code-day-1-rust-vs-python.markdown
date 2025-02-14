@@ -9,7 +9,7 @@ The end-of-year holiday season is always the time where [Advent of Code](https:/
 
 Solutions are time-sensitive, and participants can compete on a global leaderboard for the fastest solutions. The puzzles are designed to be fun, often involving creative themes or storylines. They encourage problem-solving, algorithm design, and optimisation skills. In short: a must for everybody that looks for an out during those boring days off. Many people use it to brush up on their skills, learn a new language, or just for the sake of the challenge.
 
-Since the language of choice is free, and people will be comparing their implementations, you know the inevitable happens: a lot of back-and-forth regarding what language is the best/most efficient/easy to write. Since my language of choice is Rust, I was interested in trying to compare an implementation in Rust to one in Python, and see how far I could take it. As a teaser: in the end, we'll be processing __100 million lines of data__, about __1.3GB__, in less than a second.
+Since the language of choice is free, and people will be comparing their implementations, you know the inevitable happens: a lot of back-and-forth regarding what language is the best/most efficient/easy to write. Since my language of choice is Rust, I was interested in trying to compare an implementation in Rust to one in Python, and see how far I could take it. As a teaser: in the end, we'll be processing __100 million lines of data__, about __1.3GB__, in __less than a second__.
 
 ![aoc]({{ site.url }}/assets/aoc_rust_python/rust_vs_python.jpeg)
 
