@@ -1,6 +1,8 @@
 # Site settings
 title: Peculiar Coding Endeavours
-description: "Software engineer. Loving high performance & quality code. Lifelong learner."
+description_1: "Software architect & full-stack engineer"
+description_2: "Loving high performance & quality code"
+description_3: "Lifelong learner"
 # url: 'https://tomvanschaijk.github.io'
 url: "https://www.peculiar-coding-endeavours.com"
 baseurl: ""
