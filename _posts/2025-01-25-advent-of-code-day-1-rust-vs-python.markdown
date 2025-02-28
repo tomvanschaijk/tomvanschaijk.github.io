@@ -51,7 +51,7 @@ Obviously, the basic implementation in whichever language would always be "fast 
  
 Instead of sticking to 1000 entries, I created lists of 1k, 10k, 100k, 1M, 10M, 50M and 100M entries. I compared very basic implementations in both languages, iterated a lot and tried several things to get some decent speed out of both implementations. The chapters below will give you a rundown of all the steps I took to get the most speed out of both languages. For Rust, I leaned more towards implementing as much as possible myself (because, of course I did). On the Python side of things, I mostly used familiar frameworks like Pandas/Polars and Numpy.
 
-In the end, though, one fundamental change yielded a __40-50%__ speedup in both language implementations, without depending on external frameworks. You can check out the [GitHub repository](https://github.com/tomvanschaijk/aoc_1_python_vs_rust){:target="_blank"} and look at all 5 branches, each containing an additional step towards optimisation, or a completely different approach. I have no doubt that the Rust/Python wizards out there can get even more performance out of this, and if you do, please let me know!
+In the end, though, one fundamental change yielded a __40-50%__ speedup in both language implementations, without depending on external frameworks. I have no doubt that the Rust/Python wizards out there can get even more performance out of this, and if you do, please let me know!
 
 
 ### A basic implementation
@@ -219,11 +219,11 @@ After this, I decided to try some other strategies on the Rust side, the results
 1. I used memmap to read the files instead of BufReader. This allows us to process the file as a memory-mapped file. Memory-mapped files allow you to map the file's contents directly into the process's address space. This enables accessing file data as if it were in memory, avoiding explicit read or write system calls. This enables handling files larger than the available physical memory by leveraging the operating system's virtual memory system. This is particularly beneficial when working with datasets that are too large to fit into memory all at once. The results show that we clearly pay some overhead costs for the smaller files, but since we will be focusing on a bigger scale, this is worth it when we move towards millions of entries.
 2. To parallelise iteration of the lists, I used Rayon. Again, for smaller lists, the overhead of parallelisation would not be worth it. But for larger files, we would see a big speed-up.
 
-You can see this result in the screenshot (memmap + rayon column). Additionally, I added tokio and processed all files concurrently. The results can be seen in the memmap + rayon + tokio column, and the code is in the [async_tokio](https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/async_tokio){:target="_blank"} branch. I'll not focus on concurrent handling of files, but I just wanted to add an example on how to combine Rayon and Tokio for this kind of work.
+You can see this result in the screenshot (memmap + rayon column). Additionally, I added tokio and processed all files concurrently. The results can be seen in the memmap + rayon + tokio column. I'll not focus on concurrent handling of files, but I just wanted to add an example on how to combine Rayon and Tokio for this kind of work.
 
 ### Where are we so far?
 
-Now, processing 1 million lines is nice, but to really see the scalability of the implementations, let's dial it up a few notches and increase the length of the files by a few orders of magnitude. I created some additional lists of 10M, 50M and 100M entries. To give you an idea of where we are at the moment, let's run the current implementations for Rust and Python (which you can find in the [master](https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/master){:target="_blank"} branch), up to 100M entries. This will help you appreciate the speed-ups that we will achieve in the work we will do in the upcoming sections.
+Now, processing 1 million lines is nice, but to really see the scalability of the implementations, let's dial it up a few notches and increase the length of the files by a few orders of magnitude. I created some additional lists of 10M, 50M and 100M entries. To give you an idea of where we are at the moment, let's run the current implementations for Rust and Python, up to 100M entries. This will help you appreciate the speed-ups that we will achieve in the work we will do in the upcoming sections.
 
 To get an idea about the file sizes: the 100M entry file is about 1.3Gb in size. As you can see, the results are nothing to write home about. We need several seconds to process tens of millions of entries, and in the Python implementation we need several minutes. Quite abysmal, but this is to be expected, as we didn't really put any effort into optimisation yet. On the Rust side, at least we are using Rayon and memmap to get a bit of a speed-up. The real work to achieve decent performance on either side is yet to be done though.
 
@@ -238,8 +238,6 @@ Now, we all know Python is slow. Making the Python implementation fast is just n
 * [Numba](https://numba.pydata.org/){:target="_blank"} to speed up the remaining Python code.
 
 In Rust, I tried to implement as much as possible myself, and tried to come up with improvements to avoid the annoying white space splitting and converting to numbers, and leveraged techniques like SIMD to crank out as much as I could. Some good old ingenuity and software engineering, or at least a brave attempt at it. A bit more of an artisanal approach, but I'd lie if I said that isn't why I got into the profession.
-
-The implementations I will discuss below can be found in the [optimisation_big_files](https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/optimisation_big_files){:target="_blank"} branch.
 
 #### Yeah, yeah yeah... Python
 To get the Python implementation out of the way (I'm sorry, Pythonistas), there's a few simple changes. The first thing that needs some explanation is probably the start of main. I'm calling the compute_distance function on 2 small hard-coded NumPy arrays. The reason for that is that the compute_distance function has the @jit attribute from Numba on it. This signifies that the function will be pre-compiled into C and executed as C code from then on. However, for that to happen, it needs to run 1 time for that pre-compilation to be triggered, which takes a bit of time. In order for us to not pay that cost while the actual data is processed, we execut the function on 2 small arrays to get the compilation done.
@@ -385,7 +383,7 @@ fn compute_distance(v1: &[i64], v2: &[i64]) -> i64 {
 
 ### SIMD to the rescue
 
-Before showing the comparative results between our handywork in Rust and the combination of NumPy, Polars and Numba, we'll pull off one more trick, which is the use of SIMD. Some explanation on what SIMD is, can be found on [Wikipedia](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data){:target="_blank"} or [YouTube](https://youtu.be/o_n4AKwdfiA){:target="_blank"} for a quick explanation. A longer lecture can be found [right here](https://youtu.be/Kj8Hgc80VYo){:target="_blank"}. Warning here: to use SIMD, we'll have to switch to the nightly build of Rust, as (at the time of writing), the SIMD implementations are not yet stabilised. This isn't stopping us, of course. The SIMD implementation can be found in the [optimisation_big_files_simd](https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/optimisation_big_files_simd){:target="_blank"} branch.
+Before showing the comparative results between our handywork in Rust and the combination of NumPy, Polars and Numba, we'll pull off one more trick, which is the use of SIMD. Some explanation on what SIMD is, can be found on [Wikipedia](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data){:target="_blank"} or [YouTube](https://youtu.be/o_n4AKwdfiA){:target="_blank"} for a quick explanation. A longer lecture can be found [right here](https://youtu.be/Kj8Hgc80VYo){:target="_blank"}. Warning here: to use SIMD, we'll have to switch to the nightly build of Rust, as (at the time of writing), the SIMD implementations are not yet stabilised. This isn't stopping us, of course.
 
 So, how exactly can we use SIMD to speed up our code? Well, the parse_line function is particularly suited here. As you saw, we multiplied the entries of the byte-array with multiples of 10, depending on their position in the array, to obtain the actual number. What if, instead of multiplying each entry individually, we could perform this multiplication on all numbers in one single instruction? Of course, we would have to extract the right bytes out of the original array, but it's worth checking whether the overhead from this extraction is amortised by the speed-up gained by the SIMD instruction. After some testing, it was very clear that it was worth it. So, I changed the parse_line function to the following implementation:
 
@@ -494,9 +492,6 @@ Bucket sort is a sorting algorithm that works by distributing the elements into 
 And it just so happens that the range of our input elements is indeed well-known. Since all our input elements are 5-digit numbers, all of them are between 10,000 and 99,999. So, we can use the principles behind bucket sort, such as bucketing and efficient lookup, without explicitly sorting the entire data set. That's worth a go!
 
 #### The implementation
-
-The implementation I will discuss below can be found in the [optimisation_big_files_bucketsort](https://github.com/tomvanschaijk/aoc_1_python_vs_rust/tree/feature/optimisation_big_files_bucketsort){:target="_blank"} branch.
-
 
 Here is the implementation in Rust. There are several steps:
 * first, we'll define the range of our inputs, which is between 10,000 and 99,000.
