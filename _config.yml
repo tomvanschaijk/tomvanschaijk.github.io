@@ -3,7 +3,6 @@ title: Peculiar Coding Endeavours
 description_1: "Software architect & engineer"
 description_2: "Loving high performance & quality code"
 description_3: "Lifelong learner"
-# url: 'https://tomvanschaijk.github.io'
 url: "https://www.peculiar-coding-endeavours.com"
 baseurl: ""
 google_analytics: "UA-118965289-1"
@@ -12,7 +11,7 @@ disqus_shortname: "peculiar-coding-endeavours"
 author:
   name: "Tom van Schaijk"
   email: vanschaijktom@hotmail.com
-  github_username: tomvanschaijk
+  gitlab_username: tomvanschaijk
   linkedin_username: tom-van-schaijk
   youtube_id: peculiar-coding-endeavours
 
