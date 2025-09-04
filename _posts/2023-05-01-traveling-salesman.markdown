@@ -24,7 +24,7 @@ I've been interested in genetic algorithms and ant colony optimization for a whi
 
 
 ### The project
-The full code of the project is available on my [GitHub](https://github.com/tomvanschaijk/travelingsalesman){:target="_blank"}. The requirements to run it are pretty basic. It's all Python code, and I mainly use PyGame, Numpy, Asyncio and Aiostream. Just install the requirements in requirements.txt and you'll be set. You can preview the end result right here:
+The full code of the project is available on my [GitLab](https://gitlab.com/peculiar_coding_endeavours/travelingsalesman){:target="_blank"}. The requirements to run it are pretty basic. It's all Python code, and I mainly use PyGame, Numpy, Asyncio and Aiostream. Just install the requirements in requirements.txt and you'll be set. You can preview the end result right here:
 {% include youtube.html id="XCZSwM--vCA" %}
 In fact, give that a quick gander, keep it open in your browser to get back to every now and then, and the rest of the article will quickly become clear. Obviously, cloning it yourself and running it will help your understanding even more.
 
@@ -32,7 +32,7 @@ The PyGame window that pops up when running shows you 5 panes. The top center on
 
 Since brute force and dynamic programming solutions are inherently slow for anything more than a few points, you'll notice there's a cut-off point where those algorithms are not being taken along for the ride anymore. It would simply take too much time, as the time complexity for both just explodes when the amount of points gets too high. Dynamic programming will be used for a bit longer than brute force, but when you start getting in the double digits in terms of destination count, both will not be executed anymore.
 
-In case you do follow along in the code and check out the GitHub project, there aren't a lot of files of interest:
+In case you do follow along in the code and check out the GitLab project, there aren't a lot of files of interest:
 * main.py: nothing you wouldn't expect. The only code of slight interest there is how to run the 4 algorithms concurrently. All the rest is setup for PyGame, running the main "game loop"
 * graph.py: contains an implementation of an undirected weighted graph, slightly tailored to the current problem at hand
 * the folder /solvers contains the implementations of the 4 algorithms. The rest of the article will mostly focus on those
@@ -1155,6 +1155,6 @@ The combination of this negative and positive feedback loop, applied to the resu
 
 Well, that's about all I have to say about this topic for now. Since I always wanted to dabble in genetic algorithms and ant colony optimization, this was a nice little project to keep me occupied for a few days. It took me a few months to start this actual blog, but I'm currently investing pretty much all my spare time into learning Rust, so this is definitely the last Python project I'll post for a while. I already use Python in my day-to-day work, and since I do heavily prefer statically typed compiled languages and I'm a sucker for performance, expect a lot of Rust in the future. I'm currently playing around with cloth simulation, wave function collapse, and procedural generation, so expect several of those (and other) little adventures to appear here soon. I played around with a fractal zoomer for the Mandelbrot set using [Taichi](https://github.com/taichi-dev/taichi){:target="_blank"} to get it to run on the GPU, but I'm thinking to<br/>
 ![rewrite in rust]({{ site.url }}/assets/tsp/rewriteinrust.jpg)<br/>
-and use [Bevy](https://bevyengine.org/){:target="_blank"}, since that will probably enable me to zoom into fractals even further than what Python allows me to crunch out. We'll see. If not, I'll update this article with the GitHub link to my Python project. So much to do, so little time 😉
+and use [Bevy](https://bevyengine.org/){:target="_blank"}, since that will probably enable me to zoom into fractals even further than what Python allows me to crunch out. We'll see. If not, I'll update this article with the GitLab link to my Python project. So much to do, so little time 😉
 
 In any case, thank you for reading this (if you got through it at all, I wouldn't blame you otherwise). I do hope it sparked some interest and you learned something! I'm 100% only a rookie concerning genetic algorithms and ant colony optimization, but this project and the little bit of study I needed to crank it out at least familiarized me with the concepts involved. I hope this inspires at least some people to lay off the ChatGPT's of the world and learn new stuff the old-school way, because it's just a whole lot of fun 😉 Take it from me, though: don't learn a few new algorithms, make an example implementation in 3 days, and then set it aside for 4 months so you have to relearn it all real quick for the blog post 😀 not the most efficient use of time.

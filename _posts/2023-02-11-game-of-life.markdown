@@ -24,7 +24,7 @@ These few incredibly simple rules can manifest suprisingly complex patterns and 
 
 During this project, I familiarized myself with several language constructs and frameworks specific to Python, and tried several approaches to tackle the inherent slowness of Python for computational CPU-heavy work. You can check out a little summary video of what I'll be working toward right here:
 {% include youtube.html id="2HOLWExgwzU" %}
-All the code is available on my [GitHub](https://github.com/tomvanschaijk/wayoflife){:target="_blank"}. The complete code contains all the optimizations and little features I came up with. 
+All the code is available on my [GitLab](https://gitlab.com/peculiar_coding_endeavours/wayoflife){:target="_blank"}. The complete code contains all the optimizations and little features I came up with. 
 
 One change I introduced, compared to the usual implementations you will find online, is that there are not 2 states for each cell, but 3:
 * New: a cell that just became alive because of the game rules
@@ -45,19 +45,19 @@ This small change in how cells are visualized allows you to follow the evolution
 * cell size can be changed to a predefined set of sizes
 * target framerate can be changed
 
-If you are interested in just a simple implementation with 2 states, you can checkout [this branch](https://github.com/tomvanschaijk/wayoflife/tree/just_2_states){:target="_blank"}. If you want to follow the evolution of the project from a basic implementation to using Numba to aid in faster computation of states, optimization of the search space, avoiding unnecessary recalculation of neighbours, and many other of the features above, there are a number of commits you can check out:
-* [A basic implementation](https://github.com/tomvanschaijk/wayoflife/commit/4fcbf96c61d2f2a7529652c65309eb730640dae5){:target="_blank"}
-* [Use of Numba](https://github.com/tomvanschaijk/wayoflife/commit/705f115229768ec80cc675d7730f6463e5f43856){:target="_blank"}
-* [Shrink the search space](https://github.com/tomvanschaijk/wayoflife/commit/6ffe2844d5979c2afe74de21a74c3e0445dffd0a){:target="_blank"}
-* [Move neighbour counting out of loop](https://github.com/tomvanschaijk/wayoflife/commit/0a30d7abc94f2d1f51a703fe6a2df347b6dec260){:target="_blank"}
+If you are interested in just a simple implementation with 2 states, you can checkout [this branch](https://gitlab.com/peculiar_coding_endeavours/wayoflife/tree/just_2_states){:target="_blank"}. If you want to follow the evolution of the project from a basic implementation to using Numba to aid in faster computation of states, optimization of the search space, avoiding unnecessary recalculation of neighbours, and many other of the features above, there are a number of commits you can check out:
+* [A basic implementation](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/4fcbf96c61d2f2a7529652c65309eb730640dae5){:target="_blank"}
+* [Use of Numba](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/705f115229768ec80cc675d7730f6463e5f43856){:target="_blank"}
+* [Shrink the search space](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/6ffe2844d5979c2afe74de21a74c3e0445dffd0a){:target="_blank"}
+* [Move neighbour counting out of loop](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/0a30d7abc94f2d1f51a703fe6a2df347b6dec260){:target="_blank"}
 
-or just check out the [develop](https://github.com/tomvanschaijk/wayoflife){:target="_blank"} branch for the finished product.
+or just check out the [develop](https://gitlab.com/peculiar_coding_endeavours/wayoflife/-/tree/develop){:target="_blank"} branch for the finished product.
 
 In the rest of the article, I will look at each of these commits and highlight what I consider the most interesting and fun things I worked on. I assume you have some basic knowledge of Python and virtual environments. The requirements.txt file to spin up your own is included, so you can simply check out the code, create your own environment and run the code. Throughout the different sections and checkouts, some stuff might be added to the requirements file, so be wary of the occasional necessity to install more packages ;-)
 
 ### The basic implementation
 
-So before we start getting creative, let's get back to basics and look at what we will implement. In essence, all we need is a grid layout of cells, allow for some input by the user to mark cells as alive or dead, and a way to kick off the game. After that, it's a matter of implementing the game rules iteratively, pushing each new state to the grid. Sounds simple enough. I used PyGame to implement the GUI. I've never been in love with front-end at all, but I was surprised by how easy PyGame was to get into and play around with. Besides PyGame, since we're dealing with a grid of cells, the obvious choice is to go with NumPy to represent the data structure for the grid. Again, the code for this part can be found in [this commit](https://github.com/tomvanschaijk/wayoflife/commit/4fcbf96c61d2f2a7529652c65309eb730640dae5){:target="_blank"}. Pretty much the only 2 functions that are worth talking about are the initialize and update functions:
+So before we start getting creative, let's get back to basics and look at what we will implement. In essence, all we need is a grid layout of cells, allow for some input by the user to mark cells as alive or dead, and a way to kick off the game. After that, it's a matter of implementing the game rules iteratively, pushing each new state to the grid. Sounds simple enough. I used PyGame to implement the GUI. I've never been in love with front-end at all, but I was surprised by how easy PyGame was to get into and play around with. Besides PyGame, since we're dealing with a grid of cells, the obvious choice is to go with NumPy to represent the data structure for the grid. Again, the code for this part can be found in [this commit](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/4fcbf96c61d2f2a7529652c65309eb730640dae5){:target="_blank"}. Pretty much the only 2 functions that are worth talking about are the initialize and update functions:
 
 ``` python
 def initialize(width: int, height: int, cell_size: int
@@ -119,7 +119,7 @@ When you run the game yourself, you will notice how small the PyGame window is:
 ![basic]({{ site.url }}/assets/game_of_life/basic.png)
 We have a very small window of 800x600 pixels, with a gridsize of 10 pixels. In short, our grid has 80 columns and 60 rows, for a total of 4800 cells. Even for such a small window, keep that one line of code in mind, where we count the number of neighbours of a cell... For each of those 4800 cells, we'll have to perform a sum of the values of the 8 surrounding ones. Doesn't seem too bright of an idea to start doing that several times a second (at least 60 times, since 60 frames per second does sound like an enjoyable experience), on a grid bigger than a little thumbnail.
 
-So in the next section, we'll make some big changes from our crude implementation into something that's actually worth writing a blog about ;-) In case you do want to look at this step, check out [this commit](https://github.com/tomvanschaijk/wayoflife/commit/705f115229768ec80cc675d7730f6463e5f43856){:target="_blank"}.
+So in the next section, we'll make some big changes from our crude implementation into something that's actually worth writing a blog about ;-) In case you do want to look at this step, check out [this commit](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/705f115229768ec80cc675d7730f6463e5f43856){:target="_blank"}.
 
 ## A dedicated grid class
 
@@ -179,7 +179,7 @@ If you want to run this yourself, do make sure to comment out the njit-decorator
 
 Some thoughts about these things: if we envision the complete grid, it's not hard to imagine that most of the cells in the grid are dead and/or surrounded by dead cells. For those cells, no calculation would need to happen at all, as they would not have to change state from one iteration to the next. Additionally, as we traverse the grid from row to row, and column to column, we are bound to do double work. The neighbours of the cell at coordinates [0, 1] are at least partially the same as the neighbours of the cell at coordinates [0, 0]. However, we still slice up the array around each of those coordinates and pretend the work from the past (being the previous cell) never happened. That's definitely a waste of time. 
 
-In short, performing memoization and shrinking the search space are 2 classical approaches we can apply to this problem to makes sure we are limiting the amount of work we do per iteration, and that the work we actually do is not lost. There are several approaches here, and it can sometimes become a balancing act between results and readability and complexity of the resulting code. Let's go over the route I decided to take, and focus on the most important parts. You can find the actual code in [this commit](https://github.com/tomvanschaijk/wayoflife/commit/6ffe2844d5979c2afe74de21a74c3e0445dffd0a){:target="_blank"}.
+In short, performing memoization and shrinking the search space are 2 classical approaches we can apply to this problem to makes sure we are limiting the amount of work we do per iteration, and that the work we actually do is not lost. There are several approaches here, and it can sometimes become a balancing act between results and readability and complexity of the resulting code. Let's go over the route I decided to take, and focus on the most important parts. You can find the actual code in [this commit](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/6ffe2844d5979c2afe74de21a74c3e0445dffd0a){:target="_blank"}.
 
 
 ## New representation of cells
@@ -264,7 +264,7 @@ Besides just looking at numbers, start the application (don't forget the uncomme
 Now, this is by no means an upper limit of what you can reach. However, it's a fun optimization to reach, despite having to deal with a language that is really not built or suited for this kind of work. Build this project in C++ or Rust if you want to see real speed. For Python though, I'd call this a satisfying result. Remember: we are still calculating the neighbours of each cell individually. You COULD perform some memoization there and re-use the work you performed for previous cells. There are many ways to do this, again with varying added complexity as a result. 
 
 ## A different way to count neighbours
-Let's inspect how I decided to do it, and checkout [this commit](https://github.com/tomvanschaijk/wayoflife/commit/0a30d7abc94f2d1f51a703fe6a2df347b6dec260){:target="_blank"}. The new __perform_update function looks like this:
+Let's inspect how I decided to do it, and checkout [this commit](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/0a30d7abc94f2d1f51a703fe6a2df347b6dec260){:target="_blank"}. The new __perform_update function looks like this:
 ``` python
     @staticmethod
     @njit(fastmath=True, cache=True)
@@ -357,7 +357,7 @@ Very simply put: instead of calculating all neighbours for each cell in each ite
 If you run the program, you will notice that (unless you completely overload the grid with alive cells) it will reach 50-60fps now. And even while commenting out the njit-decorator, reverting us to pure Python and not having the luxury of a precompiled optimized C-function, we get close to 20fps.
 
 ### Some more numbers...
-Besides actually looking at the game play out, and seeing the obvious speed changes from commit to commit, let's check out [a commit](https://github.com/tomvanschaijk/wayoflife/commit/bceecfc3561093ea7174c4123d8d8903ad7385f2){:target="_blank"} with no code changes, but where I have added 3 profiling results:
+Besides actually looking at the game play out, and seeing the obvious speed changes from commit to commit, let's check out [a commit](https://gitlab.com/peculiar_coding_endeavours/wayoflife/commit/bceecfc3561093ea7174c4123d8d8903ad7385f2){:target="_blank"} with no code changes, but where I have added 3 profiling results:
 
 * profiling_results_numba_only: the optimized results due to the use of Numba only
 * profiling_results_smaller_searchspace: as the previous, but we limited the searching space as explained earlier
